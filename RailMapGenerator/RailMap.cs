@@ -4,12 +4,8 @@ using System.Drawing;
 
 namespace RailMapGenerator {
     public class RailMap {
-        public static Font font = null;
         public List<Node> stops = new List<Node>();
         public List<Line> lines = new List<Line>();
-        private static int margin = 20;
-        private static int stopRadium = 10;
-        private static int lineWidth = 6;
 
         public RailMap() { }
 
@@ -35,7 +31,7 @@ namespace RailMapGenerator {
                 maxx = Math.Max(maxx, node.location.X);
                 maxy = Math.Max(maxy, node.location.Y);
             }
-            maxx += stopRadium * 4; maxy += stopRadium * 4;
+            maxx += Setting.INSTANCE.stopRadium.Value * 4; maxy += Setting.INSTANCE.stopRadium.Value * 4;
             //Create bitmap
             Bitmap bitmap = new Bitmap((int)(maxx * zoom), (int)(maxy * zoom));
             Graphics g = Graphics.FromImage(bitmap);
@@ -52,19 +48,19 @@ namespace RailMapGenerator {
             foreach (Line line in lines) {
                 //If there is only 1 stop, ignore it
                 if (line.stops.Count <= 1) continue;
-                Pen pen = new Pen(line.color, lineWidth * zoom);
+                Pen pen = new Pen(line.color, Setting.INSTANCE.lineWidth.Value * zoom);
                 Direction dir = Direction.EMPTY;
                 for (int i = 1; i < line.stops.Count; i++)
                     dir = Render.DrawLineSection(stops[line.stops[i - 1]], stops[line.stops[i]], dir, g, pen, zoom);
             }
             //Draw Stops
             foreach (Node node in stops)
-                Render.DrawStop(g, node, font, showStopName, stopRadium, zoom);
+                Render.DrawStop(g, node, Setting.INSTANCE.font, showStopName, Setting.INSTANCE.stopRadium.Value, zoom);
             //Add margin
-            Bitmap ret = new Bitmap(bitmap.Width + margin * 2, bitmap.Height + margin * 2);
+            Bitmap ret = new Bitmap(bitmap.Width + Setting.INSTANCE.margin.Value * 2, bitmap.Height + Setting.INSTANCE.margin.Value * 2);
             Graphics gr = Graphics.FromImage(ret);
             gr.Clear(Color.White);
-            gr.DrawImage(bitmap, margin, margin);
+            gr.DrawImage(bitmap, Setting.INSTANCE.margin.Value, Setting.INSTANCE.margin.Value);
             return ret;
         }
 
@@ -73,7 +69,7 @@ namespace RailMapGenerator {
         }
 
         public static Bitmap GetEmpty() {
-            return new Bitmap(margin * 2, margin * 2);
+            return new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
         }
     }
 }

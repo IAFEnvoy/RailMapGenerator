@@ -5,7 +5,6 @@ using System.Drawing;
 namespace RailMapGenerator {
     public class Node {
         public static readonly float sqrt2div2 = (float)(Math.Sqrt(2) / 2);
-        public static int lineOffset = 6;
         public Point location;
         public string name;
         public bool enable;
@@ -25,8 +24,8 @@ namespace RailMapGenerator {
         public Point GetOffset(Direction dir) {
             if (renderedCnt[dir.GetId()] == lineCnt[dir.GetId()])
                 throw new IndexOutOfRangeException("请求次数过多");
-            int totalWidth = (lineCnt[dir.GetId()] - 1) * lineOffset;
-            int offset = renderedCnt[dir.GetId()] * lineOffset - totalWidth / 2;
+            int totalWidth = (lineCnt[dir.GetId()] - 1) * Setting.INSTANCE.lineWidth.Value;
+            int offset = renderedCnt[dir.GetId()] * Setting.INSTANCE.lineWidth.Value - totalWidth / 2;
             renderedCnt[dir.GetId()]++;
             if (dir == Direction.PositiveX || dir == Direction.NegativeX)
                 return new Point(0, offset);

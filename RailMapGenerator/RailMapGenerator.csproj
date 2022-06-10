@@ -58,6 +58,12 @@
     <Compile Include="Dialogs\LineSetting.Designer.cs">
       <DependentUpon>LineSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\ModifyVariable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\ModifyVariable.Designer.cs">
+      <DependentUpon>ModifyVariable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\SplitLine.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,7 @@
       <DependentUpon>StopSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Direction.cs" />
+    <Compile Include="Setting.cs" />
     <Compile Include="Utils\HotKey.cs" />
     <Compile Include="HotKeySetting.cs">
       <SubType>Form</SubType>
@@ -93,6 +100,9 @@
     <Compile Include="Render.cs" />
     <EmbeddedResource Include="Dialogs\LineSetting.resx">
       <DependentUpon>LineSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\ModifyVariable.resx">
+      <DependentUpon>ModifyVariable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SplitLine.resx">
       <DependentUpon>SplitLine.cs</DependentUpon>

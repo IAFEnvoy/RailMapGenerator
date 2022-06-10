@@ -32,11 +32,13 @@ namespace RailMapGenerator {
 
         private void Clear_Click(object sender, EventArgs e) {
             HotKeyInput.Text = "";
+            Setting.INSTANCE.HotKeys.Remove(itemList[HotKeyTargets.SelectedIndex].Name);
         }
 
         private void OK_Click(object sender, EventArgs e) {
             if (HotKeyInput.Text != "Invalid HotKey" && HotKeyTargets.SelectedIndex != -1) {
                 itemList[HotKeyTargets.SelectedIndex].ShortcutKeys = HotKeyUtil.GetKeyByString(HotKeyInput.Text).KeyData;
+                Setting.INSTANCE.HotKeys.Add(itemList[HotKeyTargets.SelectedIndex].Name, HotKeyInput.Text);
                 HotKeySetting_Load(null, null);
             }
         }
