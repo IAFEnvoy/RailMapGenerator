@@ -1,4 +1,4 @@
-﻿namespace RailMapGenerator.Dialogs {
+﻿namespace RailMapGenerator {
     partial class SplitLine {
         /// <summary>
         /// Required designer variable.

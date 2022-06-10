@@ -9,33 +9,26 @@ namespace RailMapGenerator {
         /// <param name="e"></param>
         /// <returns></returns>
         public static string GetStringByKey(KeyEventArgs e) {
-            if (e.KeyValue == 16) {
+            if (e.KeyValue == 16)
                 return "Shift + ";
-            } else if (e.KeyValue == 17) {
+            else if (e.KeyValue == 17)
                 return "Ctrl + ";
-            } else if (e.KeyValue == 18) {
+            else if (e.KeyValue == 18)
                 return "Alt + ";
-            } else {
+            else {
                 StringBuilder keyValue = new StringBuilder();
                 if (e.Modifiers != 0) {
-                    if (e.Control) {
+                    if (e.Control)
                         keyValue.Append("Ctrl + ");
-                    }
-                    if (e.Alt) {
+                    if (e.Alt)
                         keyValue.Append("Alt + ");
-                    }
-                    if (e.Shift) {
+                    if (e.Shift)
                         keyValue.Append("Shift + ");
-                    }
                 }
-                if ((e.KeyValue >= 48 && e.KeyValue <= 57))    //0-9
-                {
+                if (e.KeyValue >= 48 && e.KeyValue <= 57)    //0-9
                     keyValue.Append(e.KeyCode.ToString());
-                    //keyValue.Append(e.KeyCode.ToString().Substring(1));
-                } else {
+                else
                     keyValue.Append(e.KeyCode);
-                }
-
                 return keyValue.ToString();
             }
         }
@@ -46,15 +39,14 @@ namespace RailMapGenerator {
         /// <param name="e"></param>
         /// <returns></returns>
         public static string GetSingleStrByKey(KeyEventArgs e) {
-            if (e.KeyValue == 16) {
+            if (e.KeyValue == 16)
                 return "Shift";
-            } else if (e.KeyValue == 17) {
+            else if (e.KeyValue == 17)
                 return "Ctrl";
-            } else if (e.KeyValue == 18) {
+            else if (e.KeyValue == 18)
                 return "Alt";
-            } else {
+            else
                 return e.KeyCode.ToString();
-            }
         }
 
         /// <summary>
@@ -66,26 +58,24 @@ namespace RailMapGenerator {
             Keys keyResult = new Keys();
             string[] strKeyCodes = strKey.Split('+');
             if (strKeyCodes.Length > 0) {
-                int numberKey;
                 foreach (string keyEach in strKeyCodes) {
-                    if (keyEach.Trim().ToUpper() == "CTRL") {
-                        keyResult = keyResult | Keys.Control;
-                    } else if (keyEach.Trim().ToUpper() == "SHIFT") {
-                        keyResult = keyResult | Keys.Shift;
-                    } else if (keyEach.Trim().ToUpper() == "ALT") {
-                        keyResult = keyResult | Keys.Alt;
-                    }
-                      //数字
-                      else if (int.TryParse(keyEach, out numberKey)) {
+                    if (keyEach.Trim().ToUpper() == "CTRL")
+                        keyResult |= Keys.Control;
+                    else if (keyEach.Trim().ToUpper() == "SHIFT")
+                        keyResult |= Keys.Shift;
+                    else if (keyEach.Trim().ToUpper() == "ALT")
+                        keyResult |= Keys.Alt;
+                    //数字
+                    else if (int.TryParse(keyEach, out int numberKey)) {
                         KeysConverter converter = new KeysConverter();
                         Keys getKey = (Keys)converter.ConvertFromString('D' + keyEach);
-                        keyResult = keyResult | getKey;
+                        keyResult |= getKey;
                     }
-                      //其它（字母，F0-F12)
-                      else {
+                    //其它（字母，F0-F12)
+                    else {
                         KeysConverter converter = new KeysConverter();
                         Keys getKey = (Keys)converter.ConvertFromString(keyEach);
-                        keyResult = keyResult | getKey;
+                        keyResult |= getKey;
                     }
                 }
             }

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RailMapGenerator.Dialogs;
 using System;
 using System.Drawing;
 using System.IO;

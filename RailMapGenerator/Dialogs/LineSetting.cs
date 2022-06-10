@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace RailMapGenerator.Dialogs {
+namespace RailMapGenerator {
     public partial class LineSetting : Form {
         public Line line;
 

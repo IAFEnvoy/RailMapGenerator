@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace RailMapGenerator.Dialogs {
+namespace RailMapGenerator {
     public partial class SplitLine : Form {
         Line oriLine, newLine;
         RailMap map;
