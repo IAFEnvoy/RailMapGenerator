@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 
 namespace RailMapGenerator {
-    public class Node {
+    public class Station {
         public static readonly float sqrt2div2 = (float)(Math.Sqrt(2) / 2);
         public Point location;
         public string name;
@@ -15,7 +15,7 @@ namespace RailMapGenerator {
         [JsonIgnore]
         private Pair<Direction, Direction> textDir = new Pair<Direction, Direction>(Direction.EMPTY, Direction.EMPTY);
 
-        public Node(string name, int x = 0, int y = 0, bool enable = true) {
+        public Station(string name, int x = 0, int y = 0, bool enable = true) {
             this.name = name;
             location = new Point(x, y);
             this.enable = enable;

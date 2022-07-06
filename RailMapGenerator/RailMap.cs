@@ -4,13 +4,13 @@ using System.Drawing;
 
 namespace RailMapGenerator {
     public class RailMap {
-        public List<Node> stops = new List<Node>();
+        public List<Station> stops = new List<Station>();
         public List<Line> lines = new List<Line>();
 
         public RailMap() { }
 
         private void AnalyzeNode() {
-            foreach (Node node in stops)
+            foreach (Station node in stops)
                 node.ClearCnt();
             foreach (Line line in lines) {
                 if (line.stops.Count <= 1) continue;
@@ -18,7 +18,7 @@ namespace RailMapGenerator {
                 for (int i = 1; i < line.stops.Count; i++)
                     d = Render.ToNextNode(stops[line.stops[i - 1]], stops[line.stops[i]], d);
             }
-            foreach (Node node in stops)
+            foreach (Station node in stops)
                 node.AnalyzeTextLocation();
         }
 
@@ -27,7 +27,7 @@ namespace RailMapGenerator {
             AnalyzeNode();
             //Get the bitmap's size
             int maxx = int.MinValue, maxy = int.MinValue;
-            foreach (Node node in stops) {
+            foreach (Station node in stops) {
                 maxx = Math.Max(maxx, node.location.X);
                 maxy = Math.Max(maxy, node.location.Y);
             }
@@ -54,7 +54,7 @@ namespace RailMapGenerator {
                     dir = Render.DrawLineSection(stops[line.stops[i - 1]], stops[line.stops[i]], dir, g, pen, zoom);
             }
             //Draw Stops
-            foreach (Node node in stops)
+            foreach (Station node in stops)
                 Render.DrawStop(g, node, Setting.INSTANCE.font, showStopName, Setting.INSTANCE.stopRadium.Value, zoom);
             //Add margin
             Bitmap ret = new Bitmap(bitmap.Width + Setting.INSTANCE.margin.Value * 2, bitmap.Height + Setting.INSTANCE.margin.Value * 2);
@@ -68,8 +68,9 @@ namespace RailMapGenerator {
             return lines.Count == 0 && stops.Count == 0;
         }
 
-        public static Bitmap GetEmpty() {
-            return new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
+        public void MoveAll(int x,int y) {
+            foreach (Station node in stops)
+                node.location.Offset(x, y);
         }
     }
 }

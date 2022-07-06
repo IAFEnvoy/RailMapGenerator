@@ -3,9 +3,9 @@ using System.Windows.Forms;
 
 namespace RailMapGenerator {
     public partial class StopSetting : Form {
-        public Node stop;
+        public Station stop;
 
-        public StopSetting(Node stop = null) {
+        public StopSetting(Station stop = null) {
             InitializeComponent();
             this.stop = stop;
             if (this.stop != null) {
@@ -18,7 +18,7 @@ namespace RailMapGenerator {
         private void OK_Click(object sender, EventArgs e) {
             if (int.TryParse(positionX.Text, out int x) && int.TryParse(positionY.Text, out int y)) {
                 if (stop == null)
-                    stop = new Node(stopName.Text, x, y);
+                    stop = new Station(stopName.Text, x, y);
                 else {
                     stop.name = stopName.Text;
                     stop.location = new System.Drawing.Point(x, y);

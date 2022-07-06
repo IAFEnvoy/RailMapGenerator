@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace RailMapGenerator {
     public class Render {
-        public static Pair<Direction, Direction> GetDirectionPair(Node start, Node end, Direction last) {
+        public static Pair<Direction, Direction> GetDirectionPair(Station start, Station end, Direction last) {
             int x = end.location.X - start.location.X;
             int y = end.location.Y - start.location.Y;
             Direction d = Direction.EMPTY;
@@ -41,7 +41,7 @@ namespace RailMapGenerator {
             return new Pair<Direction, Direction>(d1, d2);
         }
 
-        public static Direction ToNextNode(Node start, Node end, Direction last) {
+        public static Direction ToNextNode(Station start, Station end, Direction last) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
             start.lineCnt[d1.GetId()]++;
@@ -49,7 +49,7 @@ namespace RailMapGenerator {
             return d2;
         }
 
-        public static Direction DrawLineSection(Node start, Node end, Direction last, Graphics g, Pen pen, float zoom = 1) {
+        public static Direction DrawLineSection(Station start, Station end, Direction last, Graphics g, Pen pen, float zoom = 1) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
             Point startOffset = start.GetOffset(d1), endOffset = end.GetOffset(Direction.Reverse(d2));
@@ -64,8 +64,8 @@ namespace RailMapGenerator {
             return d2;
         }
 
-        public static void DrawStop(Graphics g, Node node, Font font = null, bool renderName = true, int radium = 10, float zoom = 1) {
-            FillEllipse(g, Brushes.Black, node.location.X - radium, node.location.Y - radium, radium * 2, radium * 2, zoom);
+        public static void DrawStop(Graphics g, Station node, Font font = null, bool renderName = true, int radium = 10, float zoom = 1) {
+            FillEllipse(g, node.enable ? Brushes.Black : Brushes.Gray, node.location.X - radium, node.location.Y - radium, radium * 2, radium * 2, zoom);
             int iRadium = radium - 2;
             FillEllipse(g, Brushes.White, node.location.X - iRadium, node.location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
             if (!renderName) return;
@@ -75,7 +75,7 @@ namespace RailMapGenerator {
             SizeF size = g.MeasureString(node.name, font);
             x -= size.Width / 2;
             y -= size.Height / 2;
-            DrawString(g, node.name, font, Brushes.Black, AddPoint(node.location, new Point((int)x, (int)y)), zoom);
+            DrawString(g, node.name, font, node.enable ? Brushes.Black : Brushes.Gray, AddPoint(node.location, new Point((int)x, (int)y)), zoom);
         }
 
         public static Point AddPoint(Point p1, Point p2) {

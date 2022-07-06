@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -16,7 +17,7 @@ namespace RailMapGenerator {
             Setting.Load();
             if (Setting.INSTANCE.font == null)
                 Setting.INSTANCE.font = Font;
-            Reload(true, true, true, false);
+            ReloadData(true, true, true, false);
             //add item to setting list
             setting.itemList.Add(添加站点ToolStripMenuItem);
             setting.itemList.Add(修改站点信息ToolStripMenuItem);
@@ -63,7 +64,7 @@ namespace RailMapGenerator {
             obj.Value = form.value;
             ((ToolStripMenuItem)sender).Text = obj.Name + " : " + obj.Value.ToString();
             form.Dispose();
-            Reload(false, false, false);
+            ReloadData(false, false, false);
         }
 
         private int ParseIndex(int origin, int count) {
@@ -73,7 +74,7 @@ namespace RailMapGenerator {
             return origin;
         }
 
-        private void Reload(bool stops, bool lines, bool stopsOnLines, bool render = true) {
+        private void ReloadData(bool stops, bool lines, bool stopsOnLines, bool render = true) {
             if (railMap.IsEmpty()) {
                 Stops.Items.Clear();
                 Lines.Items.Clear();
@@ -86,7 +87,7 @@ namespace RailMapGenerator {
             if (stops) {
                 int index = Stops.SelectedIndex;
                 Stops.Items.Clear();
-                foreach (Node node in railMap.stops)
+                foreach (Station node in railMap.stops)
                     Stops.Items.Add(node.name);
                 if (Stops.Items.Count == 0)
                     Stops.Items.Add("没有站点");
@@ -129,7 +130,7 @@ namespace RailMapGenerator {
                         MapVerticalSB.Enabled = true;
                     }
                 } else
-                    map.Image = RailMap.GetEmpty();
+                    map.Image = new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
                 map.Location = new Point(0, 0);
             }
         }
@@ -144,7 +145,7 @@ namespace RailMapGenerator {
             if (form.stop != null)
                 railMap.stops.Add(form.stop);
             form.Dispose();
-            Reload(true, false, false);
+            ReloadData(true, false, false);
         }
 
         private void AddLine_Click(object sender, EventArgs e) {
@@ -157,12 +158,12 @@ namespace RailMapGenerator {
             if (form.line != null)
                 railMap.lines.Add(form.line);
             form.Dispose();
-            Reload(false, true, false);
+            ReloadData(false, true, false);
         }
 
         private void Lines_SelectedIndexChanged(object sender, EventArgs e) {
             if (Lines.SelectedIndex != -1)
-                Reload(false, false, true);
+                ReloadData(false, false, true);
         }
 
         private void AddStopToLine_Click(object sender, EventArgs e) {
@@ -175,7 +176,7 @@ namespace RailMapGenerator {
                 return;
             }
             railMap.lines[Lines.SelectedIndex].stops.Add(Stops.SelectedIndex);
-            Reload(false, false, true);
+            ReloadData(false, false, true);
         }
 
         private void MoveUp_Click(object sender, EventArgs e) {
@@ -183,7 +184,7 @@ namespace RailMapGenerator {
                 int index = StopsOnLine.SelectedIndex;
                 (railMap.lines[Lines.SelectedIndex].stops[index], railMap.lines[Lines.SelectedIndex].stops[index - 1])
                     = (railMap.lines[Lines.SelectedIndex].stops[index - 1], railMap.lines[Lines.SelectedIndex].stops[index]);
-                Reload(false, false, true);
+                ReloadData(false, false, true);
                 StopsOnLine.SelectedIndex = index - 1;
             }
         }
@@ -193,7 +194,7 @@ namespace RailMapGenerator {
                 int index = StopsOnLine.SelectedIndex;
                 (railMap.lines[Lines.SelectedIndex].stops[index], railMap.lines[Lines.SelectedIndex].stops[index + 1])
                     = (railMap.lines[Lines.SelectedIndex].stops[index + 1], railMap.lines[Lines.SelectedIndex].stops[index]);
-                Reload(false, false, true);
+                ReloadData(false, false, true);
                 StopsOnLine.SelectedIndex = index + 1;
             }
         }
@@ -207,6 +208,8 @@ namespace RailMapGenerator {
                     return;
             }
             railMap = new RailMap();
+            ReloadData(true, true, true);
+            map.Image = new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -236,7 +239,7 @@ namespace RailMapGenerator {
             if (ofd.ShowDialog() == DialogResult.OK) {
                 fileName = ofd.FileName;
                 railMap = JsonConvert.DeserializeObject<RailMap>(File.ReadAllText(fileName, Encoding.UTF8));
-                Reload(true, true, true);
+                ReloadData(true, true, true);
                 FileStatus.Text = "成功打开文件: " + ofd.FileName;
             }
             ofd.Dispose();
@@ -280,7 +283,7 @@ namespace RailMapGenerator {
         private void Remove_Click(object sender, EventArgs e) {
             if (StopsOnLine.SelectedIndex == -1 || Lines.SelectedIndex == -1) return;
             railMap.lines[Lines.SelectedIndex].stops.RemoveAt(StopsOnLine.SelectedIndex);
-            Reload(false, false, true);
+            ReloadData(false, false, true);
         }
 
         private void RemoveStop_Click(object sender, EventArgs e) {
@@ -293,13 +296,13 @@ namespace RailMapGenerator {
                         line.stops[i]--;
             }
             railMap.stops.RemoveAt(index);
-            Reload(true, false, true);
+            ReloadData(true, false, true);
         }
 
         private void RemoveLine_Click(object sender, EventArgs e) {
             if (Lines.SelectedIndex == -1) return;
             railMap.lines.RemoveAt(Lines.SelectedIndex);
-            Reload(false, true, true);
+            ReloadData(false, true, true);
         }
 
         private void ModiftStop_Click(object sender, EventArgs e) {
@@ -311,7 +314,7 @@ namespace RailMapGenerator {
                 form.Text = ((Control)sender).Text;
             form.ShowDialog();
             form.Dispose();
-            Reload(true, false, false);
+            ReloadData(true, false, false);
         }
 
         private void ModifyLine_Click(object sender, EventArgs e) {
@@ -323,7 +326,7 @@ namespace RailMapGenerator {
                 form.Text = ((Control)sender).Text;
             form.ShowDialog();
             form.Dispose();
-            Reload(false, true, true);
+            ReloadData(false, true, true);
         }
 
         private void ModiftFont_Click(object sender, EventArgs e) {
@@ -333,12 +336,12 @@ namespace RailMapGenerator {
             if (fd.ShowDialog() == DialogResult.OK)
                 Setting.INSTANCE.font = fd.Font;
             fd.Dispose();
-            Reload(false, false, false);
+            ReloadData(false, false, false);
         }
 
         private void ZoomChange(object sender, EventArgs e) {
             Zoom.Text = ((ToolStripMenuItem)sender).Text;
-            Reload(false, false, false);
+            ReloadData(false, false, false);
         }
 
         private void MapHorizonSB_ValueChanged(object sender, EventArgs e) {
@@ -358,16 +361,45 @@ namespace RailMapGenerator {
             if (form1.line == null) return;
             SplitLine form2 = new SplitLine(railMap.lines[Lines.SelectedIndex], form1.line, railMap);
             form2.ShowDialog();
-            Reload(false, true, true);
+            ReloadData(false, true, true);
         }
 
         private void Check_Change(object sender, EventArgs e) {
-            Reload(false, false, false);
+            ReloadData(false, false, false);
         }
 
         private void 快捷键设置ToolStripMenuItem_Click(object sender, EventArgs e) {
             setting.ShowDialog();
         }
 
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e) {
+            About form = new About();
+            form.ShowDialog();
+            form.Dispose();
+        }
+
+        private void 支持ToolStripMenuItem_Click(object sender, EventArgs e) {
+            Process.Start("https://afdian.net/@0218xingcheng");
+        }
+
+        private void 上移50ToolStripMenuItem_Click(object sender, EventArgs e) {
+            railMap.MoveAll(0, -50);
+            ReloadData(false, false, false);
+        }
+
+        private void 下移50ToolStripMenuItem_Click(object sender, EventArgs e) {
+            railMap.MoveAll(0, 50);
+            ReloadData(false, false, false);
+        }
+
+        private void 左移50ToolStripMenuItem_Click(object sender, EventArgs e) {
+            railMap.MoveAll(-50, 0);
+            ReloadData(false, false, false);
+        }
+
+        private void 右移50ToolStripMenuItem_Click(object sender, EventArgs e) {
+            railMap.MoveAll(50, 0);
+            ReloadData(false, false, false);
+        }
     }
 }
