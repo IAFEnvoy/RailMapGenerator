@@ -28,11 +28,12 @@
             this.positionX = new System.Windows.Forms.TextBox();
             this.positionY = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.enable = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // add
             // 
-            this.add.Location = new System.Drawing.Point(167, 105);
+            this.add.Location = new System.Drawing.Point(166, 142);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(123, 47);
             this.add.TabIndex = 0;
@@ -71,11 +72,25 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "站点名称:\r\n   X坐标:\r\n   Y坐标:\r\n";
             // 
+            // enable
+            // 
+            this.enable.AutoSize = true;
+            this.enable.Checked = true;
+            this.enable.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.enable.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.enable.Location = new System.Drawing.Point(169, 105);
+            this.enable.Name = "enable";
+            this.enable.Size = new System.Drawing.Size(88, 31);
+            this.enable.TabIndex = 5;
+            this.enable.Text = "启用";
+            this.enable.UseVisualStyleBackColor = true;
+            // 
             // StopSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 160);
+            this.ClientSize = new System.Drawing.Size(512, 196);
+            this.Controls.Add(this.enable);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.positionY);
             this.Controls.Add(this.positionX);
@@ -101,5 +116,6 @@
         private System.Windows.Forms.TextBox positionX;
         private System.Windows.Forms.TextBox positionY;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox enable;
     }
 }

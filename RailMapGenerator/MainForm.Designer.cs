@@ -60,6 +60,12 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.将站点加入线路ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.从线路中删除站点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.操作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.整体移动ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.上移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.下移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.左移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.右移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.绘制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示站点名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示网格ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,19 +91,13 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.MapHorizonSB = new System.Windows.Forms.HScrollBar();
-            this.MapVerticalSB = new System.Windows.Forms.VScrollBar();
             this.MapPanel = new System.Windows.Forms.Panel();
-            this.操作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.整体移动ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.上移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.下移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.左移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.右移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.controlPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.MapPanel.SuspendLayout();
+            this.controlPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // map
@@ -115,7 +115,7 @@
             // 
             this.Stops.FormattingEnabled = true;
             this.Stops.ItemHeight = 15;
-            this.Stops.Location = new System.Drawing.Point(901, 65);
+            this.Stops.Location = new System.Drawing.Point(8, 33);
             this.Stops.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Stops.Name = "Stops";
             this.Stops.Size = new System.Drawing.Size(183, 364);
@@ -125,7 +125,7 @@
             // 
             this.Lines.FormattingEnabled = true;
             this.Lines.ItemHeight = 15;
-            this.Lines.Location = new System.Drawing.Point(1091, 65);
+            this.Lines.Location = new System.Drawing.Point(198, 33);
             this.Lines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Lines.Name = "Lines";
             this.Lines.Size = new System.Drawing.Size(183, 364);
@@ -136,7 +136,7 @@
             // 
             this.StopsOnLine.FormattingEnabled = true;
             this.StopsOnLine.ItemHeight = 15;
-            this.StopsOnLine.Location = new System.Drawing.Point(1281, 65);
+            this.StopsOnLine.Location = new System.Drawing.Point(388, 33);
             this.StopsOnLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopsOnLine.Name = "StopsOnLine";
             this.StopsOnLine.Size = new System.Drawing.Size(183, 364);
@@ -144,7 +144,7 @@
             // 
             // AddStopToLine
             // 
-            this.AddStopToLine.Location = new System.Drawing.Point(1279, 494);
+            this.AddStopToLine.Location = new System.Drawing.Point(386, 462);
             this.AddStopToLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddStopToLine.Name = "AddStopToLine";
             this.AddStopToLine.Size = new System.Drawing.Size(184, 48);
@@ -155,7 +155,7 @@
             // 
             // AddLine
             // 
-            this.AddLine.Location = new System.Drawing.Point(1091, 442);
+            this.AddLine.Location = new System.Drawing.Point(198, 410);
             this.AddLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddLine.Name = "AddLine";
             this.AddLine.Size = new System.Drawing.Size(184, 48);
@@ -166,7 +166,7 @@
             // 
             // AddStop
             // 
-            this.AddStop.Location = new System.Drawing.Point(900, 442);
+            this.AddStop.Location = new System.Drawing.Point(7, 410);
             this.AddStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddStop.Name = "AddStop";
             this.AddStop.Size = new System.Drawing.Size(184, 48);
@@ -177,7 +177,7 @@
             // 
             // MoveUp
             // 
-            this.MoveUp.Location = new System.Drawing.Point(1279, 442);
+            this.MoveUp.Location = new System.Drawing.Point(386, 410);
             this.MoveUp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MoveUp.Name = "MoveUp";
             this.MoveUp.Size = new System.Drawing.Size(55, 48);
@@ -188,7 +188,7 @@
             // 
             // MoveDown
             // 
-            this.MoveDown.Location = new System.Drawing.Point(1343, 442);
+            this.MoveDown.Location = new System.Drawing.Point(450, 410);
             this.MoveDown.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MoveDown.Name = "MoveDown";
             this.MoveDown.Size = new System.Drawing.Size(55, 48);
@@ -199,7 +199,7 @@
             // 
             // Remove
             // 
-            this.Remove.Location = new System.Drawing.Point(1408, 442);
+            this.Remove.Location = new System.Drawing.Point(515, 410);
             this.Remove.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Remove.Name = "Remove";
             this.Remove.Size = new System.Drawing.Size(55, 48);
@@ -220,7 +220,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menu.Size = new System.Drawing.Size(1472, 28);
+            this.menu.Size = new System.Drawing.Size(1475, 28);
             this.menu.TabIndex = 112;
             this.menu.Text = "menuStrip1";
             // 
@@ -349,75 +349,122 @@
             // 添加站点ToolStripMenuItem
             // 
             this.添加站点ToolStripMenuItem.Name = "添加站点ToolStripMenuItem";
-            this.添加站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.添加站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.添加站点ToolStripMenuItem.Text = "添加站点";
             this.添加站点ToolStripMenuItem.Click += new System.EventHandler(this.AddStop_Click);
             // 
             // 修改站点信息ToolStripMenuItem
             // 
             this.修改站点信息ToolStripMenuItem.Name = "修改站点信息ToolStripMenuItem";
-            this.修改站点信息ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.修改站点信息ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.修改站点信息ToolStripMenuItem.Text = "修改站点信息";
             this.修改站点信息ToolStripMenuItem.Click += new System.EventHandler(this.ModiftStop_Click);
             // 
             // 删除选中站点ToolStripMenuItem
             // 
             this.删除选中站点ToolStripMenuItem.Name = "删除选中站点ToolStripMenuItem";
-            this.删除选中站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.删除选中站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.删除选中站点ToolStripMenuItem.Text = "删除选中站点";
             this.删除选中站点ToolStripMenuItem.Click += new System.EventHandler(this.RemoveStop_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
             // 
             // 添加线路ToolStripMenuItem
             // 
             this.添加线路ToolStripMenuItem.Name = "添加线路ToolStripMenuItem";
-            this.添加线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.添加线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.添加线路ToolStripMenuItem.Text = "添加线路";
             this.添加线路ToolStripMenuItem.Click += new System.EventHandler(this.AddLine_Click);
             // 
             // 修改线路信息ToolStripMenuItem
             // 
             this.修改线路信息ToolStripMenuItem.Name = "修改线路信息ToolStripMenuItem";
-            this.修改线路信息ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.修改线路信息ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.修改线路信息ToolStripMenuItem.Text = "修改线路信息";
             this.修改线路信息ToolStripMenuItem.Click += new System.EventHandler(this.ModifyLine_Click);
             // 
             // 删除选中线路ToolStripMenuItem
             // 
             this.删除选中线路ToolStripMenuItem.Name = "删除选中线路ToolStripMenuItem";
-            this.删除选中线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.删除选中线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.删除选中线路ToolStripMenuItem.Text = "删除选中线路";
             this.删除选中线路ToolStripMenuItem.Click += new System.EventHandler(this.RemoveLine_Click);
             // 
             // 拆分线路ToolStripMenuItem
             // 
             this.拆分线路ToolStripMenuItem.Name = "拆分线路ToolStripMenuItem";
-            this.拆分线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.拆分线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.拆分线路ToolStripMenuItem.Text = "拆分线路";
             this.拆分线路ToolStripMenuItem.Click += new System.EventHandler(this.SplitLine_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(209, 6);
             // 
             // 将站点加入线路ToolStripMenuItem
             // 
             this.将站点加入线路ToolStripMenuItem.Name = "将站点加入线路ToolStripMenuItem";
-            this.将站点加入线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.将站点加入线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.将站点加入线路ToolStripMenuItem.Text = "将站点加入线路";
             this.将站点加入线路ToolStripMenuItem.Click += new System.EventHandler(this.AddStopToLine_Click);
             // 
             // 从线路中删除站点ToolStripMenuItem
             // 
             this.从线路中删除站点ToolStripMenuItem.Name = "从线路中删除站点ToolStripMenuItem";
-            this.从线路中删除站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.从线路中删除站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.从线路中删除站点ToolStripMenuItem.Text = "从线路中删除站点";
             this.从线路中删除站点ToolStripMenuItem.Click += new System.EventHandler(this.Remove_Click);
+            // 
+            // 操作ToolStripMenuItem
+            // 
+            this.操作ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.整体移动ToolStripMenuItem});
+            this.操作ToolStripMenuItem.Name = "操作ToolStripMenuItem";
+            this.操作ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
+            this.操作ToolStripMenuItem.Text = "操作";
+            // 
+            // 整体移动ToolStripMenuItem
+            // 
+            this.整体移动ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.上移50ToolStripMenuItem,
+            this.下移50ToolStripMenuItem,
+            this.左移50ToolStripMenuItem,
+            this.右移50ToolStripMenuItem});
+            this.整体移动ToolStripMenuItem.Name = "整体移动ToolStripMenuItem";
+            this.整体移动ToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.整体移动ToolStripMenuItem.Text = "整体移动";
+            // 
+            // 上移50ToolStripMenuItem
+            // 
+            this.上移50ToolStripMenuItem.Name = "上移50ToolStripMenuItem";
+            this.上移50ToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
+            this.上移50ToolStripMenuItem.Text = "上移50";
+            this.上移50ToolStripMenuItem.Click += new System.EventHandler(this.上移50ToolStripMenuItem_Click);
+            // 
+            // 下移50ToolStripMenuItem
+            // 
+            this.下移50ToolStripMenuItem.Name = "下移50ToolStripMenuItem";
+            this.下移50ToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
+            this.下移50ToolStripMenuItem.Text = "下移50";
+            this.下移50ToolStripMenuItem.Click += new System.EventHandler(this.下移50ToolStripMenuItem_Click);
+            // 
+            // 左移50ToolStripMenuItem
+            // 
+            this.左移50ToolStripMenuItem.Name = "左移50ToolStripMenuItem";
+            this.左移50ToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
+            this.左移50ToolStripMenuItem.Text = "左移50";
+            this.左移50ToolStripMenuItem.Click += new System.EventHandler(this.左移50ToolStripMenuItem_Click);
+            // 
+            // 右移50ToolStripMenuItem
+            // 
+            this.右移50ToolStripMenuItem.Name = "右移50ToolStripMenuItem";
+            this.右移50ToolStripMenuItem.Size = new System.Drawing.Size(140, 26);
+            this.右移50ToolStripMenuItem.Text = "右移50";
+            this.右移50ToolStripMenuItem.Click += new System.EventHandler(this.右移50ToolStripMenuItem_Click);
             // 
             // 绘制ToolStripMenuItem
             // 
@@ -435,7 +482,7 @@
             this.显示站点名ToolStripMenuItem.CheckOnClick = true;
             this.显示站点名ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示站点名ToolStripMenuItem.Name = "显示站点名ToolStripMenuItem";
-            this.显示站点名ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.显示站点名ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
             this.显示站点名ToolStripMenuItem.Text = "显示站点名";
             this.显示站点名ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Check_Change);
             // 
@@ -445,14 +492,14 @@
             this.显示网格ToolStripMenuItem.CheckOnClick = true;
             this.显示网格ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示网格ToolStripMenuItem.Name = "显示网格ToolStripMenuItem";
-            this.显示网格ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.显示网格ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
             this.显示网格ToolStripMenuItem.Text = "显示网格";
             this.显示网格ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Check_Change);
             // 
             // 站名字体ToolStripMenuItem
             // 
             this.站名字体ToolStripMenuItem.Name = "站名字体ToolStripMenuItem";
-            this.站名字体ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.站名字体ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
             this.站名字体ToolStripMenuItem.Text = "站名字体";
             this.站名字体ToolStripMenuItem.Click += new System.EventHandler(this.ModiftFont_Click);
             // 
@@ -468,20 +515,20 @@
             // 支持ToolStripMenuItem
             // 
             this.支持ToolStripMenuItem.Name = "支持ToolStripMenuItem";
-            this.支持ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.支持ToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.支持ToolStripMenuItem.Text = "支持";
             this.支持ToolStripMenuItem.Click += new System.EventHandler(this.支持ToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
             this.关于ToolStripMenuItem.Text = "关于";
             this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // RemoveStop
             // 
-            this.RemoveStop.Location = new System.Drawing.Point(900, 545);
+            this.RemoveStop.Location = new System.Drawing.Point(7, 513);
             this.RemoveStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RemoveStop.Name = "RemoveStop";
             this.RemoveStop.Size = new System.Drawing.Size(184, 48);
@@ -492,7 +539,7 @@
             // 
             // RemoveLine
             // 
-            this.RemoveLine.Location = new System.Drawing.Point(1091, 545);
+            this.RemoveLine.Location = new System.Drawing.Point(198, 513);
             this.RemoveLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RemoveLine.Name = "RemoveLine";
             this.RemoveLine.Size = new System.Drawing.Size(184, 48);
@@ -503,7 +550,7 @@
             // 
             // ModiftStop
             // 
-            this.ModiftStop.Location = new System.Drawing.Point(900, 494);
+            this.ModiftStop.Location = new System.Drawing.Point(7, 462);
             this.ModiftStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModiftStop.Name = "ModiftStop";
             this.ModiftStop.Size = new System.Drawing.Size(184, 48);
@@ -514,7 +561,7 @@
             // 
             // ModifyLine
             // 
-            this.ModifyLine.Location = new System.Drawing.Point(1091, 494);
+            this.ModifyLine.Location = new System.Drawing.Point(198, 462);
             this.ModifyLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModifyLine.Name = "ModifyLine";
             this.ModifyLine.Size = new System.Drawing.Size(184, 48);
@@ -530,11 +577,10 @@
             this.Zoom,
             this.AuthorName,
             this.FileStatus});
-            this.status.Location = new System.Drawing.Point(0, 600);
+            this.status.Location = new System.Drawing.Point(0, 613);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.status.Size = new System.Drawing.Size(1472, 26);
-            this.status.SizingGrip = false;
+            this.status.Size = new System.Drawing.Size(1475, 26);
             this.status.TabIndex = 120;
             this.status.Text = "statusStrip1";
             // 
@@ -618,7 +664,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(903, 42);
+            this.label1.Location = new System.Drawing.Point(10, 10);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 20);
@@ -629,7 +675,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(1092, 42);
+            this.label2.Location = new System.Drawing.Point(199, 10);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 20);
@@ -640,123 +686,63 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(1283, 42);
+            this.label3.Location = new System.Drawing.Point(390, 10);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(129, 20);
             this.label3.TabIndex = 123;
             this.label3.Text = "线路上的车站";
             // 
-            // MapHorizonSB
-            // 
-            this.MapHorizonSB.LargeChange = 1;
-            this.MapHorizonSB.Location = new System.Drawing.Point(12, 576);
-            this.MapHorizonSB.Maximum = 0;
-            this.MapHorizonSB.Name = "MapHorizonSB";
-            this.MapHorizonSB.Size = new System.Drawing.Size(859, 18);
-            this.MapHorizonSB.TabIndex = 125;
-            this.MapHorizonSB.ValueChanged += new System.EventHandler(this.MapHorizonSB_ValueChanged);
-            // 
-            // MapVerticalSB
-            // 
-            this.MapVerticalSB.LargeChange = 1;
-            this.MapVerticalSB.Location = new System.Drawing.Point(875, 38);
-            this.MapVerticalSB.Maximum = 0;
-            this.MapVerticalSB.Name = "MapVerticalSB";
-            this.MapVerticalSB.Size = new System.Drawing.Size(18, 535);
-            this.MapVerticalSB.TabIndex = 126;
-            this.MapVerticalSB.ValueChanged += new System.EventHandler(this.MapVerticalSB_ValueChanged);
-            // 
             // MapPanel
             // 
+            this.MapPanel.AutoScroll = true;
             this.MapPanel.Controls.Add(this.map);
-            this.MapPanel.Location = new System.Drawing.Point(16, 35);
+            this.MapPanel.Location = new System.Drawing.Point(13, 32);
             this.MapPanel.Margin = new System.Windows.Forms.Padding(4);
             this.MapPanel.Name = "MapPanel";
-            this.MapPanel.Size = new System.Drawing.Size(855, 538);
+            this.MapPanel.Size = new System.Drawing.Size(864, 570);
             this.MapPanel.TabIndex = 127;
             // 
-            // 操作ToolStripMenuItem
+            // controlPanel
             // 
-            this.操作ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.整体移动ToolStripMenuItem});
-            this.操作ToolStripMenuItem.Name = "操作ToolStripMenuItem";
-            this.操作ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
-            this.操作ToolStripMenuItem.Text = "操作";
-            // 
-            // 整体移动ToolStripMenuItem
-            // 
-            this.整体移动ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.上移50ToolStripMenuItem,
-            this.下移50ToolStripMenuItem,
-            this.左移50ToolStripMenuItem,
-            this.右移50ToolStripMenuItem});
-            this.整体移动ToolStripMenuItem.Name = "整体移动ToolStripMenuItem";
-            this.整体移动ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.整体移动ToolStripMenuItem.Text = "整体移动";
-            // 
-            // 上移50ToolStripMenuItem
-            // 
-            this.上移50ToolStripMenuItem.Name = "上移50ToolStripMenuItem";
-            this.上移50ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.上移50ToolStripMenuItem.Text = "上移50";
-            this.上移50ToolStripMenuItem.Click += new System.EventHandler(this.上移50ToolStripMenuItem_Click);
-            // 
-            // 下移50ToolStripMenuItem
-            // 
-            this.下移50ToolStripMenuItem.Name = "下移50ToolStripMenuItem";
-            this.下移50ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.下移50ToolStripMenuItem.Text = "下移50";
-            this.下移50ToolStripMenuItem.Click += new System.EventHandler(this.下移50ToolStripMenuItem_Click);
-            // 
-            // 左移50ToolStripMenuItem
-            // 
-            this.左移50ToolStripMenuItem.Name = "左移50ToolStripMenuItem";
-            this.左移50ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.左移50ToolStripMenuItem.Text = "左移50";
-            this.左移50ToolStripMenuItem.Click += new System.EventHandler(this.左移50ToolStripMenuItem_Click);
-            // 
-            // 右移50ToolStripMenuItem
-            // 
-            this.右移50ToolStripMenuItem.Name = "右移50ToolStripMenuItem";
-            this.右移50ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.右移50ToolStripMenuItem.Text = "右移50";
-            this.右移50ToolStripMenuItem.Click += new System.EventHandler(this.右移50ToolStripMenuItem_Click);
+            this.controlPanel.Controls.Add(this.Stops);
+            this.controlPanel.Controls.Add(this.Lines);
+            this.controlPanel.Controls.Add(this.StopsOnLine);
+            this.controlPanel.Controls.Add(this.AddStopToLine);
+            this.controlPanel.Controls.Add(this.label3);
+            this.controlPanel.Controls.Add(this.AddLine);
+            this.controlPanel.Controls.Add(this.label2);
+            this.controlPanel.Controls.Add(this.AddStop);
+            this.controlPanel.Controls.Add(this.label1);
+            this.controlPanel.Controls.Add(this.MoveUp);
+            this.controlPanel.Controls.Add(this.MoveDown);
+            this.controlPanel.Controls.Add(this.ModifyLine);
+            this.controlPanel.Controls.Add(this.Remove);
+            this.controlPanel.Controls.Add(this.ModiftStop);
+            this.controlPanel.Controls.Add(this.RemoveStop);
+            this.controlPanel.Controls.Add(this.RemoveLine);
+            this.controlPanel.Location = new System.Drawing.Point(884, 32);
+            this.controlPanel.Name = "controlPanel";
+            this.controlPanel.Size = new System.Drawing.Size(582, 570);
+            this.controlPanel.TabIndex = 128;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1472, 626);
+            this.ClientSize = new System.Drawing.Size(1475, 639);
             this.Controls.Add(this.MapPanel);
-            this.Controls.Add(this.MapVerticalSB);
-            this.Controls.Add(this.MapHorizonSB);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.controlPanel);
             this.Controls.Add(this.status);
-            this.Controls.Add(this.ModifyLine);
-            this.Controls.Add(this.ModiftStop);
-            this.Controls.Add(this.RemoveLine);
-            this.Controls.Add(this.RemoveStop);
-            this.Controls.Add(this.Remove);
-            this.Controls.Add(this.MoveDown);
-            this.Controls.Add(this.MoveUp);
-            this.Controls.Add(this.AddStop);
-            this.Controls.Add(this.AddLine);
-            this.Controls.Add(this.AddStopToLine);
-            this.Controls.Add(this.StopsOnLine);
-            this.Controls.Add(this.Lines);
-            this.Controls.Add(this.Stops);
             this.Controls.Add(this.menu);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(600, 681);
             this.Name = "MainForm";
             this.Text = "线路图生成器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.map)).EndInit();
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
@@ -764,6 +750,8 @@
             this.status.PerformLayout();
             this.MapPanel.ResumeLayout(false);
             this.MapPanel.PerformLayout();
+            this.controlPanel.ResumeLayout(false);
+            this.controlPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -801,8 +789,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ToolStripStatusLabel AuthorName;
         private System.Windows.Forms.ToolStripStatusLabel FileStatus;
-        private System.Windows.Forms.HScrollBar MapHorizonSB;
-        private System.Windows.Forms.VScrollBar MapVerticalSB;
         private System.Windows.Forms.ToolStripDropDownButton Zoom;
         private System.Windows.Forms.Panel MapPanel;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
@@ -841,5 +827,6 @@
         private System.Windows.Forms.ToolStripMenuItem 下移50ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 左移50ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 右移50ToolStripMenuItem;
+        private System.Windows.Forms.Panel controlPanel;
     }
 }

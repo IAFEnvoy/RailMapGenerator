@@ -14,6 +14,7 @@ namespace RailMapGenerator {
 
         public MainForm() {
             InitializeComponent();
+            controlPanel.Tag = this.Width - controlPanel.Left;
             Setting.Load();
             if (Setting.INSTANCE.font == null)
                 Setting.INSTANCE.font = Font;
@@ -113,22 +114,10 @@ namespace RailMapGenerator {
                     StopsOnLine.Items.Add("未选择线路");
             }
             if (render) {
-                MapHorizonSB.Maximum = 0;
-                MapHorizonSB.Enabled = false;
-                MapVerticalSB.Maximum = 0;
-                MapVerticalSB.Enabled = false;
                 if (railMap.stops.Count > 0) {
                     float zoom = int.Parse(Zoom.Text.Replace('%', '\0')) / 100.0f;
                     Bitmap origin = railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked);
                     map.Image = origin;
-                    if (origin.Width > MapPanel.Width) {
-                        MapHorizonSB.Maximum = (origin.Width - MapPanel.Width) / 10 + 1;
-                        MapHorizonSB.Enabled = true;
-                    }
-                    if (origin.Height > MapPanel.Height) {
-                        MapVerticalSB.Maximum = (origin.Height - MapPanel.Height) / 10 + 1;
-                        MapVerticalSB.Enabled = true;
-                    }
                 } else
                     map.Image = new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
                 map.Location = new Point(0, 0);
@@ -344,14 +333,6 @@ namespace RailMapGenerator {
             ReloadData(false, false, false);
         }
 
-        private void MapHorizonSB_ValueChanged(object sender, EventArgs e) {
-            map.Location = new Point(-MapHorizonSB.Value * 10, -MapVerticalSB.Value * 10);
-        }
-
-        private void MapVerticalSB_ValueChanged(object sender, EventArgs e) {
-            map.Location = new Point(-MapHorizonSB.Value * 10, -MapVerticalSB.Value * 10);
-        }
-
         private void SplitLine_Click(object sender, EventArgs e) {
             if (Lines.SelectedIndex == -1) return;
             LineSetting form1 = new LineSetting {
@@ -400,6 +381,13 @@ namespace RailMapGenerator {
         private void 右移50ToolStripMenuItem_Click(object sender, EventArgs e) {
             railMap.MoveAll(50, 0);
             ReloadData(false, false, false);
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e) {
+            if (controlPanel.Tag == null) return;
+            controlPanel.Left = this.Width - (int)controlPanel.Tag;
+            MapPanel.Width = controlPanel.Left - 10;
+            MapPanel.Height = status.Top - menu.Height - 10;
         }
     }
 }
