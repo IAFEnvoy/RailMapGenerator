@@ -7,6 +7,7 @@ namespace RailMapGenerator {
         public static readonly float sqrt2div2 = (float)(Math.Sqrt(2) / 2);
         public Point location;
         public string name;
+        [JsonIgnore]
         public bool enable;
         [JsonIgnore]
         public int[] lineCnt = new int[8];
@@ -15,10 +16,9 @@ namespace RailMapGenerator {
         [JsonIgnore]
         private Pair<Direction, Direction> textDir = new Pair<Direction, Direction>(Direction.EMPTY, Direction.EMPTY);
 
-        public Station(string name, int x = 0, int y = 0, bool enable = true) {
+        public Station(string name, int x = 0, int y = 0) {
             this.name = name;
             location = new Point(x, y);
-            this.enable = enable;
         }
 
         public Point GetOffset(Direction dir) {
@@ -58,6 +58,14 @@ namespace RailMapGenerator {
             while (f > s) s += 8;
             while (f < s - 1) { f++; s--; f %= 8; s %= 8; while (f > s) s += 8; }
             textDir = new Pair<Direction, Direction>(Direction.GetById(f % 8), Direction.GetById(s % 8));
+        }
+
+        public void AnalyzeEnabled(RailMap map,int thisIndex) {
+            enable = false;
+            foreach (Line line in map.lines)
+                for (int i = 0; i < line.stations.Count; i++)
+                    if (line.stations[i] == thisIndex)
+                        enable |= line.status[i] == StationStatus.Enable;
         }
 
         private Pair<int, int> GetDirPair(bool[] b) {

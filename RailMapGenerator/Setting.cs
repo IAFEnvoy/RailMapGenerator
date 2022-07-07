@@ -29,8 +29,6 @@ namespace RailMapGenerator {
         public class SettingObject {
             public string Name;
             public int Value;
-            [JsonIgnore]
-            public ToolStripMenuItem strip;
 
             public SettingObject(string name, int value) {
                 Name = name;

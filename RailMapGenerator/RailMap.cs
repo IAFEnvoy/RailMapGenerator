@@ -1,25 +1,32 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
 namespace RailMapGenerator {
     public class RailMap {
-        public List<Station> stops = new List<Station>();
+        public List<Station> stations = new List<Station>();
         public List<Line> lines = new List<Line>();
+        [JsonIgnore]
+        public readonly Render render;
 
-        public RailMap() { }
+        public RailMap() {
+            render = new Render(this);
+        }
 
         private void AnalyzeNode() {
-            foreach (Station node in stops)
-                node.ClearCnt();
+            foreach (Station station in stations)
+                station.ClearCnt();
             foreach (Line line in lines) {
-                if (line.stops.Count <= 1) continue;
+                if (line.stations.Count <= 1) continue;
                 Direction d = Direction.EMPTY;
-                for (int i = 1; i < line.stops.Count; i++)
-                    d = Render.ToNextNode(stops[line.stops[i - 1]], stops[line.stops[i]], d);
+                for (int i = 1; i < line.stations.Count; i++)
+                    d = render.ToNextNode(line.stations[i - 1], line.stations[i], d);
             }
-            foreach (Station node in stops)
-                node.AnalyzeTextLocation();
+            for(int i = 0; i < stations.Count; i++) {
+                stations[i].AnalyzeTextLocation();
+                stations[i].AnalyzeEnabled(this,i);
+            }
         }
 
         public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false) {
@@ -27,11 +34,12 @@ namespace RailMapGenerator {
             AnalyzeNode();
             //Get the bitmap's size
             int maxx = int.MinValue, maxy = int.MinValue;
-            foreach (Station node in stops) {
-                maxx = Math.Max(maxx, node.location.X);
-                maxy = Math.Max(maxy, node.location.Y);
+            foreach (Station station in stations) {
+                maxx = Math.Max(maxx, station.location.X);
+                maxy = Math.Max(maxy, station.location.Y);
             }
-            maxx += Setting.INSTANCE.stopRadium.Value * 4; maxy += Setting.INSTANCE.stopRadium.Value * 4;
+            maxx += Setting.INSTANCE.stopRadium.Value * 4;
+            maxy += Setting.INSTANCE.stopRadium.Value * 4;
             //Create bitmap
             Bitmap bitmap = new Bitmap((int)(maxx * zoom), (int)(maxy * zoom));
             Graphics g = Graphics.FromImage(bitmap);
@@ -47,15 +55,18 @@ namespace RailMapGenerator {
             //Draw line
             foreach (Line line in lines) {
                 //If there is only 1 stop, ignore it
-                if (line.stops.Count <= 1) continue;
+                if (line.stations.Count <= 1) continue;
                 Pen pen = new Pen(line.color, Setting.INSTANCE.lineWidth.Value * zoom);
                 Direction dir = Direction.EMPTY;
-                for (int i = 1; i < line.stops.Count; i++)
-                    dir = Render.DrawLineSection(stops[line.stops[i - 1]], stops[line.stops[i]], dir, g, pen, zoom);
+                for (int i = 1; i < line.stations.Count; i++) {
+                    bool enable = line.status[i - 1] != StationStatus.Disable && line.status[i] != StationStatus.Disable;
+                    Pen pen1 = enable ? pen : new Pen(Color.FromArgb(185, 185, 185), Setting.INSTANCE.lineWidth.Value * zoom);
+                    dir = render.DrawLineSection(line.stations[i - 1], line.stations[i], dir, g, pen1, zoom);
+                }
             }
             //Draw Stops
-            foreach (Station node in stops)
-                Render.DrawStop(g, node, Setting.INSTANCE.font, showStopName, Setting.INSTANCE.stopRadium.Value, zoom);
+            for (int i = 0; i < stations.Count; i++)
+                render.DrawStop(g, i, Setting.INSTANCE.font, showStopName, Setting.INSTANCE.stopRadium.Value, zoom);
             //Add margin
             Bitmap ret = new Bitmap(bitmap.Width + Setting.INSTANCE.margin.Value * 2, bitmap.Height + Setting.INSTANCE.margin.Value * 2);
             Graphics gr = Graphics.FromImage(ret);
@@ -65,11 +76,11 @@ namespace RailMapGenerator {
         }
 
         public bool IsEmpty() {
-            return lines.Count == 0 && stops.Count == 0;
+            return lines.Count == 0 && stations.Count == 0;
         }
 
-        public void MoveAll(int x,int y) {
-            foreach (Station node in stops)
+        public void MoveAll(int x, int y) {
+            foreach (Station node in stations)
                 node.location.Offset(x, y);
         }
     }

@@ -11,16 +11,16 @@ namespace RailMapGenerator {
             this.oriLine = oriLine;
             this.newLine = newLine;
             this.map = map;
-            foreach (int i in oriLine.stops)
-                Stops.Items.Add(map.stops[i].name);
+            foreach (int i in oriLine.stations)
+                Stops.Items.Add(map.stations[i].name);
         }
 
         private void Ok_Click(object sender, EventArgs e) {
             if (Stops.SelectedIndex == -1) return;
-            for (int i = Stops.SelectedIndex; i < oriLine.stops.Count; i++)
-                newLine.stops.Add(oriLine.stops[i]);
-            for (int i = oriLine.stops.Count - 1; i > Stops.SelectedIndex; i--)
-                oriLine.stops.RemoveAt(i);
+            for (int i = Stops.SelectedIndex; i < oriLine.stations.Count; i++)
+                newLine.stations.Add(oriLine.stations[i]);
+            for (int i = oriLine.stations.Count - 1; i > Stops.SelectedIndex; i--)
+                oriLine.stations.RemoveAt(i);
             map.lines.Add(newLine);
             Hide();
         }

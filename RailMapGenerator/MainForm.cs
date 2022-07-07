@@ -32,12 +32,13 @@ namespace RailMapGenerator {
             setting.itemList.Add(显示站点名ToolStripMenuItem);
             setting.itemList.Add(显示网格ToolStripMenuItem);
             setting.itemList.Add(站名字体ToolStripMenuItem);
+            setting.itemList.Add(修改站点状态ToolStripMenuItem);
             foreach (ToolStripMenuItem item in setting.itemList)
                 if (Setting.INSTANCE.HotKeys.ContainsKey(item.Name))
                     item.ShortcutKeys = HotKeyUtil.GetKeyByString((string)Setting.INSTANCE.HotKeys[item.Name]).KeyData;
             // add setting strip
             ToolStripMenuItem item1 = new ToolStripMenuItem {
-                Size = new Size(236, 26), Tag = Setting.INSTANCE.margin, 
+                Size = new Size(236, 26), Tag = Setting.INSTANCE.margin,
                 Text = Setting.INSTANCE.margin.Name + " : " + Setting.INSTANCE.margin.Value.ToString()
             };
             item1.Click += ModifyVariableClick;
@@ -64,7 +65,6 @@ namespace RailMapGenerator {
             form.ShowDialog();
             obj.Value = form.value;
             ((ToolStripMenuItem)sender).Text = obj.Name + " : " + obj.Value.ToString();
-            form.Dispose();
             ReloadData(false, false, false);
         }
 
@@ -88,7 +88,7 @@ namespace RailMapGenerator {
             if (stops) {
                 int index = Stops.SelectedIndex;
                 Stops.Items.Clear();
-                foreach (Station node in railMap.stops)
+                foreach (Station node in railMap.stations)
                     Stops.Items.Add(node.name);
                 if (Stops.Items.Count == 0)
                     Stops.Items.Add("没有站点");
@@ -106,21 +106,25 @@ namespace RailMapGenerator {
             if (stopsOnLines) {
                 StopsOnLine.Items.Clear();
                 if (Lines.SelectedIndex >= 0) {
-                    foreach (int stop in railMap.lines[Lines.SelectedIndex].stops)
-                        StopsOnLine.Items.Add(railMap.stops[stop].name);
+                    foreach (int stop in railMap.lines[Lines.SelectedIndex].stations)
+                        StopsOnLine.Items.Add(railMap.stations[stop].name);
                     if (StopsOnLine.Items.Count == 0)
                         StopsOnLine.Items.Add("没有站点");
                 } else
                     StopsOnLine.Items.Add("未选择线路");
             }
             if (render) {
-                if (railMap.stops.Count > 0) {
+                int hsV = MapPanel.HorizontalScroll.Value, vsV = MapPanel.VerticalScroll.Value;
+                MapPanel.AutoScroll = false;
+                if (railMap.stations.Count > 0) {
                     float zoom = int.Parse(Zoom.Text.Replace('%', '\0')) / 100.0f;
-                    Bitmap origin = railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked);
-                    map.Image = origin;
+                    map.Image = railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked); ;
                 } else
                     map.Image = new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
                 map.Location = new Point(0, 0);
+                MapPanel.AutoScroll = true;
+                MapPanel.HorizontalScroll.Value = hsV;
+                MapPanel.VerticalScroll.Value = vsV;
             }
         }
 
@@ -132,8 +136,7 @@ namespace RailMapGenerator {
                 form.Text = ((Control)sender).Text;
             form.ShowDialog();
             if (form.stop != null)
-                railMap.stops.Add(form.stop);
-            form.Dispose();
+                railMap.stations.Add(form.stop);
             ReloadData(true, false, false);
         }
 
@@ -146,7 +149,6 @@ namespace RailMapGenerator {
             form.ShowDialog();
             if (form.line != null)
                 railMap.lines.Add(form.line);
-            form.Dispose();
             ReloadData(false, true, false);
         }
 
@@ -164,15 +166,18 @@ namespace RailMapGenerator {
                 MessageBox.Show("请先选择线路");
                 return;
             }
-            railMap.lines[Lines.SelectedIndex].stops.Add(Stops.SelectedIndex);
+            railMap.lines[Lines.SelectedIndex].stations.Add(Stops.SelectedIndex);
+            railMap.lines[Lines.SelectedIndex].status.Add(StationStatus.Enable);
             ReloadData(false, false, true);
         }
 
         private void MoveUp_Click(object sender, EventArgs e) {
             if (StopsOnLine.SelectedIndex >= 1) {
                 int index = StopsOnLine.SelectedIndex;
-                (railMap.lines[Lines.SelectedIndex].stops[index], railMap.lines[Lines.SelectedIndex].stops[index - 1])
-                    = (railMap.lines[Lines.SelectedIndex].stops[index - 1], railMap.lines[Lines.SelectedIndex].stops[index]);
+                (railMap.lines[Lines.SelectedIndex].stations[index], railMap.lines[Lines.SelectedIndex].stations[index - 1])
+                    = (railMap.lines[Lines.SelectedIndex].stations[index - 1], railMap.lines[Lines.SelectedIndex].stations[index]);
+                (railMap.lines[Lines.SelectedIndex].status[index], railMap.lines[Lines.SelectedIndex].status[index - 1])
+                    = (railMap.lines[Lines.SelectedIndex].status[index - 1], railMap.lines[Lines.SelectedIndex].status[index]);
                 ReloadData(false, false, true);
                 StopsOnLine.SelectedIndex = index - 1;
             }
@@ -181,8 +186,10 @@ namespace RailMapGenerator {
         private void MoveDown_Click(object sender, EventArgs e) {
             if (StopsOnLine.SelectedIndex >= 0 && StopsOnLine.SelectedIndex < StopsOnLine.Items.Count - 1) {
                 int index = StopsOnLine.SelectedIndex;
-                (railMap.lines[Lines.SelectedIndex].stops[index], railMap.lines[Lines.SelectedIndex].stops[index + 1])
-                    = (railMap.lines[Lines.SelectedIndex].stops[index + 1], railMap.lines[Lines.SelectedIndex].stops[index]);
+                (railMap.lines[Lines.SelectedIndex].stations[index], railMap.lines[Lines.SelectedIndex].stations[index + 1])
+                    = (railMap.lines[Lines.SelectedIndex].stations[index + 1], railMap.lines[Lines.SelectedIndex].stations[index]);
+                (railMap.lines[Lines.SelectedIndex].status[index], railMap.lines[Lines.SelectedIndex].status[index + 1])
+                    = (railMap.lines[Lines.SelectedIndex].status[index + 1], railMap.lines[Lines.SelectedIndex].status[index]);
                 ReloadData(false, false, true);
                 StopsOnLine.SelectedIndex = index + 1;
             }
@@ -271,7 +278,8 @@ namespace RailMapGenerator {
 
         private void Remove_Click(object sender, EventArgs e) {
             if (StopsOnLine.SelectedIndex == -1 || Lines.SelectedIndex == -1) return;
-            railMap.lines[Lines.SelectedIndex].stops.RemoveAt(StopsOnLine.SelectedIndex);
+            railMap.lines[Lines.SelectedIndex].stations.RemoveAt(StopsOnLine.SelectedIndex);
+            railMap.lines[Lines.SelectedIndex].status.RemoveAt(StopsOnLine.SelectedIndex);
             ReloadData(false, false, true);
         }
 
@@ -279,12 +287,16 @@ namespace RailMapGenerator {
             if (Stops.SelectedIndex == -1) return;
             int index = Stops.SelectedIndex;
             foreach (Line line in railMap.lines) {
-                line.stops.Remove(index);
-                for (int i = 0; i < line.stops.Count; i++)
-                    if (line.stops[i] > index)
-                        line.stops[i]--;
+                while (line.stations.Contains(index)) {
+                    int i = line.stations.IndexOf(index);
+                    line.stations.RemoveAt(i);
+                    line.status.RemoveAt(i);
+                }
+                for (int i = 0; i < line.stations.Count; i++)
+                    if (line.stations[i] > index)
+                        line.stations[i]--;
             }
-            railMap.stops.RemoveAt(index);
+            railMap.stations.RemoveAt(index);
             ReloadData(true, false, true);
         }
 
@@ -296,13 +308,12 @@ namespace RailMapGenerator {
 
         private void ModiftStop_Click(object sender, EventArgs e) {
             if (Stops.SelectedIndex == -1) return;
-            StopSetting form = new StopSetting(railMap.stops[Stops.SelectedIndex]);
+            StopSetting form = new StopSetting(railMap.stations[Stops.SelectedIndex]);
             if (sender is ToolStripMenuItem item)
                 form.Text = item.Text;
             else
                 form.Text = ((Control)sender).Text;
             form.ShowDialog();
-            form.Dispose();
             ReloadData(true, false, false);
         }
 
@@ -314,7 +325,6 @@ namespace RailMapGenerator {
             else
                 form.Text = ((Control)sender).Text;
             form.ShowDialog();
-            form.Dispose();
             ReloadData(false, true, true);
         }
 
@@ -388,6 +398,14 @@ namespace RailMapGenerator {
             controlPanel.Left = this.Width - (int)controlPanel.Tag;
             MapPanel.Width = controlPanel.Left - 10;
             MapPanel.Height = status.Top - menu.Height - 10;
+            ReloadData(false, false, false);
+        }
+
+        private void ModifyStatus_Click(object sender, EventArgs e) {
+            if (Lines.SelectedIndex == -1) return;
+            SOLSetting form = new SOLSetting(railMap, railMap.lines[Lines.SelectedIndex]);
+            form.ShowDialog();
+            ReloadData(false, false, false);
         }
     }
 }

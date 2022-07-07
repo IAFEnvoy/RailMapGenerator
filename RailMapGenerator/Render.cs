@@ -3,9 +3,13 @@ using System.Drawing;
 
 namespace RailMapGenerator {
     public class Render {
-        public static Pair<Direction, Direction> GetDirectionPair(Station start, Station end, Direction last) {
-            int x = end.location.X - start.location.X;
-            int y = end.location.Y - start.location.Y;
+        private readonly RailMap railMap;
+        public Render(RailMap railMap) {
+            this.railMap = railMap;
+        }
+        public Pair<Direction, Direction> GetDirectionPair(int start, int end, Direction last) {
+            int x = railMap.stations[end].location.X - railMap.stations[start].location.X;
+            int y = railMap.stations[end].location.Y - railMap.stations[start].location.Y;
             Direction d = Direction.EMPTY;
             if (x == 0 && y == 0)
                 return new Pair<Direction, Direction>(last, last);
@@ -41,19 +45,19 @@ namespace RailMapGenerator {
             return new Pair<Direction, Direction>(d1, d2);
         }
 
-        public static Direction ToNextNode(Station start, Station end, Direction last) {
+        public Direction ToNextNode(int start, int end, Direction last) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            start.lineCnt[d1.GetId()]++;
-            end.lineCnt[Direction.Reverse(d2).GetId()]++;
+            railMap.stations[start].lineCnt[d1.GetId()]++;
+            railMap.stations[end].lineCnt[Direction.Reverse(d2).GetId()]++;
             return d2;
         }
 
-        public static Direction DrawLineSection(Station start, Station end, Direction last, Graphics g, Pen pen, float zoom = 1) {
+        public Direction DrawLineSection(int start, int end, Direction last, Graphics g, Pen pen, float zoom = 1) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            Point startOffset = start.GetOffset(d1), endOffset = end.GetOffset(Direction.Reverse(d2));
-            Point startPoint = AddPoint(start.location, startOffset), endPoint = AddPoint(end.location, endOffset);
+            Point startOffset = railMap.stations[start].GetOffset(d1), endOffset = railMap.stations[end].GetOffset(Direction.Reverse(d2));
+            Point startPoint = AddPoint(railMap.stations[start].location, startOffset), endPoint = AddPoint(railMap.stations[end].location, endOffset);
             if (d1 == d2)
                 DrawLines(g, pen, new Point[] { startPoint, endPoint }, zoom);
             else {
@@ -64,18 +68,20 @@ namespace RailMapGenerator {
             return d2;
         }
 
-        public static void DrawStop(Graphics g, Station node, Font font = null, bool renderName = true, int radium = 10, float zoom = 1) {
-            FillEllipse(g, node.enable ? Brushes.Black : Brushes.Gray, node.location.X - radium, node.location.Y - radium, radium * 2, radium * 2, zoom);
+        public void DrawStop(Graphics g, int node, Font font = null, bool renderName = true, int radium = 10, float zoom = 1) {
+            FillEllipse(g, railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, railMap.stations[node].location.X - radium, railMap.stations[node].location.Y - radium, radium * 2, radium * 2, zoom);
             int iRadium = radium - 2;
-            FillEllipse(g, Brushes.White, node.location.X - iRadium, node.location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
+            FillEllipse(g, Brushes.White, railMap.stations[node].location.X - iRadium, railMap.stations[node].location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
             if (!renderName) return;
-            Pair<Direction, Direction> dir = node.GetTextDirection();
+            string text = railMap.stations[node].name;
+            int length = text.Length;
+            Pair<Direction, Direction> dir = railMap.stations[node].GetTextDirection();
             double degree = (dir.first.GetDegree() + dir.second.GetDegree()) / 2 * Math.PI / 180;
-            double x = Math.Cos(degree) * radium * 2, y = Math.Sin(degree) * radium * 2;
-            SizeF size = g.MeasureString(node.name, font);
+            double x = Math.Cos(degree) * radium * length + railMap.stations[node].location.X, y = Math.Sin(degree) * radium * 2 + railMap.stations[node].location.Y;
+            SizeF size = g.MeasureString(railMap.stations[node].name, font);
             x -= size.Width / 2;
             y -= size.Height / 2;
-            DrawString(g, node.name, font, node.enable ? Brushes.Black : Brushes.Gray, AddPoint(node.location, new Point((int)x, (int)y)), zoom);
+            DrawString(g, text, font, railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, new Point((int)x, (int)y), zoom);
         }
 
         public static Point AddPoint(Point p1, Point p2) {
