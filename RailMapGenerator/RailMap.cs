@@ -14,7 +14,7 @@ namespace RailMapGenerator {
             render = new Render(this);
         }
 
-        private void AnalyzeNode() {
+        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false) {
             foreach (Station station in stations)
                 station.ClearCnt();
             foreach (Line line in lines) {
@@ -23,23 +23,18 @@ namespace RailMapGenerator {
                 for (int i = 1; i < line.stations.Count; i++)
                     d = render.ToNextNode(line.stations[i - 1], line.stations[i], d);
             }
-            for(int i = 0; i < stations.Count; i++) {
+            for (int i = 0; i < stations.Count; i++) {
                 stations[i].AnalyzeTextLocation();
-                stations[i].AnalyzeEnabled(this,i);
+                stations[i].AnalyzeEnabled(this, i);
             }
-        }
-
-        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false) {
-            //Check all stops' line count in 8 directions
-            AnalyzeNode();
             //Get the bitmap's size
             int maxx = int.MinValue, maxy = int.MinValue;
             foreach (Station station in stations) {
                 maxx = Math.Max(maxx, station.location.X);
                 maxy = Math.Max(maxy, station.location.Y);
             }
-            maxx += Setting.INSTANCE.stopRadium.Value * 4;
-            maxy += Setting.INSTANCE.stopRadium.Value * 4;
+            maxx += Setting.INSTANCE.stopRadium.Value * 4 + 25;
+            maxy += Setting.INSTANCE.stopRadium.Value * 4 + 25;
             //Create bitmap
             Bitmap bitmap = new Bitmap((int)(maxx * zoom), (int)(maxy * zoom));
             Graphics g = Graphics.FromImage(bitmap);

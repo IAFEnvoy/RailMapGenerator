@@ -18,7 +18,7 @@ namespace RailMapGenerator{
             for (int i = 0; i < line.stations.Count; i++) {
                 string text = map.stations[line.stations[i]].name;
                 switch (line.status[i]) {
-                    case StationStatus.Enable: { text = "已启用 " + text; break; }
+                    case StationStatus.Enable: { text = "已开通 " + text; break; }
                     case StationStatus.Disable: { text = "未通车 " + text; break; }
                     case StationStatus.Cross: { text = "不停靠 " + text; break; }
                 }
