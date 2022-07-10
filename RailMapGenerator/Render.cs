@@ -68,20 +68,15 @@ namespace RailMapGenerator {
             return d2;
         }
 
-        public void DrawStop(Graphics g, int node, Font font = null, bool renderName = true, int radium = 10, float zoom = 1) {
-            FillEllipse(g, railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, railMap.stations[node].location.X - radium, railMap.stations[node].location.Y - radium, radium * 2, radium * 2, zoom);
+        public void DrawStop(Graphics g, int node, bool renderName = true, int radium = 10, float zoom = 1) {
+            FillEllipse(g, railMap.stations[node].enable ? Brushes.Black : new SolidBrush(Color.FromArgb(185, 185, 185)), railMap.stations[node].location.X - radium, railMap.stations[node].location.Y - radium, radium * 2, radium * 2, zoom);
             int iRadium = radium - 2;
             FillEllipse(g, Brushes.White, railMap.stations[node].location.X - iRadium, railMap.stations[node].location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
             if (!renderName) return;
-            string text = railMap.stations[node].name;
-            int length = text.Length;
-            Pair<Direction, Direction> dir = railMap.stations[node].GetTextDirection();
-            double degree = (dir.first.GetDegree() + dir.second.GetDegree()) / 2 * Math.PI / 180;
-            double x = Math.Cos(degree) * radium * length + railMap.stations[node].location.X, y = Math.Sin(degree) * radium * 2 + railMap.stations[node].location.Y;
-            SizeF size = g.MeasureString(railMap.stations[node].name, font);
-            x -= size.Width / 2;
-            y -= size.Height / 2;
-            DrawString(g, text, font, railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, new Point((int)x, (int)y), zoom);
+            SizeF size = g.MeasureString(railMap.stations[node].name, railMap.font);
+            double x = railMap.stations[node].textOffsetX - size.Width / 2;
+            double y = railMap.stations[node].textOffsetY - size.Height / 2;
+            DrawString(g, railMap.stations[node].name, railMap.font, railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, new Point((int)x, (int)y), zoom);
         }
 
         public static Point AddPoint(Point p1, Point p2) {

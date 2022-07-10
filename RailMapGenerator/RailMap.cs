@@ -2,12 +2,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace RailMapGenerator {
     public class RailMap {
         public List<Station> stations = new List<Station>();
         public List<Line> lines = new List<Line>();
         public Legend legend = new Legend();
+        public Font font = Control.DefaultFont;
+        public int margin = 20;
         [JsonIgnore]
         public readonly Render render;
 
@@ -22,10 +25,11 @@ namespace RailMapGenerator {
                 if (line.stations.Count <= 1) continue;
                 Direction d = Direction.EMPTY;
                 for (int i = 1; i < line.stations.Count; i++)
-                    d = render.ToNextNode(line.stations[i - 1], line.stations[i], d,line.lineWidth);
+                    d = render.ToNextNode(line.stations[i - 1], line.stations[i], d, line.lineWidth);
             }
-            for (int i = 0; i < stations.Count; i++) 
-                stations[i].AnalyzeTextLocation();
+            foreach (Station station in stations)
+                if (station.autoTextPos)
+                    station.AnalyzeTextLocation();
             //Get the bitmap's size
             int maxx = int.MinValue, maxy = int.MinValue;
             foreach (Station station in stations) {
@@ -59,12 +63,12 @@ namespace RailMapGenerator {
             }
             //Draw Stops
             for (int i = 0; i < stations.Count; i++)
-                render.DrawStop(g, i, Setting.INSTANCE.font, showStopName, stations[i].radium, zoom);
+                render.DrawStop(g, i, showStopName, stations[i].radium, zoom);
             //Add margin
-            Bitmap ret = new Bitmap(bitmap.Width + Setting.INSTANCE.margin.Value * 2, bitmap.Height + Setting.INSTANCE.margin.Value * 2);
+            Bitmap ret = new Bitmap(bitmap.Width + margin * 2, bitmap.Height + margin * 2);
             Graphics gr = Graphics.FromImage(ret);
             gr.Clear(Color.White);
-            gr.DrawImage(bitmap, Setting.INSTANCE.margin.Value, Setting.INSTANCE.margin.Value);
+            gr.DrawImage(bitmap, margin, margin);
             return ret;
         }
 
@@ -76,7 +80,7 @@ namespace RailMapGenerator {
             for (int i = 0; i < lines.Count; i++) {
                 int x = i % c, y = i / c;
                 g.FillRectangle(new SolidBrush(lines[i].color), x * 120 + 10, y * 20 + 7.5f, 50, 10);
-                g.DrawString(lines[i].name, Setting.INSTANCE.font, Brushes.Black, x * 120 + 70, y * 20 + 5);
+                g.DrawString(lines[i].name, legend.font, Brushes.Black, x * 120 + 65, y * 20 + 5);
             }
             return bitmap;
         }

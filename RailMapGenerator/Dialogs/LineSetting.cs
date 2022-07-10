@@ -25,7 +25,7 @@ namespace RailMapGenerator {
                     line.lineWidth = width;
                 }
             else
-                MessageBox.Show("绘制宽度不是数字");
+                MessageBox.Show("绘制参数不是数字", "线路图生成器", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Hide();
         }
 

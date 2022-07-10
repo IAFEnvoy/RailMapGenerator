@@ -43,10 +43,6 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.导出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.渲染设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.点击以修改ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.快捷键设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.添加站点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,7 +56,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.将站点加入线路ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.从线路中删除站点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.修改站点状态ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.修改区间开通状态ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.操作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.整体移动ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.上移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,9 +66,9 @@
             this.绘制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示站点名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示网格ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.站名字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.显示图例ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.站名字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.图例设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.支持ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -240,9 +236,6 @@
             this.toolStripSeparator1,
             this.导出ToolStripMenuItem,
             this.toolStripSeparator2,
-            this.渲染设置ToolStripMenuItem,
-            this.快捷键设置ToolStripMenuItem,
-            this.toolStripSeparator6,
             this.退出ToolStripMenuItem});
             this.文件ToolStripMenuItem.Name = "文件ToolStripMenuItem";
             this.文件ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
@@ -299,33 +292,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(233, 6);
             // 
-            // 渲染设置ToolStripMenuItem
-            // 
-            this.渲染设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.点击以修改ToolStripMenuItem});
-            this.渲染设置ToolStripMenuItem.Name = "渲染设置ToolStripMenuItem";
-            this.渲染设置ToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
-            this.渲染设置ToolStripMenuItem.Text = "渲染设置";
-            // 
-            // 点击以修改ToolStripMenuItem
-            // 
-            this.点击以修改ToolStripMenuItem.Enabled = false;
-            this.点击以修改ToolStripMenuItem.Name = "点击以修改ToolStripMenuItem";
-            this.点击以修改ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
-            this.点击以修改ToolStripMenuItem.Text = "点击以修改";
-            // 
-            // 快捷键设置ToolStripMenuItem
-            // 
-            this.快捷键设置ToolStripMenuItem.Name = "快捷键设置ToolStripMenuItem";
-            this.快捷键设置ToolStripMenuItem.Size = new System.Drawing.Size(236, 26);
-            this.快捷键设置ToolStripMenuItem.Text = "快捷键设置";
-            this.快捷键设置ToolStripMenuItem.Click += new System.EventHandler(this.快捷键设置ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(233, 6);
-            // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
@@ -348,7 +314,7 @@
             this.toolStripSeparator4,
             this.将站点加入线路ToolStripMenuItem,
             this.从线路中删除站点ToolStripMenuItem,
-            this.修改站点状态ToolStripMenuItem});
+            this.修改区间开通状态ToolStripMenuItem});
             this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
             this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.编辑ToolStripMenuItem.Text = "编辑";
@@ -356,82 +322,82 @@
             // 添加站点ToolStripMenuItem
             // 
             this.添加站点ToolStripMenuItem.Name = "添加站点ToolStripMenuItem";
-            this.添加站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.添加站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.添加站点ToolStripMenuItem.Text = "添加站点";
             this.添加站点ToolStripMenuItem.Click += new System.EventHandler(this.AddStop_Click);
             // 
             // 修改站点信息ToolStripMenuItem
             // 
             this.修改站点信息ToolStripMenuItem.Name = "修改站点信息ToolStripMenuItem";
-            this.修改站点信息ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.修改站点信息ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.修改站点信息ToolStripMenuItem.Text = "修改站点信息";
             this.修改站点信息ToolStripMenuItem.Click += new System.EventHandler(this.ModiftStop_Click);
             // 
             // 删除选中站点ToolStripMenuItem
             // 
             this.删除选中站点ToolStripMenuItem.Name = "删除选中站点ToolStripMenuItem";
-            this.删除选中站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.删除选中站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.删除选中站点ToolStripMenuItem.Text = "删除选中站点";
             this.删除选中站点ToolStripMenuItem.Click += new System.EventHandler(this.RemoveStop_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
             // 
             // 添加线路ToolStripMenuItem
             // 
             this.添加线路ToolStripMenuItem.Name = "添加线路ToolStripMenuItem";
-            this.添加线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.添加线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.添加线路ToolStripMenuItem.Text = "添加线路";
             this.添加线路ToolStripMenuItem.Click += new System.EventHandler(this.AddLine_Click);
             // 
             // 修改线路信息ToolStripMenuItem
             // 
             this.修改线路信息ToolStripMenuItem.Name = "修改线路信息ToolStripMenuItem";
-            this.修改线路信息ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.修改线路信息ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.修改线路信息ToolStripMenuItem.Text = "修改线路信息";
             this.修改线路信息ToolStripMenuItem.Click += new System.EventHandler(this.ModifyLine_Click);
             // 
             // 删除选中线路ToolStripMenuItem
             // 
             this.删除选中线路ToolStripMenuItem.Name = "删除选中线路ToolStripMenuItem";
-            this.删除选中线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.删除选中线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.删除选中线路ToolStripMenuItem.Text = "删除选中线路";
             this.删除选中线路ToolStripMenuItem.Click += new System.EventHandler(this.RemoveLine_Click);
             // 
             // 拆分线路ToolStripMenuItem
             // 
             this.拆分线路ToolStripMenuItem.Name = "拆分线路ToolStripMenuItem";
-            this.拆分线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.拆分线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.拆分线路ToolStripMenuItem.Text = "拆分线路";
             this.拆分线路ToolStripMenuItem.Click += new System.EventHandler(this.SplitLine_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(209, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
             // 
             // 将站点加入线路ToolStripMenuItem
             // 
             this.将站点加入线路ToolStripMenuItem.Name = "将站点加入线路ToolStripMenuItem";
-            this.将站点加入线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.将站点加入线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.将站点加入线路ToolStripMenuItem.Text = "将站点加入线路";
             this.将站点加入线路ToolStripMenuItem.Click += new System.EventHandler(this.AddStopToLine_Click);
             // 
             // 从线路中删除站点ToolStripMenuItem
             // 
             this.从线路中删除站点ToolStripMenuItem.Name = "从线路中删除站点ToolStripMenuItem";
-            this.从线路中删除站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.从线路中删除站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.从线路中删除站点ToolStripMenuItem.Text = "从线路中删除站点";
             this.从线路中删除站点ToolStripMenuItem.Click += new System.EventHandler(this.Remove_Click);
             // 
-            // 修改站点状态ToolStripMenuItem
+            // 修改区间开通状态ToolStripMenuItem
             // 
-            this.修改站点状态ToolStripMenuItem.Name = "修改站点状态ToolStripMenuItem";
-            this.修改站点状态ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
-            this.修改站点状态ToolStripMenuItem.Text = "修改站点状态";
-            this.修改站点状态ToolStripMenuItem.Click += new System.EventHandler(this.ModifyStatus_Click);
+            this.修改区间开通状态ToolStripMenuItem.Name = "修改区间开通状态ToolStripMenuItem";
+            this.修改区间开通状态ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.修改区间开通状态ToolStripMenuItem.Text = "修改区间开通状态";
+            this.修改区间开通状态ToolStripMenuItem.Click += new System.EventHandler(this.ModifyStatus_Click);
             // 
             // 操作ToolStripMenuItem
             // 
@@ -485,9 +451,9 @@
             this.绘制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.显示站点名ToolStripMenuItem,
             this.显示网格ToolStripMenuItem,
-            this.站名字体ToolStripMenuItem,
-            this.toolStripSeparator5,
             this.显示图例ToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.站名字体ToolStripMenuItem,
             this.图例设置ToolStripMenuItem});
             this.绘制ToolStripMenuItem.Name = "绘制ToolStripMenuItem";
             this.绘制ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
@@ -513,18 +479,6 @@
             this.显示网格ToolStripMenuItem.Text = "显示网格";
             this.显示网格ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Check_Change);
             // 
-            // 站名字体ToolStripMenuItem
-            // 
-            this.站名字体ToolStripMenuItem.Name = "站名字体ToolStripMenuItem";
-            this.站名字体ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
-            this.站名字体ToolStripMenuItem.Text = "站名字体";
-            this.站名字体ToolStripMenuItem.Click += new System.EventHandler(this.ModiftFont_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(164, 6);
-            // 
             // 显示图例ToolStripMenuItem
             // 
             this.显示图例ToolStripMenuItem.Checked = true;
@@ -534,6 +488,18 @@
             this.显示图例ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
             this.显示图例ToolStripMenuItem.Text = "显示图例";
             this.显示图例ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Check_Change);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(164, 6);
+            // 
+            // 站名字体ToolStripMenuItem
+            // 
+            this.站名字体ToolStripMenuItem.Name = "站名字体ToolStripMenuItem";
+            this.站名字体ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
+            this.站名字体ToolStripMenuItem.Text = "字体设置";
+            this.站名字体ToolStripMenuItem.Click += new System.EventHandler(this.ModiftFont_Click);
             // 
             // 图例设置ToolStripMenuItem
             // 
@@ -876,10 +842,6 @@
         private System.Windows.Forms.ToolStripMenuItem 显示网格ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 站名字体ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 渲染设置ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 快捷键设置ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem 点击以修改ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 支持ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 操作ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 整体移动ToolStripMenuItem;
@@ -888,7 +850,7 @@
         private System.Windows.Forms.ToolStripMenuItem 左移50ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 右移50ToolStripMenuItem;
         private System.Windows.Forms.Panel controlPanel;
-        private System.Windows.Forms.ToolStripMenuItem 修改站点状态ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 修改区间开通状态ToolStripMenuItem;
         private System.Windows.Forms.Button ModifyStatus;
         private System.Windows.Forms.ToolStripMenuItem starMeOnGithubToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;

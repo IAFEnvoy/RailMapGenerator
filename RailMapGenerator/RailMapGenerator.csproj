@@ -92,12 +92,6 @@
     <Compile Include="Dialogs\LineSetting.Designer.cs">
       <DependentUpon>LineSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\ModifyVariable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dialogs\ModifyVariable.Designer.cs">
-      <DependentUpon>ModifyVariable.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dialogs\SectionSetting.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,14 +117,7 @@
     <Compile Include="Dialogs\LegendSetting.Designer.cs">
       <DependentUpon>LegendSetting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Setting.cs" />
     <Compile Include="Utils\HotKeyUtil.cs" />
-    <Compile Include="HotKeySetting.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="HotKeySetting.Designer.cs">
-      <DependentUpon>HotKeySetting.cs</DependentUpon>
-    </Compile>
     <Compile Include="Utils\Legend.cs" />
     <Compile Include="Utils\Line.cs" />
     <Compile Include="MainForm.cs">
@@ -154,9 +141,6 @@
     <EmbeddedResource Include="Dialogs\LineSetting.resx">
       <DependentUpon>LineSetting.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\ModifyVariable.resx">
-      <DependentUpon>ModifyVariable.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SectionSetting.resx">
       <DependentUpon>SectionSetting.cs</DependentUpon>
     </EmbeddedResource>
@@ -165,9 +149,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\StopSetting.resx">
       <DependentUpon>StopSetting.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="HotKeySetting.resx">
-      <DependentUpon>HotKeySetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

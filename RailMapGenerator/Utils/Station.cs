@@ -9,7 +9,8 @@ namespace RailMapGenerator {
         public string name;
         public bool enable;
         public int radium;
-        private Pair<Direction, Direction> textDir = new Pair<Direction, Direction>(Direction.EMPTY, Direction.EMPTY);
+        public bool autoTextPos = true;
+        public double textOffsetX, textOffsetY;
         [JsonIgnore]
         public int[] totalWidth = new int[8];
         [JsonIgnore]
@@ -43,7 +44,6 @@ namespace RailMapGenerator {
                 totalWidth[i] = 0;
                 renderWidth[i] = 0;
             }
-            textDir = new Pair<Direction, Direction>(Direction.EMPTY, Direction.EMPTY);
         }
 
         public void AnalyzeTextLocation() {
@@ -57,7 +57,10 @@ namespace RailMapGenerator {
             int f = dir.first, s = dir.second;
             while (f > s) s += 8;
             while (f < s - 1) { f++; s--; f %= 8; s %= 8; while (f > s) s += 8; }
-            textDir = new Pair<Direction, Direction>(Direction.GetById(f % 8), Direction.GetById(s % 8));
+            int length = name.Length;
+            double degree = (Direction.GetById(f % 8).GetDegree() + Direction.GetById(s % 8).GetDegree()) / 2 * Math.PI / 180;
+            textOffsetX = Math.Cos(degree) * radium * (length + 0.5) + location.X;
+            textOffsetY = Math.Sin(degree) * radium * 2 + location.Y;
         }
 
         private Pair<int, int> GetDirPair(bool[] b) {
@@ -75,12 +78,6 @@ namespace RailMapGenerator {
             if (ret == null)
                 return new Pair<int, int>(0, 0);
             return ret;
-        }
-
-        public Pair<Direction, Direction> GetTextDirection() {
-            if (textDir.first == Direction.EMPTY || textDir.second == Direction.EMPTY)
-                throw new NullReferenceException("调用太早，应在AnalyzeTextLocation()后调用");
-            return textDir;
         }
     }
 }

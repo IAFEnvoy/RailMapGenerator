@@ -10,50 +10,11 @@ namespace RailMapGenerator {
     public partial class MainForm : Form {
         private RailMap railMap = new RailMap();
         private string fileName = "";
-        private readonly HotKeySetting setting = new HotKeySetting();
 
         public MainForm() {
             InitializeComponent();
             controlPanel.Tag = this.Width - controlPanel.Left;
-            Setting.Load();
-            if (Setting.INSTANCE.font == null)
-                Setting.INSTANCE.font = Font;
             ReloadData(true, true, true, false);
-            //add item to setting list
-            setting.itemList.Add(添加站点ToolStripMenuItem);
-            setting.itemList.Add(修改站点信息ToolStripMenuItem);
-            setting.itemList.Add(删除选中站点ToolStripMenuItem);
-            setting.itemList.Add(添加线路ToolStripMenuItem);
-            setting.itemList.Add(修改线路信息ToolStripMenuItem);
-            setting.itemList.Add(删除选中线路ToolStripMenuItem);
-            setting.itemList.Add(拆分线路ToolStripMenuItem);
-            setting.itemList.Add(将站点加入线路ToolStripMenuItem);
-            setting.itemList.Add(从线路中删除站点ToolStripMenuItem);
-            setting.itemList.Add(显示站点名ToolStripMenuItem);
-            setting.itemList.Add(显示网格ToolStripMenuItem);
-            setting.itemList.Add(站名字体ToolStripMenuItem);
-            setting.itemList.Add(修改站点状态ToolStripMenuItem);
-            foreach (ToolStripMenuItem item in setting.itemList)
-                if (Setting.INSTANCE.HotKeys.ContainsKey(item.Name))
-                    item.ShortcutKeys = HotKeyUtil.GetKeyByString((string)Setting.INSTANCE.HotKeys[item.Name]).KeyData;
-            // add setting strip
-            ToolStripMenuItem item1 = new ToolStripMenuItem {
-                Size = new Size(236, 26), Tag = Setting.INSTANCE.margin,
-                Text = Setting.INSTANCE.margin.Name + " : " + Setting.INSTANCE.margin.Value.ToString()
-            };
-            item1.Click += ModifyVariableClick;
-            渲染设置ToolStripMenuItem.DropDownItems.Add(item1);
-        }
-
-        private void ModifyVariableClick(object sender, EventArgs e) {
-            Setting.SettingObject obj = (Setting.SettingObject)((ToolStripMenuItem)sender).Tag;
-            ModifyVariable form = new ModifyVariable();
-            form.value = obj.Value;
-            form.variableName.Text = obj.Name;
-            form.ShowDialog();
-            obj.Value = form.value;
-            ((ToolStripMenuItem)sender).Text = obj.Name + " : " + obj.Value.ToString();
-            ReloadData(false, false, false);
         }
 
         private int ParseIndex(int origin, int count) {
@@ -108,7 +69,7 @@ namespace RailMapGenerator {
                     float zoom = int.Parse(Zoom.Text.Replace('%', '\0')) / 100.0f;
                     map.Image = railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked); ;
                 } else
-                    map.Image = new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
+                    map.Image = new Bitmap(railMap.margin * 2, railMap.margin * 2);
                 map.Location = new Point(0, 0);
                 MapPanel.AutoScroll = true;
                 MapPanel.HorizontalScroll.Value = hsV;
@@ -147,11 +108,11 @@ namespace RailMapGenerator {
 
         private void AddStopToLine_Click(object sender, EventArgs e) {
             if (Stops.SelectedIndex == -1) {
-                MessageBox.Show("请先选择站点");
+                MessageBox.Show("请先选择站点", "线路图生成器");
                 return;
             }
             if (Lines.SelectedIndex == -1) {
-                MessageBox.Show("请先选择线路");
+                MessageBox.Show("请先选择线路", "线路图生成器");
                 return;
             }
             railMap.lines[Lines.SelectedIndex].stations.Add(Stops.SelectedIndex);
@@ -185,7 +146,7 @@ namespace RailMapGenerator {
 
         private void 新建ToolStripMenuItem_Click(object sender, EventArgs e) {
             if (!railMap.IsEmpty()) {
-                var result = MessageBox.Show("是否保存当前内容？", "", MessageBoxButtons.YesNoCancel);
+                var result = MessageBox.Show("是否保存当前内容？", "线路图生成器", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
                     保存ToolStripMenuItem_Click(sender, e);
                 if (result == DialogResult.Cancel)
@@ -193,7 +154,7 @@ namespace RailMapGenerator {
             }
             railMap = new RailMap();
             ReloadData(true, true, true);
-            map.Image = new Bitmap(Setting.INSTANCE.margin.Value * 2, Setting.INSTANCE.margin.Value * 2);
+            map.Image = new Bitmap(railMap.margin * 2, railMap.margin * 2);
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -241,9 +202,8 @@ namespace RailMapGenerator {
         }
 
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e) {
-            Setting.Save();
             if (!railMap.IsEmpty()) {
-                var result = MessageBox.Show("是否保存当前内容？", "", MessageBoxButtons.YesNoCancel);
+                var result = MessageBox.Show("是否保存当前内容？", "线路图生成器", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes) {
                     保存ToolStripMenuItem_Click(sender, e);
                     Environment.Exit(0);
@@ -253,9 +213,8 @@ namespace RailMapGenerator {
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            Setting.Save();
             if (!railMap.IsEmpty()) {
-                var result = MessageBox.Show("是否保存当前内容？", "", MessageBoxButtons.YesNoCancel);
+                var result = MessageBox.Show("是否保存当前内容？", "线路图生成器", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
                     保存ToolStripMenuItem_Click(sender, e);
                 else if (result == DialogResult.Cancel)
@@ -318,11 +277,10 @@ namespace RailMapGenerator {
 
         private void ModiftFont_Click(object sender, EventArgs e) {
             FontDialog fd = new FontDialog {
-                Font = Setting.INSTANCE.font
+                Font = railMap.font
             };
             if (fd.ShowDialog() == DialogResult.OK)
-                Setting.INSTANCE.font = fd.Font;
-            fd.Dispose();
+                railMap.font = fd.Font;
             ReloadData(false, false, false);
         }
 
@@ -345,10 +303,6 @@ namespace RailMapGenerator {
 
         private void Check_Change(object sender, EventArgs e) {
             ReloadData(false, false, false);
-        }
-
-        private void 快捷键设置ToolStripMenuItem_Click(object sender, EventArgs e) {
-            setting.ShowDialog();
         }
 
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e) {
