@@ -58,12 +58,15 @@ namespace RailMapGenerator {
                 Direction dir = Direction.EMPTY;
                 for (int i = 1; i < line.stations.Count; i++) {
                     Pen pen1 = line.sectionEnabled[i - 1] ? pen : new Pen(Color.FromArgb(185, 185, 185), line.lineWidth * zoom);
-                    dir = render.DrawLineSection(line.stations[i - 1], line.stations[i], dir, g, pen1, zoom);
+                    dir = render.DrawLineSection(line.stations[i - 1], line.stations[i], dir, g, pen1, line.lineWidth, zoom);
                 }
             }
             //Draw Stops
             for (int i = 0; i < stations.Count; i++)
                 render.DrawStop(g, i, showStopName, stations[i].radium, zoom);
+            //Draw Legend
+            if (showLegend)
+                RenderLegend(g, legend.location, zoom);
             //Add margin
             Bitmap ret = new Bitmap(bitmap.Width + margin * 2, bitmap.Height + margin * 2);
             Graphics gr = Graphics.FromImage(ret);
@@ -72,17 +75,14 @@ namespace RailMapGenerator {
             return ret;
         }
 
-        public Bitmap RenderLegend() {
-            int c = legend.isHorizon ? (int)Math.Ceiling(1.0 * lines.Count / legend.count) : legend.count;
-            Bitmap bitmap = new Bitmap(c * 120 + 10, (int)Math.Ceiling(1.0 * lines.Count / c) * 20 + 5);
-            Graphics g = Graphics.FromImage(bitmap);
-            g.Clear(Color.White);
+        public void RenderLegend(Graphics g, Point location, float zoom) {
+            int c = (int)Math.Ceiling(1.0 * lines.Count / legend.count);
             for (int i = 0; i < lines.Count; i++) {
                 int x = i % c, y = i / c;
-                g.FillRectangle(new SolidBrush(lines[i].color), x * 120 + 10, y * 20 + 7.5f, 50, 10);
-                g.DrawString(lines[i].name, legend.font, Brushes.Black, x * 120 + 65, y * 20 + 5);
+                if (legend.isHorizon) (x, y) = (y, x);
+                Render.FillRectangle(g, new SolidBrush(lines[i].color), location, x * 120 + 10, y * 20 + 7.5f, 50, 10, zoom);
+                Render.DrawString(g, lines[i].name, legend.font, Brushes.Black, Render.AddPoint(location, new Point(x * 120 + 65, y * 20 + 5)), zoom);
             }
-            return bitmap;
         }
 
         public bool IsEmpty() {

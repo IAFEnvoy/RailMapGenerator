@@ -10,7 +10,7 @@ namespace RailMapGenerator {
         /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
-        static void Main() {
+        private static void Main() {
             foreach (string s in dlls)
                 if (!File.Exists(Application.StartupPath + @"\" + s)) {
                     MessageBox.Show("无法运行此程序，因为缺少" + s, "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);

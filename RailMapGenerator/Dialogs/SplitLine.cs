@@ -3,8 +3,8 @@ using System.Windows.Forms;
 
 namespace RailMapGenerator {
     public partial class SplitLine : Form {
-        Line oriLine, newLine;
-        RailMap map;
+        private readonly Line oriLine, newLine;
+        private readonly RailMap map;
 
         public SplitLine(Line oriLine, Line newLine, RailMap map) {
             InitializeComponent();

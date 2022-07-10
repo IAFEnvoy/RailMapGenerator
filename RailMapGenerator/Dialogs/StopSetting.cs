@@ -28,7 +28,8 @@ namespace RailMapGenerator {
                     stop = new Station(stopName.Text, x, y, enabled.Checked, radium) {
                         autoTextPos = autoText.Checked, textOffsetX = offsetX, textOffsetY = offsetY
                     };
-                } else {
+                }
+                else {
                     stop.name = stopName.Text;
                     stop.location = new Point(x, y);
                     stop.enable = enabled.Checked;
@@ -38,7 +39,8 @@ namespace RailMapGenerator {
                     stop.textOffsetY = offsetY + stop.location.Y;
                 }
                 Hide();
-            } else
+            }
+            else
                 MessageBox.Show("某个应该为数字的参数不是数字", "线路图生成器", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 

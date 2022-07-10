@@ -9,7 +9,7 @@ namespace RailMapGenerator {
         public Color color;
         public int lineWidth;
 
-        public Line(string name, Color color,int lineWidth, params int[] stations) {
+        public Line(string name, Color color, int lineWidth, params int[] stations) {
             this.name = name;
             this.color = color;
             this.lineWidth = lineWidth;

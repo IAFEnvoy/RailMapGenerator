@@ -53,10 +53,10 @@ namespace RailMapGenerator {
             return d2;
         }
 
-        public Direction DrawLineSection(int start, int end, Direction last, Graphics g, Pen pen, float zoom = 1) {
+        public Direction DrawLineSection(int start, int end, Direction last, Graphics g, Pen pen, int linewidth, float zoom = 1) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            Point startOffset = railMap.stations[start].GetOffset(d1, (int)pen.Width), endOffset = railMap.stations[end].GetOffset(Direction.Reverse(d2), (int)pen.Width);
+            Point startOffset = railMap.stations[start].GetOffset(d1, linewidth), endOffset = railMap.stations[end].GetOffset(Direction.Reverse(d2), linewidth);
             Point startPoint = AddPoint(railMap.stations[start].location, startOffset), endPoint = AddPoint(railMap.stations[end].location, endOffset);
             if (d1 == d2)
                 DrawLines(g, pen, new Point[] { startPoint, endPoint }, zoom);
@@ -95,6 +95,10 @@ namespace RailMapGenerator {
 
         public static void DrawString(Graphics g, string text, Font font, Brush brush, PointF p, float zoom) {
             g.DrawString(text, new Font(font.FontFamily, font.Size * zoom, font.Style, font.Unit), brush, new PointF(p.X * zoom, p.Y * zoom));
+        }
+
+        public static void FillRectangle(Graphics g, Brush brush, Point offset, float x, float y, float width, float height, float zoom) {
+            g.FillRectangle(brush, (x + offset.X) * zoom, (y + offset.Y) * zoom, width * zoom, height * zoom);
         }
     }
 }

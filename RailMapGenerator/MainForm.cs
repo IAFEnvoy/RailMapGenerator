@@ -13,7 +13,7 @@ namespace RailMapGenerator {
 
         public MainForm() {
             InitializeComponent();
-            controlPanel.Tag = this.Width - controlPanel.Left;
+            controlPanel.Tag = Width - controlPanel.Left;
             ReloadData(true, true, true, false);
         }
 
@@ -59,7 +59,8 @@ namespace RailMapGenerator {
                         StopsOnLine.Items.Add(railMap.stations[stop].name);
                     if (StopsOnLine.Items.Count == 0)
                         StopsOnLine.Items.Add("没有站点");
-                } else
+                }
+                else
                     StopsOnLine.Items.Add("未选择线路");
             }
             if (render) {
@@ -67,8 +68,9 @@ namespace RailMapGenerator {
                 MapPanel.AutoScroll = false;
                 if (railMap.stations.Count > 0) {
                     float zoom = int.Parse(Zoom.Text.Replace('%', '\0')) / 100.0f;
-                    map.Image = railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked); ;
-                } else
+                    map.Image = railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked, 显示图例ToolStripMenuItem.Checked);
+                }
+                else
                     map.Image = new Bitmap(railMap.margin * 2, railMap.margin * 2);
                 map.Location = new Point(0, 0);
                 MapPanel.AutoScroll = true;
@@ -161,7 +163,8 @@ namespace RailMapGenerator {
             if (fileName != "") {
                 File.WriteAllText(fileName, JsonConvert.SerializeObject(railMap), Encoding.UTF8);
                 FileStatus.Text = "成功保存至: " + fileName;
-            } else
+            }
+            else
                 另存为ToolStripMenuItem_Click(sender, e);
         }
 
@@ -195,7 +198,8 @@ namespace RailMapGenerator {
                 Title = "导出", Filter = "*.png|*.png"
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
-                railMap.RenderMap(1, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked).Save(sfd.FileName);
+                float zoom = int.Parse(Zoom.Text.Replace('%', '\0')) / 100.0f;
+                railMap.RenderMap(zoom, 显示站点名ToolStripMenuItem.Checked, 显示网格ToolStripMenuItem.Checked, 显示图例ToolStripMenuItem.Checked).Save(sfd.FileName);
                 FileStatus.Text = "成功导出至: " + sfd.FileName;
             }
             sfd.Dispose();
@@ -207,9 +211,11 @@ namespace RailMapGenerator {
                 if (result == DialogResult.Yes) {
                     保存ToolStripMenuItem_Click(sender, e);
                     Environment.Exit(0);
-                } else if (result == DialogResult.No)
+                }
+                else if (result == DialogResult.No)
                     Environment.Exit(0);
-            } else Environment.Exit(0);
+            }
+            else Environment.Exit(0);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -220,7 +226,8 @@ namespace RailMapGenerator {
                 else if (result == DialogResult.Cancel)
                     e.Cancel = true;
                 else Environment.Exit(0);
-            } else Environment.Exit(0);
+            }
+            else Environment.Exit(0);
         }
 
         private void Remove_Click(object sender, EventArgs e) {
@@ -337,7 +344,7 @@ namespace RailMapGenerator {
 
         private void MainForm_Resize(object sender, EventArgs e) {
             if (controlPanel.Tag == null) return;
-            controlPanel.Left = this.Width - (int)controlPanel.Tag;
+            controlPanel.Left = Width - (int)controlPanel.Tag;
             MapPanel.Width = controlPanel.Left - 10;
             MapPanel.Height = status.Top - menu.Height - 10;
             ReloadData(false, false, false);
@@ -357,6 +364,7 @@ namespace RailMapGenerator {
         private void 图例设置ToolStripMenuItem_Click(object sender, EventArgs e) {
             LegendSetting form = new LegendSetting(railMap);
             form.ShowDialog();
+            ReloadData(false, false, false);
         }
     }
 }

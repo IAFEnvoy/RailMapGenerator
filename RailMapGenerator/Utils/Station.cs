@@ -73,7 +73,8 @@ namespace RailMapGenerator {
                         ret = new Pair<int, int>((i - lennow) % 8, (i - 1) % 8);
                     }
                     lennow = 0;
-                } else
+                }
+                else
                     lennow++;
             if (ret == null)
                 return new Pair<int, int>(0, 0);
