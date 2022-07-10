@@ -11,20 +11,25 @@ namespace RailMapGenerator {
             if (this.line != null) {
                 lineName.Text = this.line.name;
                 panel1.BackColor = this.line.color;
+                lineWidth.Text = line.lineWidth.ToString();
             }
         }
 
         private void OK_Click(object sender, EventArgs e) {
-            if (line == null)
-                line = new Line(lineName.Text, panel1.BackColor);
-            else {
-                line.name = lineName.Text;
-                line.color = panel1.BackColor;
-            }
+            if (int.TryParse(lineWidth.Text, out int width))
+                if (line == null)
+                    line = new Line(lineName.Text, panel1.BackColor, width);
+                else {
+                    line.name = lineName.Text;
+                    line.color = panel1.BackColor;
+                    line.lineWidth = width;
+                }
+            else
+                MessageBox.Show("绘制宽度不是数字");
             Hide();
         }
 
-        private void panel1_Click(object sender, EventArgs e) {
+        private void Panel1_Click(object sender, EventArgs e) {
             ColorDialog cd = new ColorDialog();
             cd.Color = panel1.BackColor;
             if (cd.ShowDialog() == DialogResult.OK)

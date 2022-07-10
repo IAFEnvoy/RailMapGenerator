@@ -7,6 +7,7 @@ namespace RailMapGenerator {
     public class RailMap {
         public List<Station> stations = new List<Station>();
         public List<Line> lines = new List<Line>();
+        public Legend legend = new Legend();
         [JsonIgnore]
         public readonly Render render;
 
@@ -14,27 +15,25 @@ namespace RailMapGenerator {
             render = new Render(this);
         }
 
-        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false) {
+        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false, bool showLegend = true) {
             foreach (Station station in stations)
                 station.ClearCnt();
             foreach (Line line in lines) {
                 if (line.stations.Count <= 1) continue;
                 Direction d = Direction.EMPTY;
                 for (int i = 1; i < line.stations.Count; i++)
-                    d = render.ToNextNode(line.stations[i - 1], line.stations[i], d);
+                    d = render.ToNextNode(line.stations[i - 1], line.stations[i], d,line.lineWidth);
             }
-            for (int i = 0; i < stations.Count; i++) {
+            for (int i = 0; i < stations.Count; i++) 
                 stations[i].AnalyzeTextLocation();
-                stations[i].AnalyzeEnabled(this, i);
-            }
             //Get the bitmap's size
             int maxx = int.MinValue, maxy = int.MinValue;
             foreach (Station station in stations) {
                 maxx = Math.Max(maxx, station.location.X);
                 maxy = Math.Max(maxy, station.location.Y);
             }
-            maxx += Setting.INSTANCE.stopRadium.Value * 4 + 25;
-            maxy += Setting.INSTANCE.stopRadium.Value * 4 + 25;
+            maxx += 10 * 4 + 25;
+            maxy += 10 * 4 + 25;
             //Create bitmap
             Bitmap bitmap = new Bitmap((int)(maxx * zoom), (int)(maxy * zoom));
             Graphics g = Graphics.FromImage(bitmap);
@@ -51,23 +50,35 @@ namespace RailMapGenerator {
             foreach (Line line in lines) {
                 //If there is only 1 stop, ignore it
                 if (line.stations.Count <= 1) continue;
-                Pen pen = new Pen(line.color, Setting.INSTANCE.lineWidth.Value * zoom);
+                Pen pen = new Pen(line.color, line.lineWidth * zoom);
                 Direction dir = Direction.EMPTY;
                 for (int i = 1; i < line.stations.Count; i++) {
-                    bool enable = line.status[i - 1] != StationStatus.Disable && line.status[i] != StationStatus.Disable;
-                    Pen pen1 = enable ? pen : new Pen(Color.FromArgb(185, 185, 185), Setting.INSTANCE.lineWidth.Value * zoom);
+                    Pen pen1 = line.sectionEnabled[i - 1] ? pen : new Pen(Color.FromArgb(185, 185, 185), line.lineWidth * zoom);
                     dir = render.DrawLineSection(line.stations[i - 1], line.stations[i], dir, g, pen1, zoom);
                 }
             }
             //Draw Stops
             for (int i = 0; i < stations.Count; i++)
-                render.DrawStop(g, i, Setting.INSTANCE.font, showStopName, Setting.INSTANCE.stopRadium.Value, zoom);
+                render.DrawStop(g, i, Setting.INSTANCE.font, showStopName, stations[i].radium, zoom);
             //Add margin
             Bitmap ret = new Bitmap(bitmap.Width + Setting.INSTANCE.margin.Value * 2, bitmap.Height + Setting.INSTANCE.margin.Value * 2);
             Graphics gr = Graphics.FromImage(ret);
             gr.Clear(Color.White);
             gr.DrawImage(bitmap, Setting.INSTANCE.margin.Value, Setting.INSTANCE.margin.Value);
             return ret;
+        }
+
+        public Bitmap RenderLegend() {
+            int c = legend.isHorizon ? (int)Math.Ceiling(1.0 * lines.Count / legend.count) : legend.count;
+            Bitmap bitmap = new Bitmap(c * 120 + 10, (int)Math.Ceiling(1.0 * lines.Count / c) * 20 + 5);
+            Graphics g = Graphics.FromImage(bitmap);
+            g.Clear(Color.White);
+            for (int i = 0; i < lines.Count; i++) {
+                int x = i % c, y = i / c;
+                g.FillRectangle(new SolidBrush(lines[i].color), x * 120 + 10, y * 20 + 7.5f, 50, 10);
+                g.DrawString(lines[i].name, Setting.INSTANCE.font, Brushes.Black, x * 120 + 70, y * 20 + 5);
+            }
+            return bitmap;
         }
 
         public bool IsEmpty() {

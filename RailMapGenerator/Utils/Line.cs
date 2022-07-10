@@ -5,15 +5,17 @@ namespace RailMapGenerator {
     public class Line {
         public string name;
         public List<int> stations = new List<int>();
-        public List<StationStatus> status = new List<StationStatus>();
+        public List<bool> sectionEnabled = new List<bool>();
         public Color color;
+        public int lineWidth;
 
-        public Line(string name, Color color, params int[] stops) {
+        public Line(string name, Color color,int lineWidth, params int[] stations) {
             this.name = name;
             this.color = color;
-            foreach (int stop in stations) {
-                stations.Add(stop);
-                status.Add(StationStatus.Enable);
+            this.lineWidth = lineWidth;
+            foreach (int station in stations) {
+                this.stations.Add(station);
+                sectionEnabled.Add(true);
             }
         }
     }

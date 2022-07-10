@@ -98,11 +98,11 @@
     <Compile Include="Dialogs\ModifyVariable.Designer.cs">
       <DependentUpon>ModifyVariable.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dialogs\SOLSetting.cs">
+    <Compile Include="Dialogs\SectionSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Dialogs\SOLSetting.Designer.cs">
-      <DependentUpon>SOLSetting.cs</DependentUpon>
+    <Compile Include="Dialogs\SectionSetting.Designer.cs">
+      <DependentUpon>SectionSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\SplitLine.cs">
       <SubType>Form</SubType>
@@ -117,6 +117,12 @@
       <DependentUpon>StopSetting.cs</DependentUpon>
     </Compile>
     <Compile Include="Direction.cs" />
+    <Compile Include="Dialogs\LegendSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\LegendSetting.Designer.cs">
+      <DependentUpon>LegendSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting.cs" />
     <Compile Include="Utils\HotKeyUtil.cs" />
     <Compile Include="HotKeySetting.cs">
@@ -125,6 +131,7 @@
     <Compile Include="HotKeySetting.Designer.cs">
       <DependentUpon>HotKeySetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Legend.cs" />
     <Compile Include="Utils\Line.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -138,9 +145,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RailMap.cs" />
     <Compile Include="Render.cs" />
-    <Compile Include="Utils\StationStatus.cs" />
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\LegendSetting.resx">
+      <DependentUpon>LegendSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\LineSetting.resx">
       <DependentUpon>LineSetting.cs</DependentUpon>
@@ -148,8 +157,8 @@
     <EmbeddedResource Include="Dialogs\ModifyVariable.resx">
       <DependentUpon>ModifyVariable.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Dialogs\SOLSetting.resx">
-      <DependentUpon>SOLSetting.cs</DependentUpon>
+    <EmbeddedResource Include="Dialogs\SectionSetting.resx">
+      <DependentUpon>SectionSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\SplitLine.resx">
       <DependentUpon>SplitLine.cs</DependentUpon>
@@ -202,5 +211,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

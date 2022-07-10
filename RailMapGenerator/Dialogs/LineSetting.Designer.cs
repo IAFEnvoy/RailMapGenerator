@@ -27,11 +27,12 @@
             this.lineName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lineWidth = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // add
             // 
-            this.add.Location = new System.Drawing.Point(166, 74);
+            this.add.Location = new System.Drawing.Point(137, 105);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(123, 47);
             this.add.TabIndex = 0;
@@ -41,7 +42,7 @@
             // 
             // lineName
             // 
-            this.lineName.Location = new System.Drawing.Point(166, 12);
+            this.lineName.Location = new System.Drawing.Point(137, 18);
             this.lineName.Name = "lineName";
             this.lineName.Size = new System.Drawing.Size(330, 25);
             this.lineName.TabIndex = 1;
@@ -52,28 +53,37 @@
             this.label1.Font = new System.Drawing.Font("宋体", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(12, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 54);
+            this.label1.Size = new System.Drawing.Size(134, 81);
             this.label1.TabIndex = 4;
-            this.label1.Text = "线路名称:\r\n线路颜色:\r\n";
+            this.label1.Text = "线路名称:\r\n线路颜色:\r\n绘制宽度:";
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Location = new System.Drawing.Point(166, 43);
+            this.panel1.Location = new System.Drawing.Point(137, 46);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(330, 25);
             this.panel1.TabIndex = 5;
-            this.panel1.Click += new System.EventHandler(this.panel1_Click);
+            this.panel1.Click += new System.EventHandler(this.Panel1_Click);
+            // 
+            // lineWidth
+            // 
+            this.lineWidth.Location = new System.Drawing.Point(137, 74);
+            this.lineWidth.Name = "lineWidth";
+            this.lineWidth.Size = new System.Drawing.Size(330, 25);
+            this.lineWidth.TabIndex = 6;
+            this.lineWidth.Text = "6";
             // 
             // LineSetting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(512, 132);
+            this.ClientSize = new System.Drawing.Size(474, 158);
+            this.Controls.Add(this.lineWidth);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.lineName);
             this.Controls.Add(this.add);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -93,5 +103,6 @@
         private System.Windows.Forms.TextBox lineName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TextBox lineWidth;
     }
 }

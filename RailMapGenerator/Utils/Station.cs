@@ -7,26 +7,26 @@ namespace RailMapGenerator {
         public static readonly float sqrt2div2 = (float)(Math.Sqrt(2) / 2);
         public Point location;
         public string name;
-        [JsonIgnore]
         public bool enable;
-        [JsonIgnore]
-        public int[] lineCnt = new int[8];
-        [JsonIgnore]
-        public int[] renderedCnt = new int[8];
-        [JsonIgnore]
+        public int radium;
         private Pair<Direction, Direction> textDir = new Pair<Direction, Direction>(Direction.EMPTY, Direction.EMPTY);
+        [JsonIgnore]
+        public int[] totalWidth = new int[8];
+        [JsonIgnore]
+        public int[] renderWidth = new int[8];
 
-        public Station(string name, int x = 0, int y = 0) {
+        public Station(string name, int x = 0, int y = 0, bool enable = true, int radium = 10) {
             this.name = name;
             location = new Point(x, y);
+            this.enable = enable;
+            this.radium = radium;
         }
 
-        public Point GetOffset(Direction dir) {
-            if (renderedCnt[dir.GetId()] == lineCnt[dir.GetId()])
+        public Point GetOffset(Direction dir, int lineWidth) {
+            if (totalWidth[dir.GetId()] == renderWidth[dir.GetId()])
                 throw new IndexOutOfRangeException("请求次数过多");
-            int totalWidth = (lineCnt[dir.GetId()] - 1) * Setting.INSTANCE.lineWidth.Value;
-            int offset = renderedCnt[dir.GetId()] * Setting.INSTANCE.lineWidth.Value - totalWidth / 2;
-            renderedCnt[dir.GetId()]++;
+            int offset = renderWidth[dir.GetId()] + lineWidth / 2 - totalWidth[dir.GetId()] / 2;
+            renderWidth[dir.GetId()] += lineWidth;
             if (dir == Direction.PositiveX || dir == Direction.NegativeX)
                 return new Point(0, offset);
             if (dir == Direction.PositiveY || dir == Direction.NegativeY)
@@ -40,8 +40,8 @@ namespace RailMapGenerator {
 
         public void ClearCnt() {
             for (int i = 0; i < 8; i++) {
-                lineCnt[i] = 0;
-                renderedCnt[i] = 0;
+                totalWidth[i] = 0;
+                renderWidth[i] = 0;
             }
             textDir = new Pair<Direction, Direction>(Direction.EMPTY, Direction.EMPTY);
         }
@@ -50,22 +50,14 @@ namespace RailMapGenerator {
             int min = int.MaxValue;
             bool[] check = new bool[8];
             for (int i = 0; i < 8; i++)
-                min = Math.Min(min, lineCnt[i]);
+                min = Math.Min(min, totalWidth[i]);
             for (int i = 0; i < 8; i++)
-                check[i] = lineCnt[i] - min > 0;
+                check[i] = totalWidth[i] - min > 0;
             Pair<int, int> dir = GetDirPair(check);
             int f = dir.first, s = dir.second;
             while (f > s) s += 8;
             while (f < s - 1) { f++; s--; f %= 8; s %= 8; while (f > s) s += 8; }
             textDir = new Pair<Direction, Direction>(Direction.GetById(f % 8), Direction.GetById(s % 8));
-        }
-
-        public void AnalyzeEnabled(RailMap map,int thisIndex) {
-            enable = false;
-            foreach (Line line in map.lines)
-                for (int i = 0; i < line.stations.Count; i++)
-                    if (line.stations[i] == thisIndex)
-                        enable |= line.status[i] == StationStatus.Enable;
         }
 
         private Pair<int, int> GetDirPair(bool[] b) {

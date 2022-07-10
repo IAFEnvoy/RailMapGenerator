@@ -13,8 +13,6 @@ namespace RailMapGenerator {
         public static string configPath = Application.StartupPath + @"\Settings.json";
         public Font font = null;
         public SettingObject margin = new SettingObject("边缘宽度", 20);
-        public SettingObject stopRadium = new SettingObject("车站半径", 10);
-        public SettingObject lineWidth = new SettingObject("线条宽度", 6);
         public Hashtable HotKeys = new Hashtable();
 
         public static void Load() {

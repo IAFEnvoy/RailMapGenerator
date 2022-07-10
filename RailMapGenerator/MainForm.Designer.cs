@@ -60,6 +60,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.将站点加入线路ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.从线路中删除站点ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.修改站点状态ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.操作ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.整体移动ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.上移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,8 +71,12 @@
             this.显示站点名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示网格ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.站名字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.显示图例ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.图例设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.支持ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.starMeOnGithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveStop = new System.Windows.Forms.Button();
             this.RemoveLine = new System.Windows.Forms.Button();
@@ -93,7 +98,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.MapPanel = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
-            this.修改站点状态ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ModifyStatus = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.map)).BeginInit();
             this.menu.SuspendLayout();
@@ -117,7 +121,7 @@
             // 
             this.Stops.FormattingEnabled = true;
             this.Stops.ItemHeight = 15;
-            this.Stops.Location = new System.Drawing.Point(8, 33);
+            this.Stops.Location = new System.Drawing.Point(8, 32);
             this.Stops.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Stops.Name = "Stops";
             this.Stops.Size = new System.Drawing.Size(183, 364);
@@ -127,7 +131,7 @@
             // 
             this.Lines.FormattingEnabled = true;
             this.Lines.ItemHeight = 15;
-            this.Lines.Location = new System.Drawing.Point(198, 33);
+            this.Lines.Location = new System.Drawing.Point(197, 32);
             this.Lines.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Lines.Name = "Lines";
             this.Lines.Size = new System.Drawing.Size(183, 364);
@@ -138,7 +142,7 @@
             // 
             this.StopsOnLine.FormattingEnabled = true;
             this.StopsOnLine.ItemHeight = 15;
-            this.StopsOnLine.Location = new System.Drawing.Point(388, 33);
+            this.StopsOnLine.Location = new System.Drawing.Point(388, 32);
             this.StopsOnLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.StopsOnLine.Name = "StopsOnLine";
             this.StopsOnLine.Size = new System.Drawing.Size(183, 364);
@@ -146,7 +150,7 @@
             // 
             // AddStopToLine
             // 
-            this.AddStopToLine.Location = new System.Drawing.Point(386, 462);
+            this.AddStopToLine.Location = new System.Drawing.Point(387, 462);
             this.AddStopToLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddStopToLine.Name = "AddStopToLine";
             this.AddStopToLine.Size = new System.Drawing.Size(184, 48);
@@ -157,7 +161,7 @@
             // 
             // AddLine
             // 
-            this.AddLine.Location = new System.Drawing.Point(198, 410);
+            this.AddLine.Location = new System.Drawing.Point(197, 410);
             this.AddLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.AddLine.Name = "AddLine";
             this.AddLine.Size = new System.Drawing.Size(184, 48);
@@ -179,7 +183,7 @@
             // 
             // MoveUp
             // 
-            this.MoveUp.Location = new System.Drawing.Point(386, 410);
+            this.MoveUp.Location = new System.Drawing.Point(387, 410);
             this.MoveUp.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MoveUp.Name = "MoveUp";
             this.MoveUp.Size = new System.Drawing.Size(55, 48);
@@ -190,7 +194,7 @@
             // 
             // MoveDown
             // 
-            this.MoveDown.Location = new System.Drawing.Point(450, 410);
+            this.MoveDown.Location = new System.Drawing.Point(451, 410);
             this.MoveDown.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MoveDown.Name = "MoveDown";
             this.MoveDown.Size = new System.Drawing.Size(55, 48);
@@ -352,75 +356,82 @@
             // 添加站点ToolStripMenuItem
             // 
             this.添加站点ToolStripMenuItem.Name = "添加站点ToolStripMenuItem";
-            this.添加站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.添加站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.添加站点ToolStripMenuItem.Text = "添加站点";
             this.添加站点ToolStripMenuItem.Click += new System.EventHandler(this.AddStop_Click);
             // 
             // 修改站点信息ToolStripMenuItem
             // 
             this.修改站点信息ToolStripMenuItem.Name = "修改站点信息ToolStripMenuItem";
-            this.修改站点信息ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.修改站点信息ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.修改站点信息ToolStripMenuItem.Text = "修改站点信息";
             this.修改站点信息ToolStripMenuItem.Click += new System.EventHandler(this.ModiftStop_Click);
             // 
             // 删除选中站点ToolStripMenuItem
             // 
             this.删除选中站点ToolStripMenuItem.Name = "删除选中站点ToolStripMenuItem";
-            this.删除选中站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.删除选中站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.删除选中站点ToolStripMenuItem.Text = "删除选中站点";
             this.删除选中站点ToolStripMenuItem.Click += new System.EventHandler(this.RemoveStop_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
             // 
             // 添加线路ToolStripMenuItem
             // 
             this.添加线路ToolStripMenuItem.Name = "添加线路ToolStripMenuItem";
-            this.添加线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.添加线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.添加线路ToolStripMenuItem.Text = "添加线路";
             this.添加线路ToolStripMenuItem.Click += new System.EventHandler(this.AddLine_Click);
             // 
             // 修改线路信息ToolStripMenuItem
             // 
             this.修改线路信息ToolStripMenuItem.Name = "修改线路信息ToolStripMenuItem";
-            this.修改线路信息ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.修改线路信息ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.修改线路信息ToolStripMenuItem.Text = "修改线路信息";
             this.修改线路信息ToolStripMenuItem.Click += new System.EventHandler(this.ModifyLine_Click);
             // 
             // 删除选中线路ToolStripMenuItem
             // 
             this.删除选中线路ToolStripMenuItem.Name = "删除选中线路ToolStripMenuItem";
-            this.删除选中线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.删除选中线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.删除选中线路ToolStripMenuItem.Text = "删除选中线路";
             this.删除选中线路ToolStripMenuItem.Click += new System.EventHandler(this.RemoveLine_Click);
             // 
             // 拆分线路ToolStripMenuItem
             // 
             this.拆分线路ToolStripMenuItem.Name = "拆分线路ToolStripMenuItem";
-            this.拆分线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.拆分线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.拆分线路ToolStripMenuItem.Text = "拆分线路";
             this.拆分线路ToolStripMenuItem.Click += new System.EventHandler(this.SplitLine_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(221, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(209, 6);
             // 
             // 将站点加入线路ToolStripMenuItem
             // 
             this.将站点加入线路ToolStripMenuItem.Name = "将站点加入线路ToolStripMenuItem";
-            this.将站点加入线路ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.将站点加入线路ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.将站点加入线路ToolStripMenuItem.Text = "将站点加入线路";
             this.将站点加入线路ToolStripMenuItem.Click += new System.EventHandler(this.AddStopToLine_Click);
             // 
             // 从线路中删除站点ToolStripMenuItem
             // 
             this.从线路中删除站点ToolStripMenuItem.Name = "从线路中删除站点ToolStripMenuItem";
-            this.从线路中删除站点ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.从线路中删除站点ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
             this.从线路中删除站点ToolStripMenuItem.Text = "从线路中删除站点";
             this.从线路中删除站点ToolStripMenuItem.Click += new System.EventHandler(this.Remove_Click);
+            // 
+            // 修改站点状态ToolStripMenuItem
+            // 
+            this.修改站点状态ToolStripMenuItem.Name = "修改站点状态ToolStripMenuItem";
+            this.修改站点状态ToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.修改站点状态ToolStripMenuItem.Text = "修改站点状态";
+            this.修改站点状态ToolStripMenuItem.Click += new System.EventHandler(this.ModifyStatus_Click);
             // 
             // 操作ToolStripMenuItem
             // 
@@ -474,7 +485,10 @@
             this.绘制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.显示站点名ToolStripMenuItem,
             this.显示网格ToolStripMenuItem,
-            this.站名字体ToolStripMenuItem});
+            this.站名字体ToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.显示图例ToolStripMenuItem,
+            this.图例设置ToolStripMenuItem});
             this.绘制ToolStripMenuItem.Name = "绘制ToolStripMenuItem";
             this.绘制ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
             this.绘制ToolStripMenuItem.Text = "绘制";
@@ -506,10 +520,33 @@
             this.站名字体ToolStripMenuItem.Text = "站名字体";
             this.站名字体ToolStripMenuItem.Click += new System.EventHandler(this.ModiftFont_Click);
             // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(164, 6);
+            // 
+            // 显示图例ToolStripMenuItem
+            // 
+            this.显示图例ToolStripMenuItem.Checked = true;
+            this.显示图例ToolStripMenuItem.CheckOnClick = true;
+            this.显示图例ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.显示图例ToolStripMenuItem.Name = "显示图例ToolStripMenuItem";
+            this.显示图例ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
+            this.显示图例ToolStripMenuItem.Text = "显示图例";
+            this.显示图例ToolStripMenuItem.CheckedChanged += new System.EventHandler(this.Check_Change);
+            // 
+            // 图例设置ToolStripMenuItem
+            // 
+            this.图例设置ToolStripMenuItem.Name = "图例设置ToolStripMenuItem";
+            this.图例设置ToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
+            this.图例设置ToolStripMenuItem.Text = "图例设置";
+            this.图例设置ToolStripMenuItem.Click += new System.EventHandler(this.图例设置ToolStripMenuItem_Click);
+            // 
             // 帮助ToolStripMenuItem
             // 
             this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.支持ToolStripMenuItem,
+            this.starMeOnGithubToolStripMenuItem,
             this.关于ToolStripMenuItem});
             this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
             this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(53, 24);
@@ -518,20 +555,27 @@
             // 支持ToolStripMenuItem
             // 
             this.支持ToolStripMenuItem.Name = "支持ToolStripMenuItem";
-            this.支持ToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
+            this.支持ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.支持ToolStripMenuItem.Text = "支持";
             this.支持ToolStripMenuItem.Click += new System.EventHandler(this.支持ToolStripMenuItem_Click);
+            // 
+            // starMeOnGithubToolStripMenuItem
+            // 
+            this.starMeOnGithubToolStripMenuItem.Name = "starMeOnGithubToolStripMenuItem";
+            this.starMeOnGithubToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.starMeOnGithubToolStripMenuItem.Text = "Star me on Github";
+            this.starMeOnGithubToolStripMenuItem.Click += new System.EventHandler(this.StarMeOnGithubToolStripMenuItem_Click);
             // 
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(122, 26);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.关于ToolStripMenuItem.Text = "关于";
             this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // RemoveStop
             // 
-            this.RemoveStop.Location = new System.Drawing.Point(7, 513);
+            this.RemoveStop.Location = new System.Drawing.Point(7, 512);
             this.RemoveStop.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RemoveStop.Name = "RemoveStop";
             this.RemoveStop.Size = new System.Drawing.Size(184, 48);
@@ -542,7 +586,7 @@
             // 
             // RemoveLine
             // 
-            this.RemoveLine.Location = new System.Drawing.Point(198, 513);
+            this.RemoveLine.Location = new System.Drawing.Point(197, 512);
             this.RemoveLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.RemoveLine.Name = "RemoveLine";
             this.RemoveLine.Size = new System.Drawing.Size(184, 48);
@@ -564,7 +608,7 @@
             // 
             // ModifyLine
             // 
-            this.ModifyLine.Location = new System.Drawing.Point(198, 462);
+            this.ModifyLine.Location = new System.Drawing.Point(197, 462);
             this.ModifyLine.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModifyLine.Name = "ModifyLine";
             this.ModifyLine.Size = new System.Drawing.Size(184, 48);
@@ -580,7 +624,7 @@
             this.Zoom,
             this.AuthorName,
             this.FileStatus});
-            this.status.Location = new System.Drawing.Point(0, 613);
+            this.status.Location = new System.Drawing.Point(0, 616);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
             this.status.Size = new System.Drawing.Size(1475, 26);
@@ -667,7 +711,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(10, 10);
+            this.label1.Location = new System.Drawing.Point(11, 10);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 20);
@@ -689,7 +733,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(390, 10);
+            this.label3.Location = new System.Drawing.Point(389, 10);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(129, 20);
@@ -726,25 +770,19 @@
             this.controlPanel.Controls.Add(this.RemoveStop);
             this.controlPanel.Controls.Add(this.RemoveLine);
             this.controlPanel.Location = new System.Drawing.Point(884, 32);
+            this.controlPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.controlPanel.Name = "controlPanel";
-            this.controlPanel.Size = new System.Drawing.Size(582, 570);
+            this.controlPanel.Size = new System.Drawing.Size(581, 570);
             this.controlPanel.TabIndex = 128;
-            // 
-            // 修改站点状态ToolStripMenuItem
-            // 
-            this.修改站点状态ToolStripMenuItem.Name = "修改站点状态ToolStripMenuItem";
-            this.修改站点状态ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.修改站点状态ToolStripMenuItem.Text = "修改站点状态";
-            this.修改站点状态ToolStripMenuItem.Click += new System.EventHandler(this.ModifyStatus_Click);
             // 
             // ModifyStatus
             // 
-            this.ModifyStatus.Location = new System.Drawing.Point(387, 513);
+            this.ModifyStatus.Location = new System.Drawing.Point(387, 512);
             this.ModifyStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.ModifyStatus.Name = "ModifyStatus";
             this.ModifyStatus.Size = new System.Drawing.Size(184, 48);
             this.ModifyStatus.TabIndex = 124;
-            this.ModifyStatus.Text = "修改站点状态";
+            this.ModifyStatus.Text = "修改区间开通状态";
             this.ModifyStatus.UseVisualStyleBackColor = true;
             this.ModifyStatus.Click += new System.EventHandler(this.ModifyStatus_Click);
             // 
@@ -752,7 +790,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1475, 639);
+            this.ClientSize = new System.Drawing.Size(1475, 642);
             this.Controls.Add(this.MapPanel);
             this.Controls.Add(this.controlPanel);
             this.Controls.Add(this.status);
@@ -760,7 +798,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MinimumSize = new System.Drawing.Size(600, 681);
+            this.MinimumSize = new System.Drawing.Size(599, 679);
             this.Name = "MainForm";
             this.Text = "线路图生成器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
@@ -852,5 +890,9 @@
         private System.Windows.Forms.Panel controlPanel;
         private System.Windows.Forms.ToolStripMenuItem 修改站点状态ToolStripMenuItem;
         private System.Windows.Forms.Button ModifyStatus;
+        private System.Windows.Forms.ToolStripMenuItem starMeOnGithubToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem 显示图例ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 图例设置ToolStripMenuItem;
     }
 }

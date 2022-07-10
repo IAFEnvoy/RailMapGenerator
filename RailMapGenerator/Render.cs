@@ -45,18 +45,18 @@ namespace RailMapGenerator {
             return new Pair<Direction, Direction>(d1, d2);
         }
 
-        public Direction ToNextNode(int start, int end, Direction last) {
+        public Direction ToNextNode(int start, int end, Direction last, int lineWidth) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            railMap.stations[start].lineCnt[d1.GetId()]++;
-            railMap.stations[end].lineCnt[Direction.Reverse(d2).GetId()]++;
+            railMap.stations[start].totalWidth[d1.GetId()] += lineWidth;
+            railMap.stations[end].totalWidth[Direction.Reverse(d2).GetId()] += lineWidth;
             return d2;
         }
 
         public Direction DrawLineSection(int start, int end, Direction last, Graphics g, Pen pen, float zoom = 1) {
             var dirPair = GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            Point startOffset = railMap.stations[start].GetOffset(d1), endOffset = railMap.stations[end].GetOffset(Direction.Reverse(d2));
+            Point startOffset = railMap.stations[start].GetOffset(d1, (int)pen.Width), endOffset = railMap.stations[end].GetOffset(Direction.Reverse(d2), (int)pen.Width);
             Point startPoint = AddPoint(railMap.stations[start].location, startOffset), endPoint = AddPoint(railMap.stations[end].location, endOffset);
             if (d1 == d2)
                 DrawLines(g, pen, new Point[] { startPoint, endPoint }, zoom);

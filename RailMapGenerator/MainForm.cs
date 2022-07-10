@@ -43,18 +43,6 @@ namespace RailMapGenerator {
             };
             item1.Click += ModifyVariableClick;
             渲染设置ToolStripMenuItem.DropDownItems.Add(item1);
-            ToolStripMenuItem item2 = new ToolStripMenuItem {
-                Size = new Size(236, 26), Tag = Setting.INSTANCE.stopRadium,
-                Text = Setting.INSTANCE.stopRadium.Name + " : " + Setting.INSTANCE.stopRadium.Value.ToString()
-            };
-            item2.Click += ModifyVariableClick;
-            渲染设置ToolStripMenuItem.DropDownItems.Add(item2);
-            ToolStripMenuItem item3 = new ToolStripMenuItem {
-                Size = new Size(236, 26), Tag = Setting.INSTANCE.lineWidth,
-                Text = Setting.INSTANCE.lineWidth.Name + " : " + Setting.INSTANCE.lineWidth.Value.ToString()
-            };
-            item3.Click += ModifyVariableClick;
-            渲染设置ToolStripMenuItem.DropDownItems.Add(item3);
         }
 
         private void ModifyVariableClick(object sender, EventArgs e) {
@@ -167,7 +155,7 @@ namespace RailMapGenerator {
                 return;
             }
             railMap.lines[Lines.SelectedIndex].stations.Add(Stops.SelectedIndex);
-            railMap.lines[Lines.SelectedIndex].status.Add(StationStatus.Enable);
+            railMap.lines[Lines.SelectedIndex].sectionEnabled.Add(true);
             ReloadData(false, false, true);
         }
 
@@ -176,8 +164,8 @@ namespace RailMapGenerator {
                 int index = StopsOnLine.SelectedIndex;
                 (railMap.lines[Lines.SelectedIndex].stations[index], railMap.lines[Lines.SelectedIndex].stations[index - 1])
                     = (railMap.lines[Lines.SelectedIndex].stations[index - 1], railMap.lines[Lines.SelectedIndex].stations[index]);
-                (railMap.lines[Lines.SelectedIndex].status[index], railMap.lines[Lines.SelectedIndex].status[index - 1])
-                    = (railMap.lines[Lines.SelectedIndex].status[index - 1], railMap.lines[Lines.SelectedIndex].status[index]);
+                (railMap.lines[Lines.SelectedIndex].sectionEnabled[index], railMap.lines[Lines.SelectedIndex].sectionEnabled[index - 1])
+                    = (railMap.lines[Lines.SelectedIndex].sectionEnabled[index - 1], railMap.lines[Lines.SelectedIndex].sectionEnabled[index]);
                 ReloadData(false, false, true);
                 StopsOnLine.SelectedIndex = index - 1;
             }
@@ -188,8 +176,8 @@ namespace RailMapGenerator {
                 int index = StopsOnLine.SelectedIndex;
                 (railMap.lines[Lines.SelectedIndex].stations[index], railMap.lines[Lines.SelectedIndex].stations[index + 1])
                     = (railMap.lines[Lines.SelectedIndex].stations[index + 1], railMap.lines[Lines.SelectedIndex].stations[index]);
-                (railMap.lines[Lines.SelectedIndex].status[index], railMap.lines[Lines.SelectedIndex].status[index + 1])
-                    = (railMap.lines[Lines.SelectedIndex].status[index + 1], railMap.lines[Lines.SelectedIndex].status[index]);
+                (railMap.lines[Lines.SelectedIndex].sectionEnabled[index], railMap.lines[Lines.SelectedIndex].sectionEnabled[index + 1])
+                    = (railMap.lines[Lines.SelectedIndex].sectionEnabled[index + 1], railMap.lines[Lines.SelectedIndex].sectionEnabled[index]);
                 ReloadData(false, false, true);
                 StopsOnLine.SelectedIndex = index + 1;
             }
@@ -279,7 +267,7 @@ namespace RailMapGenerator {
         private void Remove_Click(object sender, EventArgs e) {
             if (StopsOnLine.SelectedIndex == -1 || Lines.SelectedIndex == -1) return;
             railMap.lines[Lines.SelectedIndex].stations.RemoveAt(StopsOnLine.SelectedIndex);
-            railMap.lines[Lines.SelectedIndex].status.RemoveAt(StopsOnLine.SelectedIndex);
+            railMap.lines[Lines.SelectedIndex].sectionEnabled.RemoveAt(StopsOnLine.SelectedIndex);
             ReloadData(false, false, true);
         }
 
@@ -290,7 +278,7 @@ namespace RailMapGenerator {
                 while (line.stations.Contains(index)) {
                     int i = line.stations.IndexOf(index);
                     line.stations.RemoveAt(i);
-                    line.status.RemoveAt(i);
+                    line.sectionEnabled.RemoveAt(i);
                 }
                 for (int i = 0; i < line.stations.Count; i++)
                     if (line.stations[i] > index)
@@ -403,9 +391,18 @@ namespace RailMapGenerator {
 
         private void ModifyStatus_Click(object sender, EventArgs e) {
             if (Lines.SelectedIndex == -1) return;
-            SOLSetting form = new SOLSetting(railMap, railMap.lines[Lines.SelectedIndex]);
+            SectionSetting form = new SectionSetting(railMap, railMap.lines[Lines.SelectedIndex]);
             form.ShowDialog();
             ReloadData(false, false, false);
+        }
+
+        private void StarMeOnGithubToolStripMenuItem_Click(object sender, EventArgs e) {
+            Process.Start("https://github.com/IAFEnvoy/RailMapGenerator");
+        }
+
+        private void 图例设置ToolStripMenuItem_Click(object sender, EventArgs e) {
+            LegendSetting form = new LegendSetting(railMap);
+            form.ShowDialog();
         }
     }
 }

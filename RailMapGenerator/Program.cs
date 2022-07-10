@@ -5,6 +5,7 @@ using System.Windows.Forms;
 namespace RailMapGenerator {
     internal static class Program {
         private static readonly string[] dlls = new string[] { "Newtonsoft.Json.dll" };
+
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
