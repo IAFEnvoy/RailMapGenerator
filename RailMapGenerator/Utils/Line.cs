@@ -15,7 +15,7 @@ namespace RailMapGenerator {
             this.lineWidth = lineWidth;
             foreach (int station in stations) {
                 this.stations.Add(station);
-                sectionEnabled.Add(true);
+                this.sectionEnabled.Add(true);
             }
         }
     }

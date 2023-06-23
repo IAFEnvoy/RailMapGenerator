@@ -21,18 +21,18 @@ namespace RailMapGenerator {
             this.degree = degree;
         }
 
-        public int GetId() => id;
+        public int GetId() => this.id;
 
-        public double GetDegree() => degree;
+        public double GetDegree() => this.degree;
 
         public bool IsMainDirection() {
-            return dx == 0 || dy == 0;
+            return this.dx == 0 || this.dy == 0;
         }
 
         public Point GetDelta(Point point, int length, bool sub = false) {
             if (sub)
-                return new Point(point.X - length * dx, point.Y - length * dy);
-            return new Point(point.X + length * dx, point.Y + length * dy);
+                return new Point(point.X - length * this.dx, point.Y - length * this.dy);
+            return new Point(point.X + length * this.dx, point.Y + length * this.dy);
         }
 
         public static Direction Reverse(Direction dir) {

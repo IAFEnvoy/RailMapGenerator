@@ -18,16 +18,16 @@ namespace RailMapGenerator {
 
         public Station(string name, int x = 0, int y = 0, bool enable = true, int radium = 10) {
             this.name = name;
-            location = new Point(x, y);
+            this.location = new Point(x, y);
             this.enable = enable;
             this.radium = radium;
         }
 
         public Point GetOffset(Direction dir, int lineWidth) {
-            if (totalWidth[dir.GetId()] == renderWidth[dir.GetId()])
+            if (this.totalWidth[dir.GetId()] == this.renderWidth[dir.GetId()])
                 throw new IndexOutOfRangeException("请求次数过多");
-            int offset = renderWidth[dir.GetId()] + lineWidth / 2 - totalWidth[dir.GetId()] / 2;
-            renderWidth[dir.GetId()] += lineWidth;
+            int offset = this.renderWidth[dir.GetId()] + lineWidth / 2 - this.totalWidth[dir.GetId()] / 2;
+            this.renderWidth[dir.GetId()] += lineWidth;
             if (dir == Direction.PositiveX || dir == Direction.NegativeX)
                 return new Point(0, offset);
             if (dir == Direction.PositiveY || dir == Direction.NegativeY)
@@ -41,8 +41,8 @@ namespace RailMapGenerator {
 
         public void ClearCnt() {
             for (int i = 0; i < 8; i++) {
-                totalWidth[i] = 0;
-                renderWidth[i] = 0;
+                this.totalWidth[i] = 0;
+                this.renderWidth[i] = 0;
             }
         }
 
@@ -50,17 +50,17 @@ namespace RailMapGenerator {
             int min = int.MaxValue;
             bool[] check = new bool[8];
             for (int i = 0; i < 8; i++)
-                min = Math.Min(min, totalWidth[i]);
+                min = Math.Min(min, this.totalWidth[i]);
             for (int i = 0; i < 8; i++)
-                check[i] = totalWidth[i] - min > 0;
-            Pair<int, int> dir = GetDirPair(check);
+                check[i] = this.totalWidth[i] - min > 0;
+            Pair<int, int> dir = this.GetDirPair(check);
             int f = dir.first, s = dir.second;
             while (f > s) s += 8;
             while (f < s - 1) { f++; s--; f %= 8; s %= 8; while (f > s) s += 8; }
-            int length = name.Length;
+            int length = this.name.Length;
             double degree = (Direction.GetById(f % 8).GetDegree() + Direction.GetById(s % 8).GetDegree()) / 2 * Math.PI / 180;
-            textOffsetX = Math.Cos(degree) * radium * (length + 0.5) + location.X;
-            textOffsetY = Math.Sin(degree) * radium * 2 + location.Y;
+            this.textOffsetX = Math.Cos(degree) * this.radium * (length + 0.5) + this.location.X;
+            this.textOffsetY = Math.Sin(degree) * this.radium * 2 + this.location.Y;
         }
 
         private Pair<int, int> GetDirPair(bool[] b) {

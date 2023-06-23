@@ -6,34 +6,34 @@ namespace RailMapGenerator {
         public Line line;
 
         public LineSetting(Line line = null) {
-            InitializeComponent();
+            this.InitializeComponent();
             this.line = line;
             if (this.line != null) {
-                lineName.Text = this.line.name;
-                panel1.BackColor = this.line.color;
-                lineWidth.Text = line.lineWidth.ToString();
+                this.lineName.Text = this.line.name;
+                this.panel1.BackColor = this.line.color;
+                this.lineWidth.Text = this.line.lineWidth.ToString();
             }
         }
 
         private void OK_Click(object sender, EventArgs e) {
-            if (int.TryParse(lineWidth.Text, out int width))
-                if (line == null)
-                    line = new Line(lineName.Text, panel1.BackColor, width);
+            if (int.TryParse(this.lineWidth.Text, out int width))
+                if (this.line == null)
+                    this.line = new Line(this.lineName.Text, this.panel1.BackColor, width);
                 else {
-                    line.name = lineName.Text;
-                    line.color = panel1.BackColor;
-                    line.lineWidth = width;
+                    this.line.name = this.lineName.Text;
+                    this.line.color = this.panel1.BackColor;
+                    this.line.lineWidth = width;
                 }
             else
                 MessageBox.Show("绘制参数不是数字", "线路图生成器", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            Hide();
+            this.Hide();
         }
 
         private void Panel1_Click(object sender, EventArgs e) {
             ColorDialog cd = new ColorDialog();
-            cd.Color = panel1.BackColor;
+            cd.Color = this.panel1.BackColor;
             if (cd.ShowDialog() == DialogResult.OK)
-                panel1.BackColor = cd.Color;
+                this.panel1.BackColor = cd.Color;
         }
     }
 }

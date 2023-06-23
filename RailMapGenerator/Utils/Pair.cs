@@ -4,8 +4,8 @@
         public T2 second;
 
         public Pair(T1 item1, T2 item2) {
-            first = item1;
-            second = item2;
+            this.first = item1;
+            this.second = item2;
         }
     }
 }

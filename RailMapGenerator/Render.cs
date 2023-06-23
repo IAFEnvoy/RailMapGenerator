@@ -8,8 +8,8 @@ namespace RailMapGenerator {
             this.railMap = railMap;
         }
         public Pair<Direction, Direction> GetDirectionPair(int start, int end, Direction last) {
-            int x = railMap.stations[end].location.X - railMap.stations[start].location.X;
-            int y = railMap.stations[end].location.Y - railMap.stations[start].location.Y;
+            int x = this.railMap.stations[end].location.X - this.railMap.stations[start].location.X;
+            int y = this.railMap.stations[end].location.Y - this.railMap.stations[start].location.Y;
             Direction d = Direction.EMPTY;
             if (x == 0 && y == 0)
                 return new Pair<Direction, Direction>(last, last);
@@ -46,18 +46,18 @@ namespace RailMapGenerator {
         }
 
         public Direction ToNextNode(int start, int end, Direction last, int lineWidth) {
-            var dirPair = GetDirectionPair(start, end, last);
+            var dirPair = this.GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            railMap.stations[start].totalWidth[d1.GetId()] += lineWidth;
-            railMap.stations[end].totalWidth[Direction.Reverse(d2).GetId()] += lineWidth;
+            this.railMap.stations[start].totalWidth[d1.GetId()] += lineWidth;
+            this.railMap.stations[end].totalWidth[Direction.Reverse(d2).GetId()] += lineWidth;
             return d2;
         }
 
         public Direction DrawLineSection(int start, int end, Direction last, Graphics g, Pen pen, int linewidth, float zoom = 1) {
-            var dirPair = GetDirectionPair(start, end, last);
+            var dirPair = this.GetDirectionPair(start, end, last);
             Direction d1 = dirPair.first, d2 = dirPair.second;
-            Point startOffset = railMap.stations[start].GetOffset(d1, linewidth), endOffset = railMap.stations[end].GetOffset(Direction.Reverse(d2), linewidth);
-            Point startPoint = AddPoint(railMap.stations[start].location, startOffset), endPoint = AddPoint(railMap.stations[end].location, endOffset);
+            Point startOffset = this.railMap.stations[start].GetOffset(d1, linewidth), endOffset = this.railMap.stations[end].GetOffset(Direction.Reverse(d2), linewidth);
+            Point startPoint = AddPoint(this.railMap.stations[start].location, startOffset), endPoint = AddPoint(this.railMap.stations[end].location, endOffset);
             if (d1 == d2)
                 DrawLines(g, pen, new Point[] { startPoint, endPoint }, zoom);
             else {
@@ -69,14 +69,14 @@ namespace RailMapGenerator {
         }
 
         public void DrawStop(Graphics g, int node, bool renderName = true, int radium = 10, float zoom = 1) {
-            FillEllipse(g, railMap.stations[node].enable ? Brushes.Black : new SolidBrush(Color.FromArgb(185, 185, 185)), railMap.stations[node].location.X - radium, railMap.stations[node].location.Y - radium, radium * 2, radium * 2, zoom);
+            FillEllipse(g, this.railMap.stations[node].enable ? Brushes.Black : new SolidBrush(Color.FromArgb(185, 185, 185)), this.railMap.stations[node].location.X - radium, this.railMap.stations[node].location.Y - radium, radium * 2, radium * 2, zoom);
             int iRadium = radium - 2;
-            FillEllipse(g, Brushes.White, railMap.stations[node].location.X - iRadium, railMap.stations[node].location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
+            FillEllipse(g, Brushes.White, this.railMap.stations[node].location.X - iRadium, this.railMap.stations[node].location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
             if (!renderName) return;
-            SizeF size = g.MeasureString(railMap.stations[node].name, railMap.font);
-            double x = railMap.stations[node].textOffsetX - size.Width / 2;
-            double y = railMap.stations[node].textOffsetY - size.Height / 2;
-            DrawString(g, railMap.stations[node].name, railMap.font, railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, new Point((int)x, (int)y), zoom);
+            SizeF size = g.MeasureString(this.railMap.stations[node].name, this.railMap.font);
+            double x = this.railMap.stations[node].textOffsetX - size.Width / 2;
+            double y = this.railMap.stations[node].textOffsetY - size.Height / 2;
+            DrawString(g, this.railMap.stations[node].name, this.railMap.font, this.railMap.stations[node].enable ? Brushes.Black : Brushes.Gray, new Point((int)x, (int)y), zoom);
         }
 
         public static Point AddPoint(Point p1, Point p2) {
