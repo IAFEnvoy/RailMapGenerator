@@ -18,7 +18,7 @@ namespace RailMapGenerator {
 
         public Station(string name, int x = 0, int y = 0, bool enable = true, int radium = 10) {
             this.name = name;
-            this.location = new Point(x, y);
+            this.location = new(x, y);
             this.enable = enable;
             this.radium = radium;
         }
@@ -70,14 +70,14 @@ namespace RailMapGenerator {
                 if (b[i % 8]) {
                     if (lennow >= maxlen) {
                         maxlen = lennow;
-                        ret = new Pair<int, int>((i - lennow) % 8, (i - 1) % 8);
+                        ret = new((i - lennow) % 8, (i - 1) % 8);
                     }
                     lennow = 0;
                 }
                 else
                     lennow++;
             if (ret == null)
-                return new Pair<int, int>(0, 0);
+                return new(0, 0);
             return ret;
         }
     }

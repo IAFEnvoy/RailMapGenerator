@@ -25,12 +25,12 @@ namespace RailMapGenerator {
             if (int.TryParse(this.positionX.Text, out int x) && int.TryParse(this.positionY.Text, out int y) && int.TryParse(this.renderRadium.Text, out int radium)
                 && double.TryParse(this.xOffset.Text, out double offsetX) && double.TryParse(this.yOffset.Text, out double offsetY)) {
                 if (this.stop == null) {
-                    this.stop = new Station(this.stopName.Text, x, y, this.enabled.Checked, radium) {
+                    this.stop = new(this.stopName.Text, x, y, this.enabled.Checked, radium) {
                         autoTextPos = this.autoText.Checked, textOffsetX = offsetX, textOffsetY = offsetY
                     };
                 } else {
                     this.stop.name = this.stopName.Text;
-                    this.stop.location = new Point(x, y);
+                    this.stop.location = new(x, y);
                     this.stop.enable = this.enabled.Checked;
                     this.stop.radium = radium;
                     this.stop.autoTextPos = this.autoText.Checked;

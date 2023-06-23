@@ -12,7 +12,7 @@ namespace RailMapGenerator {
             int y = this.railMap.stations[end].location.Y - this.railMap.stations[start].location.Y;
             Direction d = Direction.EMPTY;
             if (x == 0 && y == 0)
-                return new Pair<Direction, Direction>(last, last);
+                return new (last, last);
             else if (x == 0)
                 d = y > 0 ? Direction.PositiveY : Direction.NegativeY;
             else if (y == 0)
@@ -22,7 +22,7 @@ namespace RailMapGenerator {
             else if (x == -y)
                 d = x > 0 ? Direction.PXNY : Direction.NXPY;
             if (d != Direction.EMPTY)
-                return new Pair<Direction, Direction>(d, d);
+                return new (d, d);
             Direction d1, d2;
             if (x > y)
                 d1 = x + y > 0 ? Direction.PositiveX : Direction.NegativeY;
@@ -33,7 +33,7 @@ namespace RailMapGenerator {
             else
                 d2 = y > 0 ? Direction.NXPY : Direction.NXNY;
             if (last == Direction.EMPTY)
-                return new Pair<Direction, Direction>(d1, d2);
+                return new (d1, d2);
             int r1 = Math.Abs(last.GetId() - d1.GetId());
             if (r1 > 4) r1 = 8 - r1;
             int r2 = Math.Abs(last.GetId() - d2.GetId());
@@ -80,12 +80,12 @@ namespace RailMapGenerator {
         }
 
         public static Point AddPoint(Point p1, Point p2) {
-            return new Point(p1.X + p2.X, p1.Y + p2.Y);
+            return new(p1.X + p2.X, p1.Y + p2.Y);
         }
 
         public static void DrawLines(Graphics g, Pen pen, Point[] p, float zoom) {
             for (int i = 0; i < p.Length; i++)
-                p[i] = new Point((int)(p[i].X * zoom), (int)(p[i].Y * zoom));
+                p[i] = new((int)(p[i].X * zoom), (int)(p[i].Y * zoom));
             g.DrawLines(pen, p);
         }
 
@@ -94,7 +94,7 @@ namespace RailMapGenerator {
         }
 
         public static void DrawString(Graphics g, string text, Font font, Brush brush, PointF p, float zoom) {
-            g.DrawString(text, new Font(font.FontFamily, font.Size * zoom, font.Style, font.Unit), brush, new PointF(p.X * zoom, p.Y * zoom));
+            g.DrawString(text, new(font.FontFamily, font.Size * zoom, font.Style, font.Unit), brush, new PointF(p.X * zoom, p.Y * zoom));
         }
 
         public static void FillRectangle(Graphics g, Brush brush, Point offset, float x, float y, float width, float height, float zoom) {

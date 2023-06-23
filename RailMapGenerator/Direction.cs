@@ -2,15 +2,15 @@
 
 namespace RailMapGenerator {
     public class Direction {
-        public static Direction EMPTY = new Direction(-1, 0, 0, 0);
-        public static Direction PositiveX = new Direction(0, 1, 0, 0);
-        public static Direction PXPY = new Direction(1, 1, 1, 45);//Positive X Positive Y
-        public static Direction PositiveY = new Direction(2, 0, 1, 90);
-        public static Direction NXPY = new Direction(3, -1, 1, 135);//Negative X Positive Y
-        public static Direction NegativeX = new Direction(4, -1, 0, 180);
-        public static Direction NXNY = new Direction(5, -1, -1, 225);//Negative X Negative Y
-        public static Direction NegativeY = new Direction(6, 0, -1, 270);
-        public static Direction PXNY = new Direction(7, 1, -1, 315);//Positive X Negative Y
+        public readonly static Direction EMPTY = new(-1, 0, 0, 0);
+        public readonly static Direction PositiveX = new(0, 1, 0, 0);
+        public readonly static Direction PXPY = new(1, 1, 1, 45);//Positive X Positive Y
+        public readonly static Direction PositiveY = new(2, 0, 1, 90);
+        public readonly static Direction NXPY = new(3, -1, 1, 135);//Negative X Positive Y
+        public readonly static Direction NegativeX = new(4, -1, 0, 180);
+        public readonly static Direction NXNY = new(5, -1, -1, 225);//Negative X Negative Y
+        public readonly static Direction NegativeY = new(6, 0, -1, 270);
+        public readonly static Direction PXNY = new(7, 1, -1, 315);//Positive X Negative Y
         private readonly int id, dx, dy;
         private readonly double degree;
 

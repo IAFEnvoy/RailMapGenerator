@@ -4,8 +4,8 @@ using System.Drawing;
 namespace RailMapGenerator {
     public class Line {
         public string name;
-        public List<int> stations = new List<int>();
-        public List<bool> sectionEnabled = new List<bool>();
+        public List<int> stations = new();
+        public List<bool> sectionEnabled = new();
         public Color color;
         public int lineWidth;
 

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace RailMapGenerator {
     public partial class MainForm : Form {
-        private RailMap railMap = new RailMap();
+        private RailMap railMap = new();
         private string fileName = "";
 
         public MainForm() {
@@ -72,7 +72,7 @@ namespace RailMapGenerator {
                 }
                 else
                     this.map.Image = new Bitmap(this.railMap.margin * 2, this.railMap.margin * 2);
-                this.map.Location = new Point(0, 0);
+                this.map.Location = new(0, 0);
                 this.MapPanel.AutoScroll = true;
                 this.MapPanel.HorizontalScroll.Value = hsV;
                 this.MapPanel.VerticalScroll.Value = vsV;
@@ -80,7 +80,7 @@ namespace RailMapGenerator {
         }
 
         private void AddStop_Click(object sender, EventArgs e) {
-            StopSetting form = new StopSetting();
+            StopSetting form = new();
             if (sender is ToolStripMenuItem item)
                 form.Text = item.Text;
             else
@@ -92,7 +92,7 @@ namespace RailMapGenerator {
         }
 
         private void AddLine_Click(object sender, EventArgs e) {
-            LineSetting form = new LineSetting();
+            LineSetting form = new();
             if (sender is ToolStripMenuItem item)
                 form.Text = item.Text;
             else
@@ -154,7 +154,7 @@ namespace RailMapGenerator {
                 if (result == DialogResult.Cancel)
                     return;
             }
-            this.railMap = new RailMap();
+            this.railMap = new();
             this.ReloadData(true, true, true);
             this.map.Image = new Bitmap(this.railMap.margin * 2, this.railMap.margin * 2);
         }
@@ -169,7 +169,7 @@ namespace RailMapGenerator {
         }
 
         private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e) {
-            SaveFileDialog sfd = new SaveFileDialog {
+            SaveFileDialog sfd = new (){
                 Title = "保存", Filter = "*.railmap|*.railmap"
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
@@ -181,7 +181,7 @@ namespace RailMapGenerator {
         }
 
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenFileDialog ofd = new OpenFileDialog {
+            OpenFileDialog ofd = new () {
                 Title = "打开文件", Filter = "*.railmap|*.railmap"
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
@@ -194,7 +194,7 @@ namespace RailMapGenerator {
         }
 
         private void 导出ToolStripMenuItem_Click(object sender, EventArgs e) {
-            SaveFileDialog sfd = new SaveFileDialog {
+            SaveFileDialog sfd = new () {
                 Title = "导出", Filter = "*.png|*.png"
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
@@ -260,7 +260,7 @@ namespace RailMapGenerator {
 
         private void ModiftStop_Click(object sender, EventArgs e) {
             if (this.Stops.SelectedIndex == -1) return;
-            StopSetting form = new StopSetting(this.railMap.stations[this.Stops.SelectedIndex]);
+            StopSetting form = new(this.railMap.stations[this.Stops.SelectedIndex]);
             if (sender is ToolStripMenuItem item)
                 form.Text = item.Text;
             else
@@ -271,7 +271,7 @@ namespace RailMapGenerator {
 
         private void ModifyLine_Click(object sender, EventArgs e) {
             if (this.Lines.SelectedIndex == -1) return;
-            LineSetting form = new LineSetting(this.railMap.lines[this.Lines.SelectedIndex]);
+            LineSetting form = new(this.railMap.lines[this.Lines.SelectedIndex]);
             if (sender is ToolStripMenuItem item)
                 form.Text = item.Text;
             else
@@ -281,7 +281,7 @@ namespace RailMapGenerator {
         }
 
         private void ModifyStationFont_Click(object sender, EventArgs e) {
-            FontDialog fd = new FontDialog {
+            FontDialog fd = new() {
                 Font = this.railMap.font
             };
             if (fd.ShowDialog() == DialogResult.OK)
@@ -290,7 +290,7 @@ namespace RailMapGenerator {
         }
 
         private void ModifyLegendFont_Click(object sender, EventArgs e) {
-            FontDialog fd = new FontDialog {
+            FontDialog fd = new() {
                 Font = this.railMap.legend.font
             };
             if (fd.ShowDialog() == DialogResult.OK)
@@ -305,12 +305,12 @@ namespace RailMapGenerator {
 
         private void SplitLine_Click(object sender, EventArgs e) {
             if (this.Lines.SelectedIndex == -1) return;
-            LineSetting form1 = new LineSetting {
+            LineSetting form1 = new() {
                 Text = "拆分线路"
             };
             form1.ShowDialog();
             if (form1.line == null) return;
-            SplitLine form2 = new SplitLine(this.railMap.lines[this.Lines.SelectedIndex], form1.line, this.railMap);
+            SplitLine form2 = new(this.railMap.lines[this.Lines.SelectedIndex], form1.line, this.railMap);
             form2.ShowDialog();
             this.ReloadData(false, true, true);
         }
@@ -320,7 +320,7 @@ namespace RailMapGenerator {
         }
 
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e) {
-            About form = new About();
+            About form = new();
             form.ShowDialog();
             form.Dispose();
         }
@@ -354,7 +354,7 @@ namespace RailMapGenerator {
 
         private void ModifyStatus_Click(object sender, EventArgs e) {
             if (this.Lines.SelectedIndex == -1) return;
-            SectionSetting form = new SectionSetting(this.railMap, this.railMap.lines[this.Lines.SelectedIndex]);
+            SectionSetting form = new(this.railMap, this.railMap.lines[this.Lines.SelectedIndex]);
             form.ShowDialog();
             this.ReloadData(false, false, false);
         }
@@ -369,7 +369,7 @@ namespace RailMapGenerator {
 
 
         private void 图例设置ToolStripMenuItem_Click(object sender, EventArgs e) {
-            LegendSetting form = new LegendSetting(this.railMap);
+            LegendSetting form = new(this.railMap);
             form.ShowDialog();
             this.ReloadData(false, false, false);
         }

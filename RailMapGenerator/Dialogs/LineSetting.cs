@@ -18,7 +18,7 @@ namespace RailMapGenerator {
         private void OK_Click(object sender, EventArgs e) {
             if (int.TryParse(this.lineWidth.Text, out int width))
                 if (this.line == null)
-                    this.line = new Line(this.lineName.Text, this.panel1.BackColor, width);
+                    this.line = new(this.lineName.Text, this.panel1.BackColor, width);
                 else {
                     this.line.name = this.lineName.Text;
                     this.line.color = this.panel1.BackColor;
@@ -30,8 +30,9 @@ namespace RailMapGenerator {
         }
 
         private void Panel1_Click(object sender, EventArgs e) {
-            ColorDialog cd = new ColorDialog();
-            cd.Color = this.panel1.BackColor;
+            ColorDialog cd = new() {
+                Color = this.panel1.BackColor
+            };
             if (cd.ShowDialog() == DialogResult.OK)
                 this.panel1.BackColor = cd.Color;
         }
