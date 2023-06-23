@@ -373,5 +373,11 @@ namespace RailMapGenerator {
             form.ShowDialog();
             this.ReloadData(false, false, false);
         }
+
+        private void 翻转车站顺序ToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (this.Lines.SelectedIndex == -1) return;
+            this.railMap.lines[this.Lines.SelectedIndex].stations.Reverse();
+            this.ReloadData(false, false, true);
+        }
     }
 }

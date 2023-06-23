@@ -17,10 +17,15 @@ namespace RailMapGenerator {
 
         private void Ok_Click(object sender, EventArgs e) {
             if (this.Stops.SelectedIndex == -1) return;
-            for (int i = this.Stops.SelectedIndex; i < this.oriLine.stations.Count; i++)
+            for (int i = this.Stops.SelectedIndex; i < this.oriLine.stations.Count; i++) {
                 this.newLine.stations.Add(this.oriLine.stations[i]);
-            for (int i = this.oriLine.stations.Count - 1; i > this.Stops.SelectedIndex; i--)
+                this.newLine.sectionEnabled.Add(this.oriLine.sectionEnabled[i]);
+            }
+            for (int i = this.oriLine.stations.Count - 1; i > this.Stops.SelectedIndex; i--) {
                 this.oriLine.stations.RemoveAt(i);
+                this.oriLine.sectionEnabled.RemoveAt(i);
+            }
+            this.oriLine.sectionEnabled.RemoveAt(this.Stops.SelectedIndex);
             this.map.lines.Add(this.newLine);
             this.Hide();
         }
