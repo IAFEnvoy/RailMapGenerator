@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
+#pragma warning disable CA1416
 namespace RailMapGenerator {
     public class Render {
         private readonly RailMap railMap;

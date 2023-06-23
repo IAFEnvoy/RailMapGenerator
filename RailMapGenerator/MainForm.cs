@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Forms;
 
+#pragma warning disable CA1416
 namespace RailMapGenerator {
     public partial class MainForm : Form {
         private RailMap railMap = new();
@@ -59,8 +60,7 @@ namespace RailMapGenerator {
                         this.StopsOnLine.Items.Add(this.railMap.stations[stop].name);
                     if (this.StopsOnLine.Items.Count == 0)
                         this.StopsOnLine.Items.Add("没有站点");
-                }
-                else
+                } else
                     this.StopsOnLine.Items.Add("未选择线路");
             }
             if (render) {
@@ -69,8 +69,7 @@ namespace RailMapGenerator {
                 if (this.railMap.stations.Count > 0) {
                     float zoom = int.Parse(this.Zoom.Text.Replace('%', '\0')) / 100.0f;
                     this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked);
-                }
-                else
+                } else
                     this.map.Image = new Bitmap(this.railMap.margin * 2, this.railMap.margin * 2);
                 this.map.Location = new(0, 0);
                 this.MapPanel.AutoScroll = true;
@@ -163,13 +162,12 @@ namespace RailMapGenerator {
             if (this.fileName != "") {
                 File.WriteAllText(this.fileName, JsonConvert.SerializeObject(this.railMap), Encoding.UTF8);
                 this.FileStatus.Text = "成功保存至: " + this.fileName;
-            }
-            else
+            } else
                 this.另存为ToolStripMenuItem_Click(sender, e);
         }
 
         private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e) {
-            SaveFileDialog sfd = new (){
+            SaveFileDialog sfd = new() {
                 Title = "保存", Filter = "*.railmap|*.railmap"
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
@@ -181,7 +179,7 @@ namespace RailMapGenerator {
         }
 
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e) {
-            OpenFileDialog ofd = new () {
+            OpenFileDialog ofd = new() {
                 Title = "打开文件", Filter = "*.railmap|*.railmap"
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
@@ -194,7 +192,7 @@ namespace RailMapGenerator {
         }
 
         private void 导出ToolStripMenuItem_Click(object sender, EventArgs e) {
-            SaveFileDialog sfd = new () {
+            SaveFileDialog sfd = new() {
                 Title = "导出", Filter = "*.png|*.png"
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
@@ -211,11 +209,9 @@ namespace RailMapGenerator {
                 if (result == DialogResult.Yes) {
                     this.保存ToolStripMenuItem_Click(sender, e);
                     Environment.Exit(0);
-                }
-                else if (result == DialogResult.No)
+                } else if (result == DialogResult.No)
                     Environment.Exit(0);
-            }
-            else Environment.Exit(0);
+            } else Environment.Exit(0);
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
@@ -362,7 +358,7 @@ namespace RailMapGenerator {
         private void StarMeOnGithubToolStripMenuItem_Click(object sender, EventArgs e) {
             Process.Start("https://github.com/IAFEnvoy/RailMapGenerator");
         }
-        
+
         private void 支持ToolStripMenuItem_Click(object sender, EventArgs e) {
             MessageBox.Show("感谢你的好意辣，但是作者现在还没有可以支持（如爱发电）的地方噢");
         }

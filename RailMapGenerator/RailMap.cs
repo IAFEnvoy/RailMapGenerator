@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
+#pragma warning disable CA1416
 namespace RailMapGenerator {
     public class RailMap {
         public List<Station> stations = new();
