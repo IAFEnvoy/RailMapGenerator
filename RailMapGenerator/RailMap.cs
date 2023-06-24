@@ -20,7 +20,7 @@ namespace RailMapGenerator {
             this.render = new(this);
         }
 
-        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false, bool showLegend = true) {
+        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false, bool showLegend = true, bool showClosedSection = true) {
             foreach (Station station in this.stations)
                 station.ClearCnt();
             foreach (Line line in this.lines) {
@@ -59,13 +59,15 @@ namespace RailMapGenerator {
                 Pen pen = new(line.color, line.lineWidth * zoom);
                 Direction dir = Direction.EMPTY;
                 for (int i = 1; i < line.stations.Count; i++) {
+                    if (!line.sectionEnabled[i - 1] && !showClosedSection) continue;
                     Pen pen1 = line.sectionEnabled[i - 1] ? pen : new(Color.FromArgb(185, 185, 185), line.lineWidth * zoom);
                     dir = this.render.DrawLineSection(line.stations[i - 1], line.stations[i], dir, g, pen1, line.lineWidth, zoom);
                 }
             }
             //Draw Stops
             for (int i = 0; i < this.stations.Count; i++)
-                this.render.DrawStop(g, i, showStopName, this.stations[i].radium, zoom);
+                if (this.stations[i].enable || showClosedSection)
+                    this.render.DrawStop(g, i, showStopName, zoom);
             //Draw Legend
             if (showLegend) {
                 Bitmap l = this.RenderLegend(this.legend.zoom * zoom);

@@ -69,9 +69,9 @@ namespace RailMapGenerator {
             return d2;
         }
 
-        public void DrawStop(Graphics g, int node, bool renderName = true, int radium = 10, float zoom = 1) {
-            FillEllipse(g, this.railMap.stations[node].enable ? Brushes.Black : new SolidBrush(Color.FromArgb(185, 185, 185)), this.railMap.stations[node].location.X - radium, this.railMap.stations[node].location.Y - radium, radium * 2, radium * 2, zoom);
-            int iRadium = radium - 2;
+        public void DrawStop(Graphics g, int node, bool renderName = true, float zoom = 1) {
+            FillEllipse(g, this.railMap.stations[node].enable ? Brushes.Black : new SolidBrush(Color.FromArgb(185, 185, 185)), this.railMap.stations[node].location.X - this.railMap.stations[node].radium, this.railMap.stations[node].location.Y - this.railMap.stations[node].radium, this.railMap.stations[node].radium * 2, this.railMap.stations[node].radium * 2, zoom);
+            int iRadium = this.railMap.stations[node].radium - 2;
             FillEllipse(g, Brushes.White, this.railMap.stations[node].location.X - iRadium, this.railMap.stations[node].location.Y - iRadium, iRadium * 2, iRadium * 2, zoom);
             if (!renderName) return;
             SizeF size = g.MeasureString(this.railMap.stations[node].name, this.railMap.font);

@@ -75,6 +75,7 @@
             this.左移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.右移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.快速算路ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.支持ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.starMeOnGithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +101,7 @@
             this.MapPanel = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
             this.ModifyStatus = new System.Windows.Forms.Button();
-            this.快速算路ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.显示未开通区间ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)this.map).BeginInit();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -111,7 +112,7 @@
             // map
             // 
             this.map.ImageLocation = "";
-            this.map.Location = new System.Drawing.Point(83, 60);
+            this.map.Location = new System.Drawing.Point(67, 63);
             this.map.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.map.Name = "map";
             this.map.Size = new System.Drawing.Size(642, 426);
@@ -128,6 +129,7 @@
             this.Stops.Name = "Stops";
             this.Stops.Size = new System.Drawing.Size(160, 412);
             this.Stops.TabIndex = 111;
+            this.Stops.DoubleClick += this.Stops_DoubleClick;
             // 
             // Lines
             // 
@@ -139,6 +141,7 @@
             this.Lines.Size = new System.Drawing.Size(160, 412);
             this.Lines.TabIndex = 111;
             this.Lines.SelectedIndexChanged += this.Lines_SelectedIndexChanged;
+            this.Lines.DoubleClick += this.Lines_DoubleClick;
             // 
             // StopsOnLine
             // 
@@ -223,7 +226,7 @@
             this.menu.Location = new System.Drawing.Point(0, 0);
             this.menu.Name = "menu";
             this.menu.Padding = new System.Windows.Forms.Padding(5, 3, 0, 3);
-            this.menu.Size = new System.Drawing.Size(1290, 27);
+            this.menu.Size = new System.Drawing.Size(1293, 27);
             this.menu.TabIndex = 112;
             this.menu.Text = "menuStrip1";
             // 
@@ -388,7 +391,7 @@
             // 
             // 绘制ToolStripMenuItem
             // 
-            this.绘制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.显示站点名ToolStripMenuItem, this.显示网格ToolStripMenuItem, this.显示图例ToolStripMenuItem, this.toolStripSeparator5, this.字体设置ToolStripMenuItem, this.图例设置ToolStripMenuItem, this.项目设置ToolStripMenuItem, this.toolStripSeparator6, this.整体移动ToolStripMenuItem });
+            this.绘制ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.显示站点名ToolStripMenuItem, this.显示网格ToolStripMenuItem, this.显示图例ToolStripMenuItem, this.显示未开通区间ToolStripMenuItem, this.toolStripSeparator5, this.字体设置ToolStripMenuItem, this.图例设置ToolStripMenuItem, this.项目设置ToolStripMenuItem, this.toolStripSeparator6, this.整体移动ToolStripMenuItem });
             this.绘制ToolStripMenuItem.Name = "绘制ToolStripMenuItem";
             this.绘制ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.绘制ToolStripMenuItem.Text = "绘制";
@@ -510,6 +513,13 @@
             this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.工具ToolStripMenuItem.Text = "工具";
             // 
+            // 快速算路ToolStripMenuItem
+            // 
+            this.快速算路ToolStripMenuItem.Name = "快速算路ToolStripMenuItem";
+            this.快速算路ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.快速算路ToolStripMenuItem.Text = "快速算路";
+            this.快速算路ToolStripMenuItem.Click += this.快速算路ToolStripMenuItem_Click;
+            // 
             // 帮助ToolStripMenuItem
             // 
             this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.支持ToolStripMenuItem, this.starMeOnGithubToolStripMenuItem, this.关于ToolStripMenuItem });
@@ -587,10 +597,10 @@
             // 
             this.status.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.Zoom, this.AuthorName, this.FileStatus });
-            this.status.Location = new System.Drawing.Point(0, 705);
+            this.status.Location = new System.Drawing.Point(0, 688);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.status.Size = new System.Drawing.Size(1290, 23);
+            this.status.Size = new System.Drawing.Size(1293, 23);
             this.status.TabIndex = 120;
             this.status.Text = "statusStrip1";
             // 
@@ -701,7 +711,7 @@
             this.MapPanel.AutoScroll = true;
             this.MapPanel.Controls.Add(this.map);
             this.MapPanel.Location = new System.Drawing.Point(12, 37);
-            this.MapPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MapPanel.Margin = new System.Windows.Forms.Padding(4);
             this.MapPanel.Name = "MapPanel";
             this.MapPanel.Size = new System.Drawing.Size(756, 646);
             this.MapPanel.TabIndex = 127;
@@ -742,18 +752,21 @@
             this.ModifyStatus.UseVisualStyleBackColor = true;
             this.ModifyStatus.Click += this.ModifyStatus_Click;
             // 
-            // 快速算路ToolStripMenuItem
+            // 显示未开通区间ToolStripMenuItem
             // 
-            this.快速算路ToolStripMenuItem.Enabled = false;
-            this.快速算路ToolStripMenuItem.Name = "快速算路ToolStripMenuItem";
-            this.快速算路ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.快速算路ToolStripMenuItem.Text = "快速算路";
+            this.显示未开通区间ToolStripMenuItem.Checked = true;
+            this.显示未开通区间ToolStripMenuItem.CheckOnClick = true;
+            this.显示未开通区间ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.显示未开通区间ToolStripMenuItem.Name = "显示未开通区间ToolStripMenuItem";
+            this.显示未开通区间ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.显示未开通区间ToolStripMenuItem.Text = "显示未开通区间";
+            this.显示未开通区间ToolStripMenuItem.CheckedChanged += this.Check_Change;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1290, 728);
+            this.ClientSize = new System.Drawing.Size(1293, 711);
             this.Controls.Add(this.MapPanel);
             this.Controls.Add(this.controlPanel);
             this.Controls.Add(this.status);
@@ -761,7 +774,7 @@
             this.Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             this.MainMenuStrip = this.menu;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.MinimumSize = new System.Drawing.Size(526, 764);
+            this.MinimumSize = new System.Drawing.Size(526, 750);
             this.Name = "MainForm";
             this.Text = "线路图生成器";
             this.FormClosing += this.MainForm_FormClosing;
@@ -858,5 +871,6 @@
         private System.Windows.Forms.ToolStripMenuItem 工具ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 翻转车站顺序ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 快速算路ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 显示未开通区间ToolStripMenuItem;
     }
 }

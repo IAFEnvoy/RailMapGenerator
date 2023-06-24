@@ -68,7 +68,7 @@ namespace RailMapGenerator {
                 this.MapPanel.AutoScroll = false;
                 if (this.railMap.stations.Count > 0) {
                     float zoom = int.Parse(this.Zoom.Text.Replace('%', '\0')) / 100.0f;
-                    this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked);
+                    this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked);
                 } else
                     this.map.Image = new Bitmap(this.railMap.margin * 2, this.railMap.margin * 2);
                 this.map.Location = new(0, 0);
@@ -197,7 +197,7 @@ namespace RailMapGenerator {
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
                 float zoom = int.Parse(this.Zoom.Text.Replace('%', '\0')) / 100.0f;
-                this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked).Save(sfd.FileName);
+                this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked).Save(sfd.FileName);
                 this.FileStatus.Text = "成功导出至: " + sfd.FileName;
             }
             sfd.Dispose();
@@ -373,7 +373,24 @@ namespace RailMapGenerator {
         private void 翻转车站顺序ToolStripMenuItem_Click(object sender, EventArgs e) {
             if (this.Lines.SelectedIndex == -1) return;
             this.railMap.lines[this.Lines.SelectedIndex].stations.Reverse();
+            this.railMap.lines[this.Lines.SelectedIndex].sectionEnabled.RemoveAt(this.railMap.lines[this.Lines.SelectedIndex].sectionEnabled.Count - 1);
+            this.railMap.lines[this.Lines.SelectedIndex].sectionEnabled.Reverse();
+            this.railMap.lines[this.Lines.SelectedIndex].sectionEnabled.Add(true);
             this.ReloadData(false, false, true);
+        }
+
+        private void Stops_DoubleClick(object sender, EventArgs e) {
+            this.ModiftStop_Click(sender, e);
+        }
+
+        private void Lines_DoubleClick(object sender, EventArgs e) {
+            this.ModifyLine_Click(sender, e);
+        }
+
+        private void 快速算路ToolStripMenuItem_Click(object sender, EventArgs e) {
+            RouteFinder routeFinder = new(this.railMap);
+            routeFinder.ShowDialog();
+            routeFinder.Dispose();
         }
     }
 }
