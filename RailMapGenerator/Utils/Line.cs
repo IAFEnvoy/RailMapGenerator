@@ -2,7 +2,7 @@
 using System.Drawing;
 
 namespace RailMapGenerator {
-    public class Line {
+    public class Line : IRoutable {
         public string name;
         public List<int> stations = new();
         public List<bool> sectionEnabled = new();
@@ -17,6 +17,10 @@ namespace RailMapGenerator {
                 this.stations.Add(station);
                 this.sectionEnabled.Add(true);
             }
+        }
+
+        public string GetName() {
+            return this.name;
         }
     }
 }

@@ -3,7 +3,7 @@ using System;
 using System.Drawing;
 
 namespace RailMapGenerator {
-    public class Station {
+    public class Station:IRoutable {
         public static readonly float sqrt2div2 = (float)(Math.Sqrt(2) / 2);
         public Point location;
         public string name;
@@ -79,6 +79,10 @@ namespace RailMapGenerator {
             if (ret == null)
                 return new(0, 0);
             return ret;
+        }
+        
+        public string GetName() {
+            return this.name;
         }
     }
 }
