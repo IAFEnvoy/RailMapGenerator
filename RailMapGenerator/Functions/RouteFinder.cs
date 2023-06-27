@@ -15,8 +15,19 @@ namespace RailMapGenerator {
         }
 
         private void button1_Click(object sender, EventArgs e) {
+            int stationWeight = 0, transferWeight = 0;
+            if (this.radioButton1.Checked) {
+                stationWeight = 1;
+                transferWeight = 0;
+            } else if (this.radioButton2.Checked) {
+                stationWeight = 1;
+                transferWeight = 1;
+            } else if (this.radioButton3.Checked) {
+                stationWeight = 1;
+                transferWeight = 10;
+            } else return;
             this.textBox1.Text = "";
-            List<List<IRoutable>> ans = Route.GetShortestPath(this.railMap, this.startStation.SelectedIndex, this.endStation.SelectedIndex, 1, 1);
+            List<List<IRoutable>> ans = Route.GetShortestPath(this.railMap, this.startStation.SelectedIndex, this.endStation.SelectedIndex, stationWeight, transferWeight);
             if (ans.Count == 0) this.textBox1.Text = "未找到可行线路";
             else
                 foreach (List<IRoutable> s in ans) {
