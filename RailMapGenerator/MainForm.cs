@@ -392,5 +392,13 @@ namespace RailMapGenerator {
             routeFinder.ShowDialog();
             routeFinder.Dispose();
         }
+
+        private void 启动本地服务器ToolStripMenuItem_Click(object sender, EventArgs e) {
+            LocalServer.StartServer();
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
+            LocalServer.Stop();
+        }
     }
 }

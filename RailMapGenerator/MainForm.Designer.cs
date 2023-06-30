@@ -62,6 +62,7 @@
             this.显示站点名ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示网格ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示图例ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.显示未开通区间ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.字体设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.站名字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +77,9 @@
             this.右移50ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.快速算路ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.本地服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.启动本地服务器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.本地服务器文档ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.支持ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.starMeOnGithubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,7 +105,6 @@
             this.MapPanel = new System.Windows.Forms.Panel();
             this.controlPanel = new System.Windows.Forms.Panel();
             this.ModifyStatus = new System.Windows.Forms.Button();
-            this.显示未开通区间ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)this.map).BeginInit();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -402,7 +405,7 @@
             this.显示站点名ToolStripMenuItem.CheckOnClick = true;
             this.显示站点名ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示站点名ToolStripMenuItem.Name = "显示站点名ToolStripMenuItem";
-            this.显示站点名ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.显示站点名ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.显示站点名ToolStripMenuItem.Text = "显示站点名";
             this.显示站点名ToolStripMenuItem.CheckedChanged += this.Check_Change;
             // 
@@ -412,7 +415,7 @@
             this.显示网格ToolStripMenuItem.CheckOnClick = true;
             this.显示网格ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示网格ToolStripMenuItem.Name = "显示网格ToolStripMenuItem";
-            this.显示网格ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.显示网格ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.显示网格ToolStripMenuItem.Text = "显示网格";
             this.显示网格ToolStripMenuItem.CheckedChanged += this.Check_Change;
             // 
@@ -422,20 +425,30 @@
             this.显示图例ToolStripMenuItem.CheckOnClick = true;
             this.显示图例ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.显示图例ToolStripMenuItem.Name = "显示图例ToolStripMenuItem";
-            this.显示图例ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.显示图例ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.显示图例ToolStripMenuItem.Text = "显示图例";
             this.显示图例ToolStripMenuItem.CheckedChanged += this.Check_Change;
+            // 
+            // 显示未开通区间ToolStripMenuItem
+            // 
+            this.显示未开通区间ToolStripMenuItem.Checked = true;
+            this.显示未开通区间ToolStripMenuItem.CheckOnClick = true;
+            this.显示未开通区间ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.显示未开通区间ToolStripMenuItem.Name = "显示未开通区间ToolStripMenuItem";
+            this.显示未开通区间ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.显示未开通区间ToolStripMenuItem.Text = "显示未开通区间";
+            this.显示未开通区间ToolStripMenuItem.CheckedChanged += this.Check_Change;
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(157, 6);
             // 
             // 字体设置ToolStripMenuItem
             // 
             this.字体设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.站名字体ToolStripMenuItem, this.图例字体ToolStripMenuItem });
             this.字体设置ToolStripMenuItem.Name = "字体设置ToolStripMenuItem";
-            this.字体设置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.字体设置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.字体设置ToolStripMenuItem.Text = "字体设置";
             // 
             // 站名字体ToolStripMenuItem
@@ -455,7 +468,7 @@
             // 图例设置ToolStripMenuItem
             // 
             this.图例设置ToolStripMenuItem.Name = "图例设置ToolStripMenuItem";
-            this.图例设置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.图例设置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.图例设置ToolStripMenuItem.Text = "图例设置";
             this.图例设置ToolStripMenuItem.Click += this.图例设置ToolStripMenuItem_Click;
             // 
@@ -463,19 +476,19 @@
             // 
             this.项目设置ToolStripMenuItem.Enabled = false;
             this.项目设置ToolStripMenuItem.Name = "项目设置ToolStripMenuItem";
-            this.项目设置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.项目设置ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.项目设置ToolStripMenuItem.Text = "项目设置";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(157, 6);
             // 
             // 整体移动ToolStripMenuItem
             // 
             this.整体移动ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.上移50ToolStripMenuItem, this.下移50ToolStripMenuItem, this.左移50ToolStripMenuItem, this.右移50ToolStripMenuItem });
             this.整体移动ToolStripMenuItem.Name = "整体移动ToolStripMenuItem";
-            this.整体移动ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.整体移动ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.整体移动ToolStripMenuItem.Text = "整体移动";
             // 
             // 上移50ToolStripMenuItem
@@ -508,7 +521,7 @@
             // 
             // 工具ToolStripMenuItem
             // 
-            this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.快速算路ToolStripMenuItem });
+            this.工具ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.快速算路ToolStripMenuItem, this.本地服务器ToolStripMenuItem });
             this.工具ToolStripMenuItem.Name = "工具ToolStripMenuItem";
             this.工具ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.工具ToolStripMenuItem.Text = "工具";
@@ -516,9 +529,29 @@
             // 快速算路ToolStripMenuItem
             // 
             this.快速算路ToolStripMenuItem.Name = "快速算路ToolStripMenuItem";
-            this.快速算路ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.快速算路ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.快速算路ToolStripMenuItem.Text = "快速算路";
             this.快速算路ToolStripMenuItem.Click += this.快速算路ToolStripMenuItem_Click;
+            // 
+            // 本地服务器ToolStripMenuItem
+            // 
+            this.本地服务器ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { this.启动本地服务器ToolStripMenuItem, this.本地服务器文档ToolStripMenuItem });
+            this.本地服务器ToolStripMenuItem.Name = "本地服务器ToolStripMenuItem";
+            this.本地服务器ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.本地服务器ToolStripMenuItem.Text = "本地服务器";
+            // 
+            // 启动本地服务器ToolStripMenuItem
+            // 
+            this.启动本地服务器ToolStripMenuItem.Name = "启动本地服务器ToolStripMenuItem";
+            this.启动本地服务器ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.启动本地服务器ToolStripMenuItem.Text = "启动本地服务器";
+            this.启动本地服务器ToolStripMenuItem.Click += this.启动本地服务器ToolStripMenuItem_Click;
+            // 
+            // 本地服务器文档ToolStripMenuItem
+            // 
+            this.本地服务器文档ToolStripMenuItem.Name = "本地服务器文档ToolStripMenuItem";
+            this.本地服务器文档ToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.本地服务器文档ToolStripMenuItem.Text = "本地服务器文档";
             // 
             // 帮助ToolStripMenuItem
             // 
@@ -752,16 +785,6 @@
             this.ModifyStatus.UseVisualStyleBackColor = true;
             this.ModifyStatus.Click += this.ModifyStatus_Click;
             // 
-            // 显示未开通区间ToolStripMenuItem
-            // 
-            this.显示未开通区间ToolStripMenuItem.Checked = true;
-            this.显示未开通区间ToolStripMenuItem.CheckOnClick = true;
-            this.显示未开通区间ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.显示未开通区间ToolStripMenuItem.Name = "显示未开通区间ToolStripMenuItem";
-            this.显示未开通区间ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.显示未开通区间ToolStripMenuItem.Text = "显示未开通区间";
-            this.显示未开通区间ToolStripMenuItem.CheckedChanged += this.Check_Change;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -778,6 +801,7 @@
             this.Name = "MainForm";
             this.Text = "线路图生成器";
             this.FormClosing += this.MainForm_FormClosing;
+            this.FormClosed += this.MainForm_FormClosed;
             this.Resize += this.MainForm_Resize;
             ((System.ComponentModel.ISupportInitialize)this.map).EndInit();
             this.menu.ResumeLayout(false);
@@ -872,5 +896,8 @@
         private System.Windows.Forms.ToolStripMenuItem 翻转车站顺序ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 快速算路ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 显示未开通区间ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 本地服务器ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 启动本地服务器ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 本地服务器文档ToolStripMenuItem;
     }
 }
