@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RailMapGenerator.Utils.Server;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -11,6 +12,7 @@ namespace RailMapGenerator {
     public partial class MainForm : Form {
         private RailMap railMap = new();
         private string fileName = "";
+        private string originJson = "";
 
         public MainForm() {
             this.InitializeComponent();
@@ -184,7 +186,8 @@ namespace RailMapGenerator {
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
                 this.fileName = ofd.FileName;
-                this.railMap = JsonConvert.DeserializeObject<RailMap>(File.ReadAllText(this.fileName, Encoding.UTF8));
+                this.originJson = File.ReadAllText(this.fileName, Encoding.UTF8);
+                this.railMap = JsonConvert.DeserializeObject<RailMap>(this.originJson);
                 this.ReloadData(true, true, true);
                 this.FileStatus.Text = "成功打开文件: " + ofd.FileName;
             }
@@ -215,7 +218,7 @@ namespace RailMapGenerator {
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e) {
-            if (!this.railMap.IsEmpty()) {
+            if (!this.railMap.IsEmpty() && JsonConvert.SerializeObject(this.railMap) != this.originJson) {
                 var result = MessageBox.Show("是否保存当前内容？", "线路图生成器", MessageBoxButtons.YesNoCancel);
                 if (result == DialogResult.Yes)
                     this.保存ToolStripMenuItem_Click(sender, e);
@@ -394,11 +397,9 @@ namespace RailMapGenerator {
         }
 
         private void 启动本地服务器ToolStripMenuItem_Click(object sender, EventArgs e) {
-            LocalServer.StartServer();
-        }
-
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
-            LocalServer.Stop();
+            ServerHud serverHud = new(this.railMap);
+            serverHud.ShowDialog();
+            serverHud.Dispose();
         }
     }
 }

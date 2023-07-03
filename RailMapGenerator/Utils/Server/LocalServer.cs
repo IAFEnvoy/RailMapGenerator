@@ -1,49 +1,44 @@
-﻿using System.Linq;
+﻿using PeanutButter.SimpleHTTPServer;
+using System.Collections.Generic;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
-using System.Threading;
+using System.Web;
 using System.Windows.Forms;
 
 namespace RailMapGenerator {
     internal class LocalServer {
-        static bool RequestStop = false;
+        private static RailMap railMap = null;
+        public static HttpServer server = null;
 
-        public static void StartServer() {
-            TcpListener server = new(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8989));
+        public static void StartServer(RailMap map, LogServerMessage handler) {
+            railMap = map;
+            server = new(8989, handler.Invoke);
+            server.AddHandler((processor, stream) => {
+                if (processor.Path == "favicon.ico") return HttpServerPipelineResult.NotHandled;
+                else if (processor.Path == "/")
+                    processor.WriteSuccess("text/plain", Encoding.UTF8.GetBytes("Ping Message"));
+                else if (processor.Path == "/route") {
+                    Dictionary<string, string> form = processor.UrlParameters;
+                    if (form != null && form.ContainsKey("start") && form.ContainsKey("end")) {
+                        int start = railMap.GetStationByName(HttpUtility.UrlDecode(form["start"])), end = railMap.GetStationByName(HttpUtility.UrlDecode(form["end"]));
+                        if (start == -1 || end == -1) processor.WriteFailure(HttpStatusCode.NotFound, "Not Found", "Station Not Found");
+                        else {
+                            List<List<IRoutable>> res = Route.GetShortestPath(railMap, start, end, 1, 1, false);
+                            if (res.Count == 0) processor.WriteFailure(HttpStatusCode.NotFound, "Not Found", "Route Not Found");
+                            else {
+                                List<string> newList = new();
+                                res[0].ForEach(i => newList.Add(i.GetName()));
+                                processor.WriteSuccess("text/plain; charset=UTF-8", Encoding.UTF8.GetBytes(string.Join("-", newList)));
+                            }
+                        }
+                    } else
+                        processor.WriteFailure(HttpStatusCode.BadRequest, "Bad Request", "Missing one of the fields. [start,end]");
+                }
+                return HttpServerPipelineResult.HandledExclusively;
+            });
             server.Start();
-            new Thread(() => {
-                while (!RequestStop)
-                    if (server.Pending()) {
-                        TcpClient client = server.AcceptTcpClient();
-                        new Thread(() => Serve(client, "")).Start();
-                    }
-                server.Stop();
-            }).Start();
-        }
-
-        static void Serve(TcpClient client, string baseAddress) {
-            NetworkStream stream = client.GetStream();
-            byte[] buffer = new byte[512];
-            stream.Read(buffer);
-            string str = Encoding.ASCII.GetString(buffer);
-            string firstLine = str.Split("\r\n").First();
-            string urlFull = firstLine.Split(" ")[1];
-            string url = urlFull.Split("?")[0], args = "";
-            if (url != urlFull) args = urlFull[(url.Length + 1)..];
-            if (url == "/"||url=="") {
-                stream.Write(Encoding.UTF8.GetBytes("HTTP/1.1 200 OK\r\n"));
-                stream.Write(Encoding.UTF8.GetBytes("Content-Type: text/plain\r\n"));
-                stream.Write(Encoding.UTF8.GetBytes("Connection: close\r\n"));
-                stream.Write(Encoding.UTF8.GetBytes("\r\n"));
-                stream.Write(Encoding.UTF8.GetBytes("Test Message"));
-            }
-            stream.Close();
-            client.Close();
-        }
-
-        public static void Stop() {
-            RequestStop = true;
         }
     }
+
+    delegate void LogServerMessage(string message);
 }

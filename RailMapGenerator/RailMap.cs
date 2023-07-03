@@ -96,6 +96,13 @@ namespace RailMapGenerator {
             return ret;
         }
 
+        public int GetStationByName(string name) {
+            for (int i = 0; i < this.stations.Count; i++)
+                if (this.stations[i].name == name)
+                    return i;
+            return -1;
+        }
+
         public bool IsEmpty() {
             return this.lines.Count == 0 && this.stations.Count == 0;
         }

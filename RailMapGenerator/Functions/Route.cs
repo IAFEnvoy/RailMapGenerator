@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace RailMapGenerator {
     internal class Route {
@@ -9,21 +10,26 @@ namespace RailMapGenerator {
         private readonly RailMap railMap;
         private readonly int stationWeight;
         private readonly int transferWeight;
-        public Route(RailMap railMap, int stationWeight, int transferWeight) {
+        private readonly bool includeIncomplete;
+
+        public Route(RailMap railMap, int stationWeight, int transferWeight, bool includeIncomplete) {
             this.railMap = railMap;
             for (int i = 0; i < this.railMap.stations.Count; i++) this.visited.Add(false);
             this.stationWeight = stationWeight;
             this.transferWeight = transferWeight;
+            this.includeIncomplete = includeIncomplete;
         }
 
-        private static List<int> GetNeighborElement(List<int> list, int target) {//TODO: 去重
-            List<int> ret = new();
-            if (list[0] == target) ret.Add(list[1]);
-            if (list[^1] == target) ret.Add(list[^2]);
-            for (int i = 1; i <= list.Count - 2; i++)
-                if (list[i] == target) {
-                    ret.Add(list[i - 1]);
-                    ret.Add(list[i + 1]);
+        private HashSet<int> GetNeighborElement(Line line, int target) {
+            HashSet<int> ret = new();
+            if (line.stations[0] == target) ret.Add(line.stations[1]);
+            if (line.stations[^1] == target) ret.Add(line.stations[^2]);
+            for (int i = 1; i <= line.stations.Count - 2; i++)
+                if (line.stations[i] == target) {
+                    if (line.sectionEnabled[i - 1] || this.includeIncomplete)
+                        ret.Add(line.stations[i - 1]);
+                    if (line.sectionEnabled[i] || this.includeIncomplete)
+                        ret.Add(line.stations[i + 1]);
                 }
             return ret;
         }
@@ -38,13 +44,12 @@ namespace RailMapGenerator {
 
         private static List<IRoutable> RemoveSameNear(List<IRoutable> list) {
             List<IRoutable> newList = new() { list[0] };
-            for (int i = 1; i <= list.Count - 3; i += 2) {
+            for (int i = 1; i <= list.Count - 3; i += 2)
                 if (list[i] != list[i + 2]) {
                     newList.Add(list[i]);
                     newList.Add(list[i + 1]);
                 }
-            }
-            newList.Add(list[^2]);
+            newList.Add(list[^2]); 
             newList.Add(list[^1]);
             return newList;
         }
@@ -60,34 +65,22 @@ namespace RailMapGenerator {
                     this.ansPath.Add(RemoveSameNear(path));
                 return;
             }
-            List<Pair<Line, List<int>>> neighborStation = new();
+            List<Pair<Line, HashSet<int>>> neighborStation = new();
             foreach (Line line in this.railMap.lines) {
-                List<int> l = GetNeighborElement(line.stations, nowStationIndex);
+                HashSet<int> l = GetNeighborElement(line, nowStationIndex);
                 if (l.Count > 0) neighborStation.Add(new(line, l));
             }
-            foreach (Pair<Line, List<int>> p in neighborStation) {
-                if (p.first == lastLine) {
-                    foreach (int i in p.second) {
-                        if (!this.visited[i]) {
-                            this.visited[i] = true;
-                            this.GetShortest(i, endStationIndex, score + this.stationWeight, p.first, Package(path, p.first, this.railMap.stations[i]));
-                            this.visited[i] = false;
-                        }
+            foreach (Pair<Line, HashSet<int>> p in neighborStation)
+                foreach (int i in p.second)
+                    if (!this.visited[i]) {
+                        this.visited[i] = true;
+                        this.GetShortest(i, endStationIndex, score + this.stationWeight + (p.first == lastLine ? 0 : this.transferWeight), p.first, Package(path, p.first, this.railMap.stations[i]));
+                        this.visited[i] = false;
                     }
-                } else {
-                    foreach (int i in p.second) {
-                        if (!this.visited[i]) {
-                            this.visited[i] = true;
-                            this.GetShortest(i, endStationIndex, score + this.stationWeight + this.transferWeight, p.first, Package(path, p.first, this.railMap.stations[i]));
-                            this.visited[i] = false;
-                        }
-                    }
-                }
-            }
         }
 
-        public static List<List<IRoutable>> GetShortestPath(RailMap railMap, int startStationIndex, int endStationIndex, int stationWeight, int transferWeight) {
-            Route route = new(railMap, stationWeight, transferWeight);
+        public static List<List<IRoutable>> GetShortestPath(RailMap railMap, int startStationIndex, int endStationIndex, int stationWeight, int transferWeight, bool includeIncomplete = false) {
+            Route route = new(railMap, stationWeight, transferWeight, includeIncomplete);
             route.GetShortest(startStationIndex, endStationIndex, 0, null, new() { railMap.stations[startStationIndex] });
             return route.ansPath;
         }

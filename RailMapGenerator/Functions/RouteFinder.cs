@@ -27,7 +27,7 @@ namespace RailMapGenerator {
                 transferWeight = 10;
             } else return;
             this.textBox1.Text = "";
-            List<List<IRoutable>> ans = Route.GetShortestPath(this.railMap, this.startStation.SelectedIndex, this.endStation.SelectedIndex, stationWeight, transferWeight);
+            List<List<IRoutable>> ans = Route.GetShortestPath(this.railMap, this.startStation.SelectedIndex, this.endStation.SelectedIndex, stationWeight, transferWeight,this.checkBox1.Checked);
             if (ans.Count == 0) this.textBox1.Text = "未找到可行线路";
             else
                 foreach (List<IRoutable> s in ans) {

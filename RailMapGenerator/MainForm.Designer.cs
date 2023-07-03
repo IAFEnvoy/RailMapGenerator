@@ -801,7 +801,6 @@
             this.Name = "MainForm";
             this.Text = "线路图生成器";
             this.FormClosing += this.MainForm_FormClosing;
-            this.FormClosed += this.MainForm_FormClosed;
             this.Resize += this.MainForm_Resize;
             ((System.ComponentModel.ISupportInitialize)this.map).EndInit();
             this.menu.ResumeLayout(false);

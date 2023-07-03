@@ -31,6 +31,7 @@
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // startStation
@@ -63,12 +64,12 @@
             this.textBox1.Location = new System.Drawing.Point(12, 75);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(477, 158);
+            this.textBox1.Size = new System.Drawing.Size(590, 158);
             this.textBox1.TabIndex = 3;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(405, 10);
+            this.button1.Location = new System.Drawing.Point(518, 9);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(84, 60);
             this.button1.TabIndex = 4;
@@ -108,11 +109,22 @@
             this.radioButton3.Text = "最少换乘";
             this.radioButton3.UseVisualStyleBackColor = true;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(405, 10);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(111, 21);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Text = "计入未开通车站";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // RouteFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 243);
+            this.ClientSize = new System.Drawing.Size(614, 243);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
@@ -142,5 +154,6 @@
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
