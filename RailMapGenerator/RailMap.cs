@@ -20,7 +20,7 @@ namespace RailMapGenerator {
             this.render = new(this);
         }
 
-        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false, bool showLegend = true, bool showClosedSection = true) {
+        public Bitmap RenderMap(float zoom = 1, bool showStopName = true, bool showGrid = false, bool showLegend = true, bool showClosedSection = true,bool showRod=false) {
             foreach (Station station in this.stations)
                 station.ClearCnt();
             foreach (Line line in this.lines) {
@@ -51,6 +51,14 @@ namespace RailMapGenerator {
                     g.DrawLine(gray, i * 50 * zoom, 0, i * 50 * zoom, bitmap.Height);
                 for (int i = 1; i <= bitmap.Height / 50 / zoom; i++)
                     g.DrawLine(gray, 0, i * 50 * zoom, bitmap.Width, i * 50 * zoom);
+            }
+            //Draw rod
+            if (showRod) {
+                Brush gray = Brushes.Gray;
+                for (int i = 1; i <= bitmap.Width / 50 / zoom; i++)
+                    g.DrawString((i * 50).ToString(), this.font, gray, i * 50 * zoom, 0);
+                for (int i = 1; i <= bitmap.Height / 50 / zoom; i++)
+                    g.DrawString((i * 50).ToString(), this.font, gray,0, i * 50 * zoom);
             }
             //Draw line
             foreach (Line line in this.lines) {

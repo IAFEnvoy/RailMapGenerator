@@ -13,7 +13,7 @@ namespace RailMapGenerator {
             int y = this.railMap.stations[end].location.Y - this.railMap.stations[start].location.Y;
             Direction d = Direction.EMPTY;
             if (x == 0 && y == 0)
-                return new (last, last);
+                return new(last, last);
             else if (x == 0)
                 d = y > 0 ? Direction.PositiveY : Direction.NegativeY;
             else if (y == 0)
@@ -23,7 +23,7 @@ namespace RailMapGenerator {
             else if (x == -y)
                 d = x > 0 ? Direction.PXNY : Direction.NXPY;
             if (d != Direction.EMPTY)
-                return new (d, d);
+                return new(d, d);
             Direction d1, d2;
             if (x > y)
                 d1 = x + y > 0 ? Direction.PositiveX : Direction.NegativeY;
@@ -34,7 +34,7 @@ namespace RailMapGenerator {
             else
                 d2 = y > 0 ? Direction.NXPY : Direction.NXNY;
             if (last == Direction.EMPTY)
-                return new (d1, d2);
+                return new(d1, d2);
             int r1 = Math.Abs(last.GetId() - d1.GetId());
             if (r1 > 4) r1 = 8 - r1;
             int r2 = Math.Abs(last.GetId() - d2.GetId());

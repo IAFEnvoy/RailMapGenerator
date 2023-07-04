@@ -19,7 +19,7 @@ namespace RailMapGenerator {
 
         private void RenderLegend() {
             if (int.TryParse(this.xOffset.Text, out int x) && int.TryParse(this.yOffset.Text, out int y) && int.TryParse(this.count.Text, out int c)
-                &&float.TryParse(this.zoom.Text.Replace('%', '\0'),out float z)) {
+                && float.TryParse(this.zoom.Text.Replace('%', '\0'), out float z)) {
                 this.map.legend.isHorizon = this.rel.Text == "横向";
                 this.map.legend.location = new Point(x, y);
                 this.map.legend.count = c;

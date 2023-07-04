@@ -31,37 +31,37 @@
             // Stops
             // 
             this.Stops.FormattingEnabled = true;
-            this.Stops.ItemHeight = 15;
-            this.Stops.Location = new System.Drawing.Point(12, 12);
+            this.Stops.ItemHeight = 17;
+            this.Stops.Location = new System.Drawing.Point(10, 14);
             this.Stops.Name = "Stops";
-            this.Stops.Size = new System.Drawing.Size(236, 349);
+            this.Stops.Size = new System.Drawing.Size(207, 395);
             this.Stops.TabIndex = 0;
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(12, 367);
+            this.ok.Location = new System.Drawing.Point(10, 416);
             this.ok.Name = "ok";
-            this.ok.Size = new System.Drawing.Size(97, 59);
+            this.ok.Size = new System.Drawing.Size(102, 67);
             this.ok.TabIndex = 3;
             this.ok.Text = "确认";
             this.ok.UseVisualStyleBackColor = true;
-            this.ok.Click += new System.EventHandler(this.Ok_Click);
+            this.ok.Click += this.Ok_Click;
             // 
             // cancel
             // 
-            this.cancel.Location = new System.Drawing.Point(151, 367);
+            this.cancel.Location = new System.Drawing.Point(118, 416);
             this.cancel.Name = "cancel";
-            this.cancel.Size = new System.Drawing.Size(97, 59);
+            this.cancel.Size = new System.Drawing.Size(99, 67);
             this.cancel.TabIndex = 4;
             this.cancel.Text = "取消";
             this.cancel.UseVisualStyleBackColor = true;
-            this.cancel.Click += new System.EventHandler(this.Cancel_Click);
+            this.cancel.Click += this.Cancel_Click;
             // 
             // SplitLine
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(261, 434);
+            this.ClientSize = new System.Drawing.Size(228, 492);
             this.Controls.Add(this.cancel);
             this.Controls.Add(this.ok);
             this.Controls.Add(this.Stops);
@@ -74,7 +74,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "选择拆分车站";
             this.ResumeLayout(false);
-
         }
 
         #endregion

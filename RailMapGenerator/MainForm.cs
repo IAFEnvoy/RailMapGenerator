@@ -70,7 +70,7 @@ namespace RailMapGenerator {
                 this.MapPanel.AutoScroll = false;
                 if (this.railMap.stations.Count > 0) {
                     float zoom = int.Parse(this.Zoom.Text.Replace('%', '\0')) / 100.0f;
-                    this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked);
+                    this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked,this.显示标尺ToolStripMenuItem.Checked);
                 } else
                     this.map.Image = new Bitmap(this.railMap.margin * 2, this.railMap.margin * 2);
                 this.map.Location = new(0, 0);
@@ -199,8 +199,7 @@ namespace RailMapGenerator {
                 Title = "导出", Filter = "*.png|*.png"
             };
             if (sfd.ShowDialog() == DialogResult.OK) {
-                float zoom = int.Parse(this.Zoom.Text.Replace('%', '\0')) / 100.0f;
-                this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked).Save(sfd.FileName);
+                this.map.Image.Save(sfd.FileName);
                 this.FileStatus.Text = "成功导出至: " + sfd.FileName;
             }
             sfd.Dispose();
@@ -400,6 +399,10 @@ namespace RailMapGenerator {
             ServerHud serverHud = new(this.railMap);
             serverHud.ShowDialog();
             serverHud.Dispose();
+        }
+
+        private void 清理内存ToolStripMenuItem_Click(object sender, EventArgs e) {
+            GC.Collect();
         }
     }
 }

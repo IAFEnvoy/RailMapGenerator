@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+﻿using System.Collections.Generic;
 
 namespace RailMapGenerator {
     internal class Route {
@@ -49,7 +47,7 @@ namespace RailMapGenerator {
                     newList.Add(list[i]);
                     newList.Add(list[i + 1]);
                 }
-            newList.Add(list[^2]); 
+            newList.Add(list[^2]);
             newList.Add(list[^1]);
             return newList;
         }

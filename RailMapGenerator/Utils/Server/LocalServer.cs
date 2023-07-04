@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Web;
-using System.Windows.Forms;
 
 namespace RailMapGenerator {
     internal class LocalServer {
@@ -21,7 +20,7 @@ namespace RailMapGenerator {
                     Dictionary<string, string> form = processor.UrlParameters;
                     if (form != null && form.ContainsKey("start") && form.ContainsKey("end")) {
                         int start = railMap.GetStationByName(HttpUtility.UrlDecode(form["start"])), end = railMap.GetStationByName(HttpUtility.UrlDecode(form["end"]));
-                        if (start == -1 || end == -1) processor.WriteFailure(HttpStatusCode.NotFound, "Not Found", "Station Not Found");
+                        if (start == -1 || end == -1) processor.WriteFailure(HttpStatusCode.NotAcceptable, "Not Acceptable", "Station Not Found");
                         else {
                             List<List<IRoutable>> res = Route.GetShortestPath(railMap, start, end, 1, 1, false);
                             if (res.Count == 0) processor.WriteFailure(HttpStatusCode.NotFound, "Not Found", "Route Not Found");

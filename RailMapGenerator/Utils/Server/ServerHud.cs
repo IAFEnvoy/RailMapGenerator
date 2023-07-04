@@ -10,7 +10,7 @@ namespace RailMapGenerator.Utils.Server {
         }
 
         private void ServerHud_Load(object sender, EventArgs e) {
-            LocalServer.StartServer(this.map ,(message) => {
+            LocalServer.StartServer(this.map, (message) => {
                 this.textBox1.Invoke(() => {
                     this.textBox1.Text += message + "\r\n";
                 });
