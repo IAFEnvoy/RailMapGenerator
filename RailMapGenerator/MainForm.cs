@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RailMapGenerator.Utils.Server;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,10 +13,15 @@ namespace RailMapGenerator {
         private string fileName = "";
         private string originJson = "";
 
-        public MainForm() {
+        public MainForm(string openFilePath) {
             this.InitializeComponent();
             this.controlPanel.Tag = this.Width - this.controlPanel.Left;
-            this.ReloadData(true, true, true, false);
+            if (openFilePath != null) {
+                this.originJson = File.ReadAllText(openFilePath, Encoding.UTF8);
+                this.railMap = JsonConvert.DeserializeObject<RailMap>(this.originJson);
+                this.FileStatus.Text = "成功打开文件: " + openFilePath;
+            }
+            this.ReloadData(true, true, true);
         }
 
         private int ParseIndex(int origin, int count) {
@@ -70,7 +74,7 @@ namespace RailMapGenerator {
                 this.MapPanel.AutoScroll = false;
                 if (this.railMap.stations.Count > 0) {
                     float zoom = int.Parse(this.Zoom.Text.Replace('%', '\0')) / 100.0f;
-                    this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked,this.显示标尺ToolStripMenuItem.Checked);
+                    this.map.Image = this.railMap.RenderMap(zoom, this.显示站点名ToolStripMenuItem.Checked, this.显示网格ToolStripMenuItem.Checked, this.显示图例ToolStripMenuItem.Checked, this.显示未开通区间ToolStripMenuItem.Checked, this.显示标尺ToolStripMenuItem.Checked);
                 } else
                     this.map.Image = new Bitmap(this.railMap.margin * 2, this.railMap.margin * 2);
                 this.map.Location = new(0, 0);
@@ -403,6 +407,10 @@ namespace RailMapGenerator {
 
         private void 清理内存ToolStripMenuItem_Click(object sender, EventArgs e) {
             GC.Collect();
+        }
+
+        private void 绑定文件拓展名ToolStripMenuItem_Click(object sender, EventArgs e) {
+            FileBind.ExecuteBind();
         }
     }
 }

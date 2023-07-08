@@ -1,4 +1,4 @@
-﻿namespace RailMapGenerator.Utils.Server {
+﻿namespace RailMapGenerator {
     partial class ServerHud {
         /// <summary>
         /// Required designer variable.

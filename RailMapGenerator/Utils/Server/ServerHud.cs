@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace RailMapGenerator.Utils.Server {
+namespace RailMapGenerator {
     public partial class ServerHud : Form {
         private readonly RailMap map;
         public ServerHud(RailMap map) {

@@ -20,8 +20,8 @@ namespace RailMapGenerator {
 
         private HashSet<int> GetNeighborElement(Line line, int target) {
             HashSet<int> ret = new();
-            if (line.stations[0] == target) ret.Add(line.stations[1]);
-            if (line.stations[^1] == target) ret.Add(line.stations[^2]);
+            if (line.stations[0] == target && (line.sectionEnabled[0] || this.includeIncomplete)) ret.Add(line.stations[1]);
+            if (line.stations[^1] == target && (line.sectionEnabled[^2] || this.includeIncomplete)) ret.Add(line.stations[^2]);
             for (int i = 1; i <= line.stations.Count - 2; i++)
                 if (line.stations[i] == target) {
                     if (line.sectionEnabled[i - 1] || this.includeIncomplete)
@@ -65,7 +65,7 @@ namespace RailMapGenerator {
             }
             List<Pair<Line, HashSet<int>>> neighborStation = new();
             foreach (Line line in this.railMap.lines) {
-                HashSet<int> l = GetNeighborElement(line, nowStationIndex);
+                HashSet<int> l = this.GetNeighborElement(line, nowStationIndex);
                 if (l.Count > 0) neighborStation.Add(new(line, l));
             }
             foreach (Pair<Line, HashSet<int>> p in neighborStation)

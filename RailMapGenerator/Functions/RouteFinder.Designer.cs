@@ -26,12 +26,13 @@
             this.startStation = new System.Windows.Forms.ComboBox();
             this.endStation = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.routeList = new System.Windows.Forms.ListBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // startStation
@@ -58,14 +59,6 @@
             this.label1.Size = new System.Drawing.Size(44, 51);
             this.label1.TabIndex = 2;
             this.label1.Text = "起点：\r\n\r\n终点：";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(12, 75);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(590, 158);
-            this.textBox1.TabIndex = 3;
             // 
             // button1
             // 
@@ -119,17 +112,38 @@
             this.checkBox1.Text = "计入未开通车站";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // routeList
+            // 
+            this.routeList.FormattingEnabled = true;
+            this.routeList.ItemHeight = 17;
+            this.routeList.Location = new System.Drawing.Point(12, 78);
+            this.routeList.Name = "routeList";
+            this.routeList.Size = new System.Drawing.Size(680, 208);
+            this.routeList.TabIndex = 9;
+            this.routeList.SelectedIndexChanged += this.routeList_SelectedIndexChanged;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(608, 9);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(84, 60);
+            this.button2.TabIndex = 10;
+            this.button2.Text = "复制路径";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += this.button2_Click;
+            // 
             // RouteFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 243);
+            this.ClientSize = new System.Drawing.Size(702, 301);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.routeList);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.endStation);
             this.Controls.Add(this.startStation);
             this.Controls.Add(this.label1);
@@ -149,11 +163,12 @@
         private System.Windows.Forms.ComboBox startStation;
         private System.Windows.Forms.ComboBox endStation;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ListBox routeList;
+        private System.Windows.Forms.Button button2;
     }
 }

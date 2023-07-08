@@ -26,15 +26,26 @@ namespace RailMapGenerator {
                 stationWeight = 1;
                 transferWeight = 10;
             } else return;
-            this.textBox1.Text = "";
+            this.routeList.Items.Clear();
+            this.routeList.Tag = null;
             List<List<IRoutable>> ans = Route.GetShortestPath(this.railMap, this.startStation.SelectedIndex, this.endStation.SelectedIndex, stationWeight, transferWeight, this.checkBox1.Checked);
-            if (ans.Count == 0) this.textBox1.Text = "未找到可行线路";
-            else
-                foreach (List<IRoutable> s in ans) {
+            if (ans.Count == 0) this.routeList.Items.Add("未找到可行线路");
+            else foreach (List<IRoutable> s in ans) {
                     List<string> newList = new();
                     s.ForEach(i => newList.Add(i.GetName()));
-                    this.textBox1.Text += string.Join('-', newList) + "\r\n";
+                    this.routeList.Items.Add(string.Join('-', newList));
+                    this.routeList.Tag = ans;
                 }
+        }
+
+        private void button2_Click(object sender, EventArgs e) {
+            if (this.routeList.SelectedIndex != -1)
+                Clipboard.SetText((string)this.routeList.SelectedItem);
+        }
+
+        private void routeList_SelectedIndexChanged(object sender, EventArgs e) {
+            if (this.routeList.SelectedIndex == -1) return;
+
         }
     }
 }

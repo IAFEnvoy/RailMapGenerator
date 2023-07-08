@@ -1,5 +1,5 @@
 ﻿namespace RailMapGenerator {
-    internal interface IRoutable {
+    public interface IRoutable {
         public string GetName();
     }
 }
